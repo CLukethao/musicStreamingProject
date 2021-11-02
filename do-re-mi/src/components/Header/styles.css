@@ -1,0 +1,67 @@
+
+.bg-color {
+    background-color: black;
+}
+
+.text-css {
+    color: white;
+    font-size: 25px;
+}
+
+.menu-btn {
+    width: 30px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding: 0px 0px 0px 0px;
+    color: white;
+}
+
+.nav-list {
+    background-color: black;
+    width: 225px;
+    position: fixed;
+    margin-top: 2rem;
+
+}
+
+.menu-btn:hover {
+    color: red;
+}
+
+.login-btn {
+    background-color: indianred;
+    border: none;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 15px;
+    padding: 3px 0 8px 0;
+    width: 80px;
+}
+
+.navbar-logo {
+    font-family: 'Mitr', sans-serif;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.navbar-link {
+    font-family: 'Mitr', sans-serif;
+    font-size: 21px;
+    font-weight: 300;
+    color: white !important;
+}
+
+#menu {
+    transition: transform .3s
+    cubic-bezier(0, .52, 0, 1);
+}
+
+#menu.hide {
+    transform: translate3d(-100vw, 0, 0);
+}
+
+#menu.show {
+    transform: translate3d(0vw, 0, 0);
+    overflow: hidden;
+}
