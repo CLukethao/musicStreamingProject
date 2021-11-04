@@ -1,38 +1,44 @@
 import React, {useState} from 'react'
 import './styles.css'
+import SearchResults from "./SearchResults/SearchResults";
 
-//GET https://www.googleapis.com/youtube/v3/search
-//AIzaSyD7Z9wTocDrH7nP0jIrXRpp1YCGcIiu4j8
+
+
 const Search = () => {
 
     const [inputData, setInputData] = useState({
         searchQuery: '',
         searchResults: []
-    })
+    });
 
-    let videoContainer = document.querySelector('.youtube-container')
+    const API_KEY = 'AIzaSyDhjCec7htgsdItR9p2cwpJlduGvouQ9sg'
+
+
+    const getURL = 'https://www.googleapis.com/youtube/v3/search?key='
+
 
     const handleClick = () => {
-        fetch("https://www.googleapis.com/youtube/v3/search?port=snippet&key=AIzaSyD7Z9wTocDrH7nP0jIrXRpp1YCGcIiu4j8&type=video&q=ajax")
+       videoSearch(inputData.searchQuery)
+    }
+
+    const videoSearch = (search) =>   {
+        fetch(getURL + API_KEY + '&type=video&part=snippet&maxResults=14' + '&q=' + search )
             .then((results) => {
                 return results.json()
-            }).then((results) => {
-                console.log(results)
-                let videoContainer = document.querySelector('.youtube-container')
-                for (let i = 0; i < results.length; i++) {
-                    setInputData({...inputData, searchResults: results[i].snippet.thumbnails.default.url})
-
-                    console.log('gottem')
-                }
+            }).then((data) => {
+                console.log(data.items)
+                setInputData({...inputData, searchResults: data.items})
+                console.log("results here " + inputData.searchResults)
         })
-
     }
+
+
 
     return (
         <div className='container'>
-            <div className='row'>
+            <div className='row mb-5'>
                 <div className='col-6 offset-1 col-md-6 offset-md-2 mt-3 input-p'>
-                    <input className='form-control' type='text' placeholder='Search' onChange={(e) => setInputData({...inputData, searchQuery: e.target.value})}/>
+                    <input className='form-control' type='text' placeholder='Search' value={inputData.searchQuery} onChange={(e) => setInputData({...inputData, searchQuery: e.target.value})}/>
                 </div>
 
                 <div className='col-2 col-md-2 mt-3 btn-p'>
@@ -40,17 +46,30 @@ const Search = () => {
                 </div>
             </div>
 
-            <div className='row'>
-                <div className='col-4'>
-                    {inputData.searchResults.map((videos) =>
-                        videoContainer.innerHTML +=
-                        <img src={videos}  alt='hola'/>
-                    )}
+            <SearchResults videos={inputData.searchResults}/>
 
-                </div>
-            </div>
+            {/*<div className='row'>*/}
+
+            {/*    /!*<div className='col-12 col-md-4'>*!/*/}
+            {/*    /!*    <iframe width="50" height="50" src={`https://www.youtube.com/embed/PDeTO26fRVQ?rel=0&showinfo=0&controls=0"frameborder="0"`}*!/*/}
+            {/*    /!*            title="YouTube video player" frameBorder="0"*!/*/}
+            {/*    /!*    ></iframe>*!/*/}
+            {/*    /!*</div>*!/*/}
+
+            {/*    /!*{inputData.searchResults.map((video) =>*!/*/}
+            {/*    /!*    <div className='col-12 col-md-4'>*!/*/}
+            {/*    /!*        <iframe width="300" height="250" src={`https://www.youtube.com/embed/${video.id.videoId}?rel=0&showinfo=0&controls=0"frameborder="0"`}*!/*/}
+            {/*    /!*                title="YouTube video player" frameBorder="0"*!/*/}
+            {/*    /!*                ></iframe>*!/*/}
+            {/*    /!*    </div>*!/*/}
+            {/*    /!*)}*!/*/}
+
+            {/*</div>*/}
+
         </div>
     )
 }
+
+
 
 export default Search

@@ -6,3 +6,26 @@
 .btn-p {
     padding-left: 0;
 }
+
+.results-display {
+    background-color: rgb(28,28,28);
+    border: black solid 2px;
+    color: white;
+    margin-bottom: 2px;
+    font-size: 1.35vw;
+}
+
+.thumbnails {
+    padding-left: 0px;
+}
+
+img {
+    max-width: 14vw;
+    height: auto;
+}
+
+.result-header {
+    font-size: 2vw;
+    font-weight: bold;
+    color: white;
+}
