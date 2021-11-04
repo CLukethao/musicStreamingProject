@@ -4,11 +4,11 @@ import SearchResults from "./SearchResults/SearchResults";
 
 
 
-const Search = () => {
+const Search = ({playSong}) => {
 
     const [inputData, setInputData] = useState({
         searchQuery: '',
-        searchResults: []
+        searchResults: [],
     });
 
     const API_KEY = 'AIzaSyDhjCec7htgsdItR9p2cwpJlduGvouQ9sg'
@@ -22,7 +22,7 @@ const Search = () => {
     }
 
     const videoSearch = (search) =>   {
-        fetch(getURL + API_KEY + '&type=video&part=snippet&maxResults=14' + '&q=' + search )
+        fetch(getURL + API_KEY + '&type=video&part=snippet&maxResults=14' + '&q=' + search)
             .then((results) => {
                 return results.json()
             }).then((data) => {
@@ -30,6 +30,10 @@ const Search = () => {
                 setInputData({...inputData, searchResults: data.items})
                 console.log("results here " + inputData.searchResults)
         })
+    }
+
+    const onResultClick = (e) => {
+        playSong(e)
     }
 
 
@@ -42,11 +46,11 @@ const Search = () => {
                 </div>
 
                 <div className='col-2 col-md-2 mt-3 btn-p'>
-                    <button className='btn btn-primary btn-block' onClick={handleClick}>Submit</button>
+                    <button className='btn btn-primary btn-block' onClick={handleClick}>Search</button>
                 </div>
             </div>
 
-            <SearchResults videos={inputData.searchResults}/>
+            <SearchResults videos={inputData.searchResults} onResultClick={onResultClick}/>
 
             {/*<div className='row'>*/}
 
