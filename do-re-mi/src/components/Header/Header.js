@@ -16,7 +16,7 @@ const Header = () => {
     }
 
     return (
-        <div className='row text-css'>
+        <div className='row header-font header'>
             <div className='col-12 logo bg-color'>
                 <button className='menu-btn btn' onClick={toggleNav}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

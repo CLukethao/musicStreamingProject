@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import './App.css'
 import Header from "./components/Header/Header";
 import Search from "./components/Search/Search";
-import PlayerControls from "./components/PlayerControls/PlayerControls";
+import Player from "./components/Player/Player";
 
 const App = () => {
 
@@ -20,7 +20,7 @@ const App = () => {
         <div className="">
             <Header />
             <Search playSong={selectedSong}/>
-            <PlayerControls song={currentState.selectedSong}/>
+            <Player song={currentState.selectedSong}/>
         </div>
     );
 }

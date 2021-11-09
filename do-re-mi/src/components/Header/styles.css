@@ -3,7 +3,14 @@
     background-color: black;
 }
 
-.text-css {
+.header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+}
+
+
+.header-font {
     color: white;
     font-size: 25px;
 }
@@ -12,7 +19,7 @@
     width: 30px;
     margin-bottom: 5px;
     margin-right: 5px;
-    padding: 0px 0px 0px 0px;
+    padding: 0 0 0 0;
     color: white;
 }
 
@@ -61,7 +68,7 @@
     transform: translate3d(-100vw, 0, 0);
 }
 
-#menu.show {
-    transform: translate3d(0vw, 0, 0);
-    overflow: hidden;
-}
+/*#menu.show {*/
+/*    transform: translate3d(0vw, 0, 0);*/
+/*    overflow: hidden;*/
+/*}*/

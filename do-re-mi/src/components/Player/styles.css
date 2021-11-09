@@ -1,0 +1,55 @@
+
+
+.player {
+    background-color: rgb(28,28,28);
+    position: fixed;
+    border: black solid 1px;
+    bottom: 0;
+    color: white;
+    height: 50px;
+}
+
+.player-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.player-title-overlay{
+    display: none;
+}
+
+/*.player-title.hover + .player-title-overlay {*/
+/*    display: block;*/
+/*    color: red;*/
+/*    background-color: white;*/
+/*}*/
+
+.player-thumbnail {
+    padding-left: 0px;
+}
+
+.player-img {
+    max-width: 85px;
+    height: auto;
+}
+
+.hide {
+    bottom: -50px;
+}
+
+.show {
+    transition: .4s;
+    bottom: 0
+}
+
+/*#player {*/
+/*    left: 0;*/
+/*    transition: transform 10s*/
+/*}*/
+
+/*#players {*/
+/*    left: -100px;*/
+/*    background: blue;*/
+/*    transition: 1s;*/
+/*}*/
