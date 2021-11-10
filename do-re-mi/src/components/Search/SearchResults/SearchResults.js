@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import '../styles.css'
 
 const SearchResults = ({videos, onResultClick}) => {
@@ -9,7 +9,7 @@ const SearchResults = ({videos, onResultClick}) => {
     if (videos) {
         for (let i = 0; i < videos.length; i++) {
             results.push(
-                <a className='clickable-row' id={videos[i].id.videoId} onClick={() => onResultClick(videos[i])}>
+                <div className='clickable-row' key={videos[i].id.videoId} id={videos[i].id.videoId} onClick={() => onResultClick(videos[i])}>
                     <div className='row results-display d-flex align-items-center'>
                         <div className='col-3 col-md-4 thumbnails'>
                             <img className='result-img' src={videos[i].snippet.thumbnails.medium.url} alt=''></img>
@@ -27,13 +27,13 @@ const SearchResults = ({videos, onResultClick}) => {
                             {videos[i].snippet.publishedAt.replace(dateRegex, "$2-$3-$1")}
                         </div>
                     </div>
-                </a>
+                </div>
             )
         }
     }
 
     return (
-        <div>
+        <div className='search-container'>
             <div className='row result-header'>
                 <div className='offset-4 col-4 offset-md-3 col-md-2 text-md-end'>
                     Title

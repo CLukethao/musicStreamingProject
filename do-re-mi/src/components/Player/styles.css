@@ -27,6 +27,7 @@
 
 .player-thumbnail {
     padding-left: 0px;
+
 }
 
 .player-img {
@@ -43,13 +44,31 @@
     bottom: 0
 }
 
-/*#player {*/
-/*    left: 0;*/
-/*    transition: transform 10s*/
-/*}*/
+.player-btn {
+    color: white;
+}
 
-/*#players {*/
-/*    left: -100px;*/
-/*    background: blue;*/
-/*    transition: 1s;*/
-/*}*/
+.player-btn:hover{
+    color: grey;
+}
+
+.range {
+    width: 28vw;
+    height: 10px;
+    -webkit-appearance: none;
+    background: #111;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 1);
+}
+
+.range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #00fd0a;
+    cursor: pointer;
+    border: 4px solid #333;
+    box-shadow: -407px 0 0 400px #00fd0a;
+}
