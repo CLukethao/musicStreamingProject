@@ -3,16 +3,12 @@ import React, {useEffect} from 'react'
 import './styles.css'
 import SongInformation from "./SongInformation/SongInformation";
 import Controls from "./Controls/Controls";
-import {useYoutube} from "./useYoutube/useYoutube";
 
 
 const Player = ({song}) => {
 
-    const loadSong = () => {
-        console.log('wassup')
-    }
 
-    useYoutube(loadSong)
+
 
     if (song.hasOwnProperty('snippet')) {
         return (

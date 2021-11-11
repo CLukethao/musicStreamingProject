@@ -1,6 +1,10 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './styles.css'
 import SearchResults from "./SearchResults/SearchResults";
+import UTube from "../Player/useYoutube/mock";
+
+
+
 
 
 
@@ -16,10 +20,21 @@ const Search = ({playSong}) => {
 
     const getURL = 'https://www.googleapis.com/youtube/v3/search?key='
 
-
     const handleClick = () => {
        videoSearch(inputData.searchQuery)
     }
+
+    useEffect(() => {
+        if (!window.YT) {
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        }
+
+    }, []);
+
 
     const videoSearch = (search) =>   {
         fetch(getURL + API_KEY + '&type=video&part=snippet&maxResults=14' + '&q=' + search)
@@ -36,8 +51,6 @@ const Search = ({playSong}) => {
         playSong(e)
     }
 
-
-
     return (
         <div className='container'>
             <div className='row mb-5'>
@@ -52,23 +65,7 @@ const Search = ({playSong}) => {
 
             <SearchResults videos={inputData.searchResults} onResultClick={onResultClick}/>
 
-            {/*<div className='row'>*/}
-
-            {/*    /!*<div className='col-12 col-md-4'>*!/*/}
-            {/*    /!*    <iframe width="50" height="50" src={`https://www.youtube.com/embed/PDeTO26fRVQ?rel=0&showinfo=0&controls=0"frameborder="0"`}*!/*/}
-            {/*    /!*            title="YouTube video player" frameBorder="0"*!/*/}
-            {/*    /!*    ></iframe>*!/*/}
-            {/*    /!*</div>*!/*/}
-
-            {/*    /!*{inputData.searchResults.map((video) =>*!/*/}
-            {/*    /!*    <div className='col-12 col-md-4'>*!/*/}
-            {/*    /!*        <iframe width="300" height="250" src={`https://www.youtube.com/embed/${video.id.videoId}?rel=0&showinfo=0&controls=0"frameborder="0"`}*!/*/}
-            {/*    /!*                title="YouTube video player" frameBorder="0"*!/*/}
-            {/*    /!*                ></iframe>*!/*/}
-            {/*    /!*    </div>*!/*/}
-            {/*    /!*)}*!/*/}
-
-            {/*</div>*/}
+            <UTube />
 
         </div>
     )
