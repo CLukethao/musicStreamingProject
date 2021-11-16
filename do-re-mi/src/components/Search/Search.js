@@ -2,13 +2,9 @@ import React, {useState, useEffect} from 'react'
 import './styles.css'
 import SearchResults from "./SearchResults/SearchResults";
 import UTube from "../Player/useYoutube/mock";
+import UseYoutube from "../Player/useYoutube/UseYoutube";
 
-
-
-
-
-
-const Search = ({playSong}) => {
+const Search = ({selectedSong}) => {
 
     const [inputData, setInputData] = useState({
         searchQuery: '',
@@ -24,16 +20,16 @@ const Search = ({playSong}) => {
        videoSearch(inputData.searchQuery)
     }
 
-    useEffect(() => {
-        if (!window.YT) {
-            const tag = document.createElement('script');
-            tag.src = 'https://www.youtube.com/iframe_api';
-            const firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        }
-
-    }, []);
+    // useEffect(() => {
+    //     if (!window.YT) {
+    //         const tag = document.createElement('script');
+    //         tag.src = 'https://www.youtube.com/iframe_api';
+    //         const firstScriptTag = document.getElementsByTagName('script')[0];
+    //         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    //
+    //     }
+    //
+    // }, []);
 
 
     const videoSearch = (search) =>   {
@@ -47,8 +43,8 @@ const Search = ({playSong}) => {
         })
     }
 
-    const onResultClick = (e) => {
-        playSong(e)
+    const selectSong = (e) => {
+        selectedSong(e)
     }
 
     return (
@@ -63,9 +59,10 @@ const Search = ({playSong}) => {
                 </div>
             </div>
 
-            <SearchResults videos={inputData.searchResults} onResultClick={onResultClick}/>
+            <SearchResults videos={inputData.searchResults} selectSong={selectSong}/>
 
-            <UTube />
+            {/*<UTube />*/}
+            {/*<UseYoutube />*/}
 
         </div>
     )

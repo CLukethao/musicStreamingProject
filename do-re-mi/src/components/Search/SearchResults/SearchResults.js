@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import '../styles.css'
 
-const SearchResults = ({videos, onResultClick}) => {
+const SearchResults = ({videos, selectSong}) => {
 
     const results = []
     const dateRegex = /([0-9]+)-([0-9]+)-([0-9]+).*/
@@ -9,7 +9,7 @@ const SearchResults = ({videos, onResultClick}) => {
     if (videos) {
         for (let i = 0; i < videos.length; i++) {
             results.push(
-                <div className='clickable-row' key={videos[i].id.videoId} id={videos[i].id.videoId} onClick={() => onResultClick(videos[i])}>
+                <div className='clickable-row' key={videos[i].id.videoId} id={videos[i].id.videoId} onClick={() => selectSong(videos[i])}>
                     <div className='row results-display d-flex align-items-center'>
                         <div className='col-3 col-md-4 thumbnails'>
                             <img className='result-img' src={videos[i].snippet.thumbnails.medium.url} alt=''></img>

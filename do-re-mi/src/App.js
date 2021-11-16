@@ -19,7 +19,7 @@ const App = () => {
     return (
         <div className="">
             <Header />
-            <Search playSong={selectedSong}/>
+            <Search selectedSong={selectedSong}/>
             <Player song={currentState.selectedSong}/>
         </div>
     );
