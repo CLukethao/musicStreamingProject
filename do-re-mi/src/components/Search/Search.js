@@ -39,7 +39,6 @@ const Search = ({selectedSong}) => {
             }).then((data) => {
                 console.log(data.items)
                 setInputData({...inputData, searchResults: data.items})
-                console.log("results here " + inputData.searchResults)
         })
     }
 

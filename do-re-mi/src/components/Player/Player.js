@@ -1,31 +1,24 @@
 
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import './styles.css'
 import SongInformation from "./SongInformation/SongInformation";
-import Controls from "./Controls/Controls";
 import UseYoutube from "./useYoutube/UseYoutube";
 
 
-const Player = ({song}) => {
+const Player = ({selectedSong}) => {
 
     const [songTrack, setSongTrack] = useState({
         song: '',
-        songsPlayed: [],
-        playSong: false,
+        songHistory: []
     });
 
-    const playSong = () => {
-        setSongTrack({...songTrack, playSong: !songTrack.playSong})
-        console.log(songTrack.playSong)
-    }
-
-    if (song.hasOwnProperty('snippet')) {
+    if (selectedSong.hasOwnProperty('snippet')) {
         return (
             <div className='container player vw-100 show'>
                 <div className='row player vw-100 show align-items-center'>
                     <UseYoutube />
 
-                    <SongInformation song={song}/>
+                    <SongInformation selectedSong={selectedSong}/>
                 </div>
             </div>
         )

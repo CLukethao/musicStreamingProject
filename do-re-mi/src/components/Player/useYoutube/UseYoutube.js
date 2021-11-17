@@ -7,7 +7,8 @@ const UseYoutube = () => {
     const [songInfo, setSongInfo] = useState({
         songLength: 180,
         currentPlaybackTime: 20,
-        playSong: false
+        playSong: true,
+        songHistory: []
     })
 
     const seekTo = (e) => {
@@ -37,11 +38,10 @@ const UseYoutube = () => {
     const loadVideo = () => {
         window.YT.ready ( () => {
             player = new window.YT.Player('youtube-player-Avw0_VjiQkY', {
-                height: '30',
-                width: '30',
+                height: '1',
+                width: '1',
                 videoId: "Avw0_VjiQkY",
-                playerVars: { 'autoplay': 0, 'controls': 0 },
-                // playerVars: { 'autoplay': 1, 'controls': 0 },
+                playerVars: { 'autoplay': 1, 'controls': 0 },
                 events: {
                     onReady: () => onPlayerReady,
                 },
@@ -53,12 +53,8 @@ const UseYoutube = () => {
         console.log('player ready')
     };
 
-    const pause = () => {
-        player.pauseVideo()
-    }
-
     const play = () => {
-        // player.playVideo()
+
         if (!songInfo.playSong) {
             setSongInfo({...songInfo, playSong: true})
             player.playVideo()
@@ -77,12 +73,12 @@ const UseYoutube = () => {
             <div className='row align-items-center'>
                 <div className='col-4'>
                     <SkipBackward />
-                    <Play playSong={play}/>
-                    <SkipForward pauseSong={pause}/>
+                    <Play playSong={play} playPauseToggle={songInfo.playSong}/>
+                    <SkipForward />
                     <Repeat />
-                    <div id='youtube-player-Avw0_VjiQkY'>
+                    <div id='youtube-player-Avw0_VjiQkY' className='iframe'/>
 
-                    </div>
+
                 </div>
 
                 <SongTimeline currentPlaybackTime={songInfo.currentPlaybackTime} songLength={songInfo.songLength} seekTo={seekTo}/>
@@ -107,24 +103,31 @@ const SkipBackward = () => {
     )
 }
 
-const Play = ({playSong}) => {
-    return (
-        <button className='btn player-btn' onClick={() => playSong()}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                 className="bi bi-play-fill" viewBox="0 0 16 16">
-                <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
-            </svg>
-        </button>
+const Play = ({playSong, playPauseToggle}) => {
 
-        // <button className='btn player-btn'>
-        //     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pause-fill"
-        //          viewBox="0 0 16 16">
-        //         <path
-        //             d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
-        //     </svg>
-        // </button>
-    )
+    if (!playPauseToggle) {
+        return (
+            <button className='btn player-btn' onClick={() => playSong()}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     className="bi bi-play-fill" viewBox="0 0 16 16">
+                    <path
+                        d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                </svg>
+            </button>
+        )
+    }
+
+    else {
+        return (
+            <button className='btn player-btn' onClick={() => playSong()}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pause-fill"
+                     viewBox="0 0 16 16">
+                    <path
+                        d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
+                </svg>
+            </button>
+        )
+    }
 }
 
 
@@ -170,81 +173,3 @@ const SongTimeline = ({currentPlaybackTime, songLength, seekTo}) => {
 
     )
 }
-
-// import React, {useEffect} from 'react';
-//
-// let player;
-//
-// const UseYoutube = ({playSong}) => {
-//
-//     useEffect(() => {
-//
-//         if (!window.YT) {
-//             console.log('api loaded')
-//             const tag = document.createElement('script');
-//             tag.src = 'https://www.youtube.com/iframe_api';
-//
-//
-//             window.onYouTubeIframeAPIReady = this.loadVideo;
-//
-//             const firstScriptTag = document.getElementsByTagName('script')[0];
-//             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-//
-//         } else {
-//
-//             loadVideo()
-//         }
-//     })
-//
-//     // useEffect(() => {
-//     //
-//     //     if (playSong) {
-//     //         play()
-//     //     }
-//     //
-//     //     else {
-//     //         pause()
-//     //     }
-//     //
-//     // }, [playSong])
-//
-//     const pause = () => {
-//         player.pauseVideo()
-//     }
-//
-//     const play = () => {
-//         player.playVideo()
-//     }
-//
-//     const loadVideo = () => {
-//         window.YT.ready ( () => {
-//             player = new window.YT.Player('youtube-player-Avw0_VjiQkY', {
-//                 height: '30',
-//                 width: '30',
-//                 videoId: "Avw0_VjiQkY",
-//                 playerVars: { 'autoplay': 0, 'controls': 0 },
-//                 // playerVars: { 'autoplay': 1, 'controls': 0 },
-//                 events: {
-//                     onReady: () => onPlayerReady,
-//                 },
-//             });
-//         })
-//     };
-//
-//     const onPlayerReady = (event) => {
-//         console.log('player ready')
-//     };
-//
-//     return (
-//         <div>
-//             <div id='youtube-player-Avw0_VjiQkY'>
-//
-//             </div>
-//             <button onClick={() => pause()}>pause</button>
-//             <button onClick={() => play()}>play</button>
-//         </div>
-//
-//     );
-// }
-//
-// export default UseYoutube;
