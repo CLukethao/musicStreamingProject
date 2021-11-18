@@ -5,23 +5,25 @@ import SongInformation from "./SongInformation/SongInformation";
 import UseYoutube from "./useYoutube/UseYoutube";
 
 
-const Player = ({selectedSong}) => {
+const Player = ({songSelected}) => {
 
     const [songTrack, setSongTrack] = useState({
         song: '',
         songHistory: []
     });
 
-    if (selectedSong.hasOwnProperty('snippet')) {
-        return (
-            <div className='container player vw-100 show'>
-                <div className='row player vw-100 show align-items-center'>
-                    <UseYoutube />
+    if (typeof songSelected !== 'undefined') {
+        if (songSelected.hasOwnProperty('snippet')) {
+            return (
+                <div className='container player vw-100 show'>
+                    <div className='row player vw-100 show align-items-center'>
+                        <UseYoutube songSelected={songSelected}/>
 
-                    <SongInformation selectedSong={selectedSong}/>
+                        <SongInformation songSelected={songSelected}/>
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        }
     }
 
     else {

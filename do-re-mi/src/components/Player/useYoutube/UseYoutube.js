@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 let player;
 
-const UseYoutube = () => {
+const UseYoutube = ({songSelected}) => {
 
     const [songInfo, setSongInfo] = useState({
         songLength: 180,
@@ -17,30 +17,38 @@ const UseYoutube = () => {
 
     useEffect(() => {
 
+        console.log(player)
+
         if (!window.YT) {
-        console.log('api loaded')
+
         const tag = document.createElement('script');
         tag.src = 'https://www.youtube.com/iframe_api';
-
 
         window.onYouTubeIframeAPIReady = this.loadVideo;
 
         const firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        } else {
-
-            loadVideo()
         }
-    }, [])
+
+        else if (player === undefined) {
+
+            loadVideo(songSelected)
+        }
+
+        else {
+            newSongSelected(songSelected)
+        }
+
+    }, [songSelected])
 
 
-    const loadVideo = () => {
+    const loadVideo = (song) => {
         window.YT.ready ( () => {
-            player = new window.YT.Player('youtube-player-Avw0_VjiQkY', {
+            player = new window.YT.Player(`youtube-player-${song.id.videoId}`, {
                 height: '1',
                 width: '1',
-                videoId: "Avw0_VjiQkY",
+                videoId: song.id.videoId,
                 playerVars: { 'autoplay': 1, 'controls': 0 },
                 events: {
                     onReady: () => onPlayerReady,
@@ -67,6 +75,12 @@ const UseYoutube = () => {
 
     }
 
+    const newSongSelected = () => {
+        player.loadVideoById({
+            'videoId': songSelected.id.videoId,
+        })
+    }
+
     return (
 
         <div className='col-7'>
@@ -76,7 +90,7 @@ const UseYoutube = () => {
                     <Play playSong={play} playPauseToggle={songInfo.playSong}/>
                     <SkipForward />
                     <Repeat />
-                    <div id='youtube-player-Avw0_VjiQkY' className='iframe'/>
+                    <div id={`youtube-player-${songSelected.id.videoId}`} className='iframe'/>
 
 
                 </div>
