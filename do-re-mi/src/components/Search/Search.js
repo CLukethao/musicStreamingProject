@@ -11,7 +11,8 @@ const Search = ({selectedSong}) => {
         searchResults: [],
     });
 
-    const API_KEY = 'AIzaSyDhjCec7htgsdItR9p2cwpJlduGvouQ9sg'
+    // const API_KEY = 'AIzaSyDhjCec7htgsdItR9p2cwpJlduGvouQ9sg'
+    const API_KEY = 'AIzaSyDlnn9kjXhP8g6mrWbHZev0fivwxJQlOSA'
 
 
     const getURL = 'https://www.googleapis.com/youtube/v3/search?key='

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 let player;
 
-const UseYoutube = ({songSelected}) => {
+const UseYoutube = ({songSelected, songHistory}) => {
 
     const [songInfo, setSongInfo] = useState({
         songLength: 180,
@@ -11,8 +11,10 @@ const UseYoutube = ({songSelected}) => {
         songHistory: []
     })
 
+    const [indexInHistory, setIndexInHistory] = useState(0)
+
     const seekTo = (e) => {
-        setSongInfo({...songInfo, currentPlaybackTime: e.target.value})
+        setSongInfo({...songInfo, currentPlaybackTime: e.target.value});
     }
 
     useEffect(() => {
@@ -33,11 +35,13 @@ const UseYoutube = ({songSelected}) => {
 
         else if (player === undefined) {
 
-            loadVideo(songSelected)
+            loadVideo(songSelected);
+
         }
 
         else {
-            newSongSelected(songSelected)
+            newSongSelected(songSelected);
+
         }
 
     }, [songSelected])
@@ -64,21 +68,50 @@ const UseYoutube = ({songSelected}) => {
     const play = () => {
 
         if (!songInfo.playSong) {
-            setSongInfo({...songInfo, playSong: true})
-            player.playVideo()
+            setSongInfo({...songInfo, playSong: true});
+
+            player.playVideo();
         }
 
         else {
-            setSongInfo({...songInfo, playSong: false})
-            player.pauseVideo()
+            setSongInfo({...songInfo, playSong: false});
+
+            player.pauseVideo();
         }
 
     }
 
     const newSongSelected = () => {
+        try {
+            player.loadVideoById({
+                'videoId': songSelected.id.videoId,
+            });
+        }
+
+        catch {
+            setTimeout(() => {
+                player.loadVideoById({
+                    'videoId': songSelected.id.videoId,
+                });
+            }, 700)
+        }
+    }
+
+    const skipToPrev = () => {
+        console.log('hello')
+
+    }
+
+    const rewind = () => {
+
         player.loadVideoById({
-            'videoId': songSelected.id.videoId,
-        })
+            'videoId': songSelected.id.videoId
+        });
+
+    }
+
+    const skipToNext = () => {
+        console.log('hello')
     }
 
     return (
@@ -86,12 +119,12 @@ const UseYoutube = ({songSelected}) => {
         <div className='col-7'>
             <div className='row align-items-center'>
                 <div className='col-4'>
-                    <SkipBackward />
+
+                    <SkipBackward skipToPrev={skipToPrev} rewind={rewind}/>
                     <Play playSong={play} playPauseToggle={songInfo.playSong}/>
-                    <SkipForward />
+                    <SkipForward skipToNext={skipToNext}/>
                     <Repeat />
                     <div id={`youtube-player-${songSelected.id.videoId}`} className='iframe'/>
-
 
                 </div>
 
@@ -105,17 +138,62 @@ const UseYoutube = ({songSelected}) => {
 export default UseYoutube;
 
 
-const SkipBackward = () => {
-    return (
-        <button className='btn player-btn'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                 className="bi bi-skip-start-fill" viewBox="0 0 16 16">
-                <path
-                    d="M4 4a.5.5 0 0 1 1 0v3.248l6.267-3.636c.54-.313 1.232.066 1.232.696v7.384c0 .63-.692 1.01-1.232.697L5 8.753V12a.5.5 0 0 1-1 0V4z"/>
-            </svg>
-        </button>
-    )
+const SkipBackward = ({skipToPrev, rewind}) => {
+
+    const [timeLeft, setTimeLeft] = useState(0)
+
+    useEffect(() => {
+        let timer = setInterval(() => {
+            if (timeLeft > 0) {
+                setTimeLeft(prevState => prevState - 1)
+            }
+
+            if (timeLeft === 0) {
+                clearInterval(timer)
+            }
+        }, 100)
+
+        return () => {
+            clearInterval(timer)
+        }
+    })
+
+    const onRewind = (event) => {
+        if (event.target.id === 'rewind') {
+            setTimeLeft(prevState => prevState + 6)
+        }
+
+        else {
+            setTimeLeft(prevState => prevState + 3)
+        }
+    }
+
+    if (!timeLeft) {
+        return (
+            <button id='rewind' className='btn player-btn' onClick={(event) => {rewind(); onRewind(event)}}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     className="bi bi-skip-start-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M4 4a.5.5 0 0 1 1 0v3.248l6.267-3.636c.54-.313 1.232.066 1.232.696v7.384c0 .63-.692 1.01-1.232.697L5 8.753V12a.5.5 0 0 1-1 0V4z"/>
+                </svg>
+            </button>
+        )
+    }
+
+    else {
+        return (
+            <button id='skipPrev' className='btn player-btn' onClick={event => {skipToPrev(); onRewind(event)}}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     className="bi bi-skip-backward-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M.5 3.5A.5.5 0 0 0 0 4v8a.5.5 0 0 0 1 0V8.753l6.267 3.636c.54.313 1.233-.066 1.233-.697v-2.94l6.267 3.636c.54.314 1.233-.065 1.233-.696V4.308c0-.63-.693-1.01-1.233-.696L8.5 7.248v-2.94c0-.63-.692-1.01-1.233-.696L1 7.248V4a.5.5 0 0 0-.5-.5z"/>
+                </svg>
+            </button>
+        )
+    }
 }
+
+
 
 const Play = ({playSong, playPauseToggle}) => {
 
@@ -145,9 +223,9 @@ const Play = ({playSong, playPauseToggle}) => {
 }
 
 
-const SkipForward = ({pauseSong}) => {
+const SkipForward = ({skipToNext}) => {
     return (
-        <button className='btn player-btn' onClick={() => pauseSong()}>
+        <button id='skipForward' className='btn player-btn' onClick={() => skipToNext()}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                  className="bi bi-skip-end-fill" viewBox="0 0 16 16">
                 <path
