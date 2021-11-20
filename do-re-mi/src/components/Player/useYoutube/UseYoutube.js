@@ -1,32 +1,33 @@
 import React, {useEffect, useState} from 'react';
+import data from "bootstrap/js/src/dom/data";
 
-let player;
+const UseYoutube = ({songSelected, songHistory, setSong}) => {
 
-const UseYoutube = ({songSelected, songHistory}) => {
-
-    const [songInfo, setSongInfo] = useState({
-        songLength: 180,
-        currentPlaybackTime: 20,
+    const [playerInfo, setPlayerInfo] = useState({
+        indexInHistory: songHistory.length - 1,
+        songLength: 0,
+        currentPlaybackTime: 0,
         playSong: true,
-        songHistory: []
+        songHistory: [],
     })
 
-    const [indexInHistory, setIndexInHistory] = useState(0)
-
     const seekTo = (e) => {
-        setSongInfo({...songInfo, currentPlaybackTime: e.target.value});
+        setPlayerInfo({...playerInfo, currentPlaybackTime: e.target.value});
     }
 
-    useEffect(() => {
+    const [player, setPlayer] = useState()
 
-        console.log(player)
+    useEffect(() => {
+        setPlayerInfo({...playerInfo, indexInHistory: songHistory.length - 1})
+
+    }, [songHistory])
+
+    useEffect(() => {
 
         if (!window.YT) {
 
         const tag = document.createElement('script');
         tag.src = 'https://www.youtube.com/iframe_api';
-
-        window.onYouTubeIframeAPIReady = this.loadVideo;
 
         const firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
@@ -41,40 +42,43 @@ const UseYoutube = ({songSelected, songHistory}) => {
 
         else {
             newSongSelected(songSelected);
-
         }
 
     }, [songSelected])
 
-
     const loadVideo = (song) => {
         window.YT.ready ( () => {
-            player = new window.YT.Player(`youtube-player-${song.id.videoId}`, {
+            setPlayer(
+                new window.YT.Player(`youtube-player`, {
                 height: '1',
                 width: '1',
                 videoId: song.id.videoId,
                 playerVars: { 'autoplay': 1, 'controls': 0 },
                 events: {
-                    onReady: () => onPlayerReady,
+                    onReady: onPlayerReady,
                 },
-            });
+                })
+            );
         })
     };
 
     const onPlayerReady = (event) => {
-        console.log('player ready')
+        console.log('')
+        // console.log('duration is')
+        // console.log(player.getDuration())
+
     };
 
     const play = () => {
 
-        if (!songInfo.playSong) {
-            setSongInfo({...songInfo, playSong: true});
+        if (!playerInfo.playSong) {
+            setPlayerInfo({...playerInfo, playSong: true});
 
             player.playVideo();
         }
 
         else {
-            setSongInfo({...songInfo, playSong: false});
+            setPlayerInfo({...playerInfo, playSong: false});
 
             player.pauseVideo();
         }
@@ -98,8 +102,17 @@ const UseYoutube = ({songSelected, songHistory}) => {
     }
 
     const skipToPrev = () => {
-        console.log('hello')
+        let indexOfNewSong = playerInfo.indexInHistory - 1
 
+        if (indexOfNewSong >= 0) {
+
+            player.loadVideoById({
+                'videoId': songHistory[indexOfNewSong].id.videoId
+            });
+
+            setPlayerInfo({...playerInfo, indexInHistory: playerInfo.indexInHistory - 1});
+            setSong(songHistory[indexOfNewSong]);
+        }
     }
 
     const rewind = () => {
@@ -111,7 +124,16 @@ const UseYoutube = ({songSelected, songHistory}) => {
     }
 
     const skipToNext = () => {
-        console.log('hello')
+        let indexOfNewSong = playerInfo.indexInHistory + 1
+
+        if (playerInfo.indexInHistory !== (songHistory.length - 1)) {
+            player.loadVideoById({
+                'videoId': songHistory[indexOfNewSong].id.videoId
+            });
+
+            setPlayerInfo({...playerInfo, indexInHistory: playerInfo.indexInHistory + 1});
+            setSong(songHistory[indexOfNewSong]);
+        }
     }
 
     return (
@@ -121,14 +143,14 @@ const UseYoutube = ({songSelected, songHistory}) => {
                 <div className='col-4'>
 
                     <SkipBackward skipToPrev={skipToPrev} rewind={rewind}/>
-                    <Play playSong={play} playPauseToggle={songInfo.playSong}/>
+                    <Play playSong={play} playPauseToggle={playerInfo.playSong}/>
                     <SkipForward skipToNext={skipToNext}/>
                     <Repeat />
-                    <div id={`youtube-player-${songSelected.id.videoId}`} className='iframe'/>
+                    <div id={`youtube-player`} className='iframe'/>
 
                 </div>
 
-                <SongTimeline currentPlaybackTime={songInfo.currentPlaybackTime} songLength={songInfo.songLength} seekTo={seekTo}/>
+                <SongTimeline currentPlaybackTime={playerInfo.currentPlaybackTime} songLength={playerInfo.songLength} seekTo={seekTo}/>
             </div>
         </div>
 
@@ -143,6 +165,7 @@ const SkipBackward = ({skipToPrev, rewind}) => {
     const [timeLeft, setTimeLeft] = useState(0)
 
     useEffect(() => {
+
         let timer = setInterval(() => {
             if (timeLeft > 0) {
                 setTimeLeft(prevState => prevState - 1)
@@ -156,9 +179,11 @@ const SkipBackward = ({skipToPrev, rewind}) => {
         return () => {
             clearInterval(timer)
         }
+
     })
 
     const onRewind = (event) => {
+
         if (event.target.id === 'rewind') {
             setTimeLeft(prevState => prevState + 6)
         }

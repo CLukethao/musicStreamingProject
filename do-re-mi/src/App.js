@@ -9,22 +9,26 @@ const App = () => {
     const [songHistory, setSongHistory] = useState([])
     const [songSelected, setSongSelected] = useState({})
 
-    const updateHistory = (video) => {
+    const updateHistory = (song) => {
 
-        setSongSelected(video)
+        setSongSelected(song)
 
         if (songHistory === undefined || songHistory.length === 0) {
-            setSongHistory([...songHistory, video]);
+            setSongHistory([...songHistory, song]);
 
         }
 
-        else if (songHistory.map(videoInHistory => videoInHistory.id.videoId).indexOf(video.id.videoId) !== -1) {
+        else if (songHistory.map(songInHistory => songInHistory.id.videoId).indexOf(song.id.videoId) !== -1) {
 
         }
 
         else {
-            setSongHistory([...songHistory, video]);
+            setSongHistory([...songHistory, song]);
         }
+    }
+
+    const playerSetSong = (song) => {
+        setSongSelected(song)
     }
 
 
@@ -35,7 +39,7 @@ const App = () => {
         <div className="">
             <Header />
             <Search selectedSong={updateHistory}/>
-            <Player songSelected={songSelected} songHistory={songHistory} updateHistory={updateHistory}/>
+            <Player songSelected={songSelected} setSong={playerSetSong} songHistory={songHistory}/>
 
         </div>
     );
