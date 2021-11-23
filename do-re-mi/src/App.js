@@ -31,10 +31,6 @@ const App = () => {
         setSongSelected(song)
     }
 
-
-    console.log(songHistory)
-    console.log(window)
-
     return (
         <div className="">
             <Header />

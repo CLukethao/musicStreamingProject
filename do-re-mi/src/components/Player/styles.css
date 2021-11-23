@@ -77,3 +77,12 @@
     bottom: -500px;
     position: absolute;
 }
+
+
+.toggled {
+    color: #00fd0a;
+}
+
+.toggled:hover {
+    color: #09b00e;
+}

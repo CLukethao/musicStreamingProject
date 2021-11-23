@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import './styles.css'
 import SearchResults from "./SearchResults/SearchResults";
-import UTube from "../Player/useYoutube/mock";
-import UseYoutube from "../Player/useYoutube/UseYoutube";
+
 
 const Search = ({selectedSong}) => {
 
@@ -21,20 +20,8 @@ const Search = ({selectedSong}) => {
        videoSearch(inputData.searchQuery)
     }
 
-    // useEffect(() => {
-    //     if (!window.YT) {
-    //         const tag = document.createElement('script');
-    //         tag.src = 'https://www.youtube.com/iframe_api';
-    //         const firstScriptTag = document.getElementsByTagName('script')[0];
-    //         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    //
-    //     }
-    //
-    // }, []);
-
-
     const videoSearch = (search) =>   {
-        fetch(getURL + API_KEY + '&type=video&part=snippet&maxResults=14' + '&q=' + search)
+        fetch(getURL + API_KEY + '&type=video&part=snippet&maxResults=14&q=' + search)
             .then((results) => {
                 return results.json()
             }).then((data) => {
@@ -60,10 +47,6 @@ const Search = ({selectedSong}) => {
             </div>
 
             <SearchResults videos={inputData.searchResults} selectSong={selectSong}/>
-
-            {/*<UTube />*/}
-            {/*<UseYoutube />*/}
-
         </div>
     )
 }

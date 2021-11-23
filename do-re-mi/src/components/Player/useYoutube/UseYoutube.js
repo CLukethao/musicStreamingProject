@@ -1,24 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import data from "bootstrap/js/src/dom/data";
+
 
 const UseYoutube = ({songSelected, songHistory, setSong}) => {
 
     const [playerInfo, setPlayerInfo] = useState({
         indexInHistory: songHistory.length - 1,
         songLength: 0,
-        currentPlaybackTime: 0,
+        currentPlayerTime: 0,
         playSong: true,
         songHistory: [],
+        seekToTimer: false,
+        repeat: false,
+        timer: 0
     })
-
-    const seekTo = (e) => {
-        setPlayerInfo({...playerInfo, currentPlaybackTime: e.target.value});
-    }
 
     const [player, setPlayer] = useState()
 
     useEffect(() => {
-        setPlayerInfo({...playerInfo, indexInHistory: songHistory.length - 1})
+        setPlayerInfo(prevState => ({...prevState, indexInHistory: songHistory.length - 1}))
 
     }, [songHistory])
 
@@ -46,6 +45,30 @@ const UseYoutube = ({songSelected, songHistory, setSong}) => {
 
     }, [songSelected])
 
+    useEffect(() => {
+
+        if (playerInfo.playSong && (playerInfo.currentPlayerTime < Math.floor(playerInfo.songLength))) {
+            playerInfo.timer = setInterval(() => {
+                setPlayerInfo(prevState => ({...prevState, currentPlayerTime: playerInfo.currentPlayerTime + 1}))
+            }, 1000)
+        }
+
+        else if ((playerInfo.currentPlayerTime === Math.floor(playerInfo.songLength)) && playerInfo.repeat) {
+            rewind()
+        }
+
+        else if (playerInfo.currentPlayerTime === Math.floor(playerInfo.songLength)) {
+            clearInterval(playerInfo.timer)
+            setPlayerInfo(prevState => ({...prevState, timer: 0, currentPlayerTime: 0, playSong: false}))
+        }
+
+        return () => {
+            clearInterval(playerInfo.timer)
+            setPlayerInfo(prevState => ({...prevState, timer: 0}))
+        }
+
+    }, [playerInfo.currentPlayerTime, playerInfo.playSong])
+
     const loadVideo = (song) => {
         window.YT.ready ( () => {
             setPlayer(
@@ -53,36 +76,38 @@ const UseYoutube = ({songSelected, songHistory, setSong}) => {
                 height: '1',
                 width: '1',
                 videoId: song.id.videoId,
-                playerVars: { 'autoplay': 1, 'controls': 0 },
+                playerVars: { 'autoplay': 1, 'controls': 0, enablejsapi: 1},
                 events: {
-                    onReady: onPlayerReady,
+                    onReady: ((event) => onPlayerReady(event)),
+                    onStateChange: (event => playerState(event))
                 },
                 })
             );
         })
     };
 
+    const playerState = (event) => {
+        if (event.data === 1) {
+            setPlayerInfo(prevState => ({...prevState, playSong: true, songLength: event.target.getDuration()}))
+        }
+    }
+
     const onPlayerReady = (event) => {
-        console.log('')
-        // console.log('duration is')
-        // console.log(player.getDuration())
+
+        setPlayerInfo(prevState => ({...prevState, songLength: event.target.getDuration()}))
 
     };
 
     const play = () => {
 
         if (!playerInfo.playSong) {
-            setPlayerInfo({...playerInfo, playSong: true});
-
             player.playVideo();
         }
 
         else {
-            setPlayerInfo({...playerInfo, playSong: false});
-
+            setPlayerInfo(prevState => ({...prevState, playSong: false}));
             player.pauseVideo();
         }
-
     }
 
     const newSongSelected = () => {
@@ -99,6 +124,8 @@ const UseYoutube = ({songSelected, songHistory, setSong}) => {
                 });
             }, 700)
         }
+        setPlayerInfo(prevState => ({...prevState, currentPlayerTime: 0}));
+
     }
 
     const skipToPrev = () => {
@@ -110,12 +137,13 @@ const UseYoutube = ({songSelected, songHistory, setSong}) => {
                 'videoId': songHistory[indexOfNewSong].id.videoId
             });
 
-            setPlayerInfo({...playerInfo, indexInHistory: playerInfo.indexInHistory - 1});
+            setPlayerInfo(prevState => ({...prevState, indexInHistory: playerInfo.indexInHistory - 1, currentPlayerTime: 0}));
             setSong(songHistory[indexOfNewSong]);
         }
     }
 
     const rewind = () => {
+        setPlayerInfo(prevState => ({...prevState, currentPlayerTime: 0}));
 
         player.loadVideoById({
             'videoId': songSelected.id.videoId
@@ -131,9 +159,30 @@ const UseYoutube = ({songSelected, songHistory, setSong}) => {
                 'videoId': songHistory[indexOfNewSong].id.videoId
             });
 
-            setPlayerInfo({...playerInfo, indexInHistory: playerInfo.indexInHistory + 1});
+            setPlayerInfo(prevState => ({...prevState, indexInHistory: playerInfo.indexInHistory + 1, currentPlayerTime: 0}));
             setSong(songHistory[indexOfNewSong]);
         }
+    }
+
+    const seek = (e) => {
+        player.seekTo(parseInt(e.target.value), true)
+        setPlayerInfo(prevState => ({...prevState, seekToTimer: false}))
+    }
+
+    const seekTo = (e) => {
+        if (!playerInfo.seekToTimer) {
+            setPlayerInfo(prevState => ({...prevState, seekToTimer: setTimeout(() => seek(e), 1000)}))
+            setPlayerInfo(prevState => ({...prevState, currentPlayerTime: parseInt(e.target.value)}));
+        }
+
+        else {
+            clearTimeout(playerInfo.seekToTimer)
+            setPlayerInfo(prevState => ({...prevState, currentPlayerTime: parseInt(e.target.value)}))
+        }
+    }
+
+    const repeat = () => {
+        setPlayerInfo(prevState => ({...prevState, repeat: !playerInfo.repeat}))
     }
 
     return (
@@ -145,12 +194,12 @@ const UseYoutube = ({songSelected, songHistory, setSong}) => {
                     <SkipBackward skipToPrev={skipToPrev} rewind={rewind}/>
                     <Play playSong={play} playPauseToggle={playerInfo.playSong}/>
                     <SkipForward skipToNext={skipToNext}/>
-                    <Repeat />
+                    <Repeat repeat={repeat} toggled={playerInfo.repeat}/>
                     <div id={`youtube-player`} className='iframe'/>
 
                 </div>
 
-                <SongTimeline currentPlaybackTime={playerInfo.currentPlaybackTime} songLength={playerInfo.songLength} seekTo={seekTo}/>
+                <SongTimeline currentPlayerTime={playerInfo.currentPlayerTime} songLength={playerInfo.songLength} seekTo={seekTo} playing={playerInfo.playSong}/>
             </div>
         </div>
 
@@ -260,30 +309,47 @@ const SkipForward = ({skipToNext}) => {
     )
 }
 
-const Repeat = () => {
-    return (
-        <button className='btn player-btn'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                 className="bi bi-arrow-repeat" viewBox="0 0 16 16">
-                <path
-                    d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-                <path fill-rule="evenodd"
-                      d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
-            </svg>
-        </button>
-    )
+const Repeat = ({repeat, toggled}) => {
+
+    if (!toggled) {
+        return (
+            <button className='btn player-btn' onClick={() => repeat()}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     className="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                    <path
+                        d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                    <path fill-rule="evenodd"
+                          d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                </svg>
+            </button>
+        )
+    }
+
+    else {
+        return (
+                <button className='btn toggled' onClick={() => repeat()}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         className="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                        <path
+                            d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                        <path fill-rule="evenodd"
+                              d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                    </svg>
+                </button>
+            )
+    }
 }
 
-const SongTimeline = ({currentPlaybackTime, songLength, seekTo}) => {
+const SongTimeline = ({currentPlayerTime, songLength, seekTo}) => {
 
     const secondsToMinutes = (time) => Math.floor(time / 60) + ':' + ('0' + Math.floor(time % 60)).slice(-2);
 
     return (
         <div className='col-8'>
 
-            {secondsToMinutes(currentPlaybackTime)}
+            {secondsToMinutes(currentPlayerTime)}
             &nbsp;
-            <input id='timeline' className='range' value={currentPlaybackTime} type='range' step='1' min='0' max={songLength} onChange={e => seekTo(e)}/>
+            <input id='timeline' className='range' value={currentPlayerTime} type='range' step='1' min='0' max={songLength} onChange={e => seekTo(e)}/>
             &nbsp;
             {secondsToMinutes(songLength)}
         </div>
