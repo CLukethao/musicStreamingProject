@@ -57,18 +57,28 @@
     font-size: 21px;
     font-weight: 300;
     color: white !important;
+    text-decoration: none;
+    margin-bottom: 10px;
+    margin-left: 12px;
 }
 
 #menu {
     transition: transform .3s
-    cubic-bezier(0, .52, 0, 1);
+    cubic-bezier(.8, 0, 0, 1);
+
 }
 
 #menu.hide {
     transform: translate3d(-100vw, 0, 0);
 }
 
-/*#menu.show {*/
-/*    transform: translate3d(0vw, 0, 0);*/
-/*    overflow: hidden;*/
+#menu.show {
+    transform: translate3d(0vw, 0, 0);
+    overflow: hidden;
+}
+
+/*.btn {*/
+/*    border: solid black 1px;*/
+/*    background-color: rgb(28,28,28);*/
+/*    color: white;*/
 /*}*/

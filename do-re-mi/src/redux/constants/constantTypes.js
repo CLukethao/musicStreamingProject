@@ -1,0 +1,8 @@
+
+
+export const UPDATE_HISTORY = 'UPDATE_HISTORY'
+export const SONG_SELECTED = 'SONG_SELECTED'
+export const SEARCH_SONG = 'SEARCH_SONG'
+
+
+

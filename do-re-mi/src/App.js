@@ -1,42 +1,25 @@
-import React, {useState} from 'react'
+import React from 'react'
 import './App.css'
 import Header from "./components/Header/Header";
 import Search from "./components/Search/Search";
 import Player from "./components/Player/Player";
+import Home from "./components/Home/Home"
+import {Routes, Route} from "react-router-dom";
+
 
 const App = () => {
 
-    const [songHistory, setSongHistory] = useState([])
-    const [songSelected, setSongSelected] = useState({})
-
-    const updateHistory = (song) => {
-
-        setSongSelected(song)
-
-        if (songHistory === undefined || songHistory.length === 0) {
-            setSongHistory([...songHistory, song]);
-
-        }
-
-        else if (songHistory.map(songInHistory => songInHistory.id.videoId).indexOf(song.id.videoId) !== -1) {
-
-        }
-
-        else {
-            setSongHistory([...songHistory, song]);
-        }
-    }
-
-    const playerSetSong = (song) => {
-        setSongSelected(song)
-    }
 
     return (
         <div className="">
             <Header />
-            <Search selectedSong={updateHistory}/>
-            <Player songSelected={songSelected} setSong={playerSetSong} songHistory={songHistory}/>
 
+            <Routes>
+                <Route path='/home' element={<Home />} />
+                <Route path='/search' element={<Search />} />
+            </Routes>
+
+            <Player />
         </div>
     );
 }

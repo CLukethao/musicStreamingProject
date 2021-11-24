@@ -1,47 +1,34 @@
 import React from 'react'
-import {Navbar, Nav, NavItem} from 'reactstrap';
 import '../styles.css'
+import {NavLink} from "react-router-dom";
 
-const Menu = ({navIsOpen}) => {
+const Menu = ({navIsOpen, toggleNav, toggleFalse}) => {
 
+    return (
+        <div id='menu' className={(navIsOpen ? "col-2 text-start nav-list vh-100 show" : "col-2 text-start nav-list vh-100 hide")} onMouseLeave={toggleFalse}>
+                <div className="container">
+                    <div className='row'>
+                        <NavLink to="/home" className='navbar-link' onClick={toggleNav}>
+                            Home
+                        </NavLink>
 
-        return (
-            <div id='menu' className={(navIsOpen ? "col-2 text-start nav-list vh-100" : "col-2 text-start nav-list vh-100 hide")}>
-                <Navbar>
-                    <div className="container">
-                        <div className='row'>
-                            <Nav navbar>
-                                <NavItem>
-                                    <a className="nav-link navbar-link" href=''>
-                                        Home
-                                    </a>
-                                </NavItem>
+                        <NavLink to="/search" className='navbar-link' onClick={toggleNav}>
+                            Search
+                        </NavLink>
 
-                                <NavItem>
-                                    <a className="nav-link navbar-link" href=''>
-                                        Search
-                                    </a>
-                                </NavItem>
+                        <NavLink to="/home" className='navbar-link' onClick={toggleNav}>
+                                Playlists
+                        </NavLink>
 
-                                <NavItem>
-                                    <a className="nav-link navbar-link" href=''>
-                                        Playlists
-                                    </a>
-                                </NavItem>
-                            </Nav>
-
-                            <Nav navbar>
-                                <NavItem>
-                                    <button className="login-btn nav-link navbar-link" to='#signin'>
-                                        Sign in
-                                    </button>
-                                </NavItem>
-                            </Nav>
-                        </div>
+                        <NavLink to="/home">
+                            <button className="login-btn navbar-link" to='#signin'>
+                                Sign in
+                            </button>
+                        </NavLink>
                     </div>
-                </Navbar>
-            </div>
-        )
+                </div>
+        </div>
+    )
 }
 
 export default Menu;

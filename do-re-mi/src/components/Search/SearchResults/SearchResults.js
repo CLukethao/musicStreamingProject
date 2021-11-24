@@ -1,30 +1,30 @@
 import React from 'react'
 import '../styles.css'
 
-const SearchResults = ({videos, selectSong}) => {
+const SearchResults = ({songs, selectSong}) => {
 
     const results = []
     const dateRegex = /([0-9]+)-([0-9]+)-([0-9]+).*/
 
-    if (videos) {
-        for (let i = 0; i < videos.length; i++) {
+    if (songs) {
+        for (let i = 0; i < songs.length; i++) {
             results.push(
-                <div className='clickable-row' key={videos[i].id.videoId} id={videos[i].id.videoId} onClick={() => selectSong(videos[i])}>
+                <div className='clickable-row' key={songs[i].id.videoId} id={songs[i].id.videoId} onClick={() => selectSong(i)}>
                     <div className='row results-display d-flex align-items-center'>
                         <div className='col-3 col-md-4 thumbnails'>
-                            <img className='result-img' src={videos[i].snippet.thumbnails.medium.url} alt=''></img>
+                            <img className='result-img' src={songs[i].snippet.thumbnails.medium.url} alt=''></img>
                         </div>
 
                         <div className='col-5 col-md-3'>
-                            {videos[i].snippet.title}
+                            {songs[i].snippet.title}
                         </div>
 
                         <div className='col-2 col-md-3'>
-                            <a href={`https://www.youtube.com/channel/${videos[i].snippet.channelId}`} target="_blank">{videos[i].snippet.channelTitle}</a>
+                            <a href={`https://www.youtube.com/channel/${songs[i].snippet.channelId}`} target="_blank">{songs[i].snippet.channelTitle}</a>
                         </div>
 
                         <div className='col-2 col-md-2'>
-                            {videos[i].snippet.publishedAt.replace(dateRegex, "$2-$3-$1")}
+                            {songs[i].snippet.publishedAt.replace(dateRegex, "$2-$3-$1")}
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Menu from "./Menu/Menu";
 import './styles.css'
 
@@ -12,6 +12,12 @@ const Header = () => {
     const toggleNav = () => {
         setNavState({
             navIsOpen: !navState.navIsOpen
+        })
+    }
+
+    const toggleFalse = () => {
+        setNavState({
+            navIsOpen: false
         })
     }
 
@@ -28,7 +34,7 @@ const Header = () => {
                 Do Re Mi
             </div>
 
-            <Menu navIsOpen={navState.navIsOpen}/>
+            <Menu navIsOpen={navState.navIsOpen} toggleNav={toggleNav} toggleFalse={toggleFalse}/>
         </div>
 
     )

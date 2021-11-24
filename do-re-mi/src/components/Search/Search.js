@@ -1,37 +1,27 @@
 import React, {useState} from 'react'
 import './styles.css'
 import SearchResults from "./SearchResults/SearchResults";
+import {useDispatch, useSelector} from "react-redux";
+import {searchSong, songSelected, updateHistory} from "../../redux/actions/actions";
 
-
-const Search = ({selectedSong}) => {
+const Search = () => {
 
     const [inputData, setInputData] = useState({
-        searchQuery: '',
-        searchResults: [],
+        searchQuery: ''
     });
 
-    // const API_KEY = 'AIzaSyDhjCec7htgsdItR9p2cwpJlduGvouQ9sg'
-    const API_KEY = 'AIzaSyDlnn9kjXhP8g6mrWbHZev0fivwxJQlOSA'
+    const dispatch = useDispatch()
 
+    const searchResults = useSelector((state) => state.searchResults)
+    const songHistory = useSelector((state) => state.songHistory)
 
-    const getURL = 'https://www.googleapis.com/youtube/v3/search?key='
-
-    const handleClick = () => {
-       videoSearch(inputData.searchQuery)
+    const searchForSong = () => {
+        dispatch(searchSong(inputData.searchQuery))
     }
 
-    const videoSearch = (search) =>   {
-        fetch(getURL + API_KEY + '&type=video&part=snippet&maxResults=14&q=' + search)
-            .then((results) => {
-                return results.json()
-            }).then((data) => {
-                console.log(data.items)
-                setInputData({...inputData, searchResults: data.items})
-        })
-    }
-
-    const selectSong = (e) => {
-        selectedSong(e)
+    const selectSong = (index) => {
+        dispatch(songSelected(searchResults[index]))
+        dispatch(updateHistory(songHistory, searchResults[index]))
     }
 
     return (
@@ -42,11 +32,20 @@ const Search = ({selectedSong}) => {
                 </div>
 
                 <div className='col-2 col-md-2 mt-3 btn-p'>
-                    <button className='btn btn-primary btn-block' onClick={handleClick}>Search</button>
+                    <button className='btn btn-block' onClick={searchForSong}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             className="bi bi-music-note-list" viewBox="0 0 16 16">
+                            <path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2z"/>
+                            <path fill-rule="evenodd" d="M12 3v10h-1V3h1z"/>
+                            <path d="M11 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 16 2.22V4l-5 1V2.82z"/>
+                            <path fill-rule="evenodd"
+                                  d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
 
-            <SearchResults videos={inputData.searchResults} selectSong={selectSong}/>
+            <SearchResults songs={searchResults} selectSong={selectSong}/>
         </div>
     )
 }
