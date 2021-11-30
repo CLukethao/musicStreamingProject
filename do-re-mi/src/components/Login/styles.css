@@ -1,0 +1,33 @@
+
+.menu-header {
+    color: white;
+    font-family: 'Kalam';
+    margin-top: -200px;
+}
+
+.btn-login {
+    color: black;
+    background-color: white;
+    border-radius: 40px;
+    font-weight: bold;
+}
+
+.btn-login:hover {
+    transform: scale(1.1);
+}
+
+.btn-login-container {
+    margin-top: -75px;
+}
+
+.modal {
+    background-color: rgba(0, 0, 0, 0.65);
+
+}
+
+
+
+
+
+
+
