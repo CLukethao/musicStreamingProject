@@ -8,9 +8,6 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 import reducer from "./redux/reducers/reducer";
 
-
-// import reportWebVitals from './reportWebVitals';
-
 const store = createStore(reducer, compose(applyMiddleware(thunk)))
 
 ReactDOM.render(

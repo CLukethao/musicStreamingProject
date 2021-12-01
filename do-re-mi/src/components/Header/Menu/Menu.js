@@ -1,8 +1,17 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import '../styles.css'
 import {NavLink} from "react-router-dom";
+import CredentialsModal from "../../Login/CredentialsModal/CredentialsModal";
+
 
 const Menu = ({navIsOpen, toggleNav, toggleFalse}) => {
+
+    const modal = useRef(null)
+
+    const openModal = () => {
+
+        modal.current.open()
+    }
 
     return (
         <div id='menu' className={(navIsOpen ? "col-2 text-start nav-list vh-100 show" : "col-2 text-start nav-list vh-100 hide")} onMouseLeave={toggleFalse}>
@@ -21,13 +30,14 @@ const Menu = ({navIsOpen, toggleNav, toggleFalse}) => {
                             History
                         </NavLink>
 
-                        <NavLink to="/search">
-                            <button className="login-btn navbar-link" to='#signin'>
-                                Sign in
-                            </button>
-                        </NavLink>
+                        <button className="login-btn navbar-link" onClick={openModal}>
+                            Sign in
+                        </button>
+
                     </div>
                 </div>
+
+            <CredentialsModal ref={modal} modalType={'login'}/>
         </div>
     )
 }

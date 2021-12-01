@@ -21,11 +21,17 @@
 }
 
 .modal {
-    background-color: rgba(0, 0, 0, 0.65);
-
+    background-color: rgba(0, 0, 0, 0.85);
 }
 
+.signUp-tip {
+    color: dimgray;
+}
 
+.signUp-anchor {
+    text-decoration: none;
+    cursor: pointer;
+}
 
 
 
