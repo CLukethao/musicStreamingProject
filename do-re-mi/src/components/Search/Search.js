@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import './styles.css'
 import SearchResults from "./SearchResults/SearchResults";
 import {useDispatch, useSelector} from "react-redux";
@@ -23,6 +23,22 @@ const Search = () => {
         dispatch(songSelected(searchResults[index]))
         dispatch(updateHistory(songHistory, searchResults[index]))
     }
+
+    const handleEnter = (event) => {
+        if (event.keyCode === 13) {
+            searchForSong()
+        }
+    }
+
+    useEffect(() => {
+
+        document.addEventListener('keydown', handleEnter, false)
+
+
+        return () => {
+            document.removeEventListener('keydown', handleEnter, false)
+        }
+    })
 
     return (
         <div className='container'>

@@ -41,7 +41,8 @@
 
 .show {
     transition: .4s;
-    bottom: 0
+    bottom: 0;
+
 }
 
 .player-btn {
@@ -52,7 +53,57 @@
     color: grey;
 }
 
-.range {
+.control-container {
+    max-height: 50px;
+}
+
+.vol-container {
+    display: inline-block;
+    max-width: 42px;
+    max-height: 38px;
+}
+
+.vol-range-container {
+    position: relative;
+    top: -76px;
+    right: 25px;
+    margin-bottom: -50px;
+    height: 32px;
+    width: 90px;
+    transform:rotate(-90deg);
+    background-color: rgb(28,28,28);
+    border: black solid 1px;
+    padding-left: 5px;
+}
+
+.vol-range {
+    width: 75px;
+    height: 5px;
+    -webkit-appearance: none;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: inset 0 0 5px rgba(250, 243, 247, 0.8);
+    cursor: pointer;
+}
+
+
+
+.vol-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #00fd0a;
+    cursor: pointer;
+    border-width: 4px 5px 4px 4px;
+    border-style: solid;
+    border-color: #333;
+    box-shadow: -407px 0 0 400px #00fd0a;
+
+}
+
+.timeline-range {
     width: 28vw;
     height: 10px;
     -webkit-appearance: none;
@@ -60,9 +111,10 @@
     border-radius: 15px;
     overflow: hidden;
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 1);
+    cursor: pointer;
 }
 
-.range::-webkit-slider-thumb {
+.timeline-range::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 15px;
     height: 15px;
@@ -73,11 +125,12 @@
     box-shadow: -407px 0 0 400px #00fd0a;
 }
 
+
+
 .iframe {
     bottom: -500px;
     position: absolute;
 }
-
 
 .toggled {
     color: #00fd0a;
