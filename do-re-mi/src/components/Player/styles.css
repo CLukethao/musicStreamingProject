@@ -7,12 +7,14 @@
     bottom: 0;
     color: white;
     height: 50px;
+    min-width: 1150px;
 }
 
 .player-title {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    padding-left: 20px;
 }
 
 .player-title-overlay{
@@ -35,14 +37,13 @@
     height: auto;
 }
 
-.hide {
+.player-hide {
     bottom: -50px;
 }
 
-.show {
+.player-show {
     transition: .4s;
     bottom: 0;
-
 }
 
 .player-btn {
@@ -53,10 +54,6 @@
     color: grey;
 }
 
-.control-container {
-    max-height: 50px;
-}
-
 .vol-container {
     display: inline-block;
     max-width: 42px;
@@ -64,9 +61,9 @@
 }
 
 .vol-range-container {
-    position: relative;
     top: -76px;
     right: 25px;
+    position: relative;
     margin-bottom: -50px;
     height: 32px;
     width: 90px;
@@ -80,10 +77,10 @@
     width: 75px;
     height: 5px;
     -webkit-appearance: none;
-    background: white;
+    background: #111;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: inset 0 0 5px rgba(250, 243, 247, 0.8);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 1);
     cursor: pointer;
 }
 
@@ -100,7 +97,14 @@
     border-style: solid;
     border-color: #333;
     box-shadow: -407px 0 0 400px #00fd0a;
+}
 
+.vol-hide {
+    visibility: hidden;
+}
+
+.vol-show {
+    visibility: visible;
 }
 
 .timeline-range {
@@ -124,8 +128,6 @@
     border: 4px solid #333;
     box-shadow: -407px 0 0 400px #00fd0a;
 }
-
-
 
 .iframe {
     bottom: -500px;

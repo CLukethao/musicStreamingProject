@@ -9,8 +9,8 @@ const SearchResults = ({songs, selectSong}) => {
     if (songs) {
         for (let i = 0; i < songs.length; i++) {
             results.push(
-                <div className='clickable-row' key={songs[i].id.videoId} id={songs[i].id.videoId} onClick={() => selectSong(i)}>
-                    <div className='row results-display d-flex align-items-center'>
+                <div className='results-display' key={songs[i].id.videoId} id={songs[i].id.videoId} onClick={() => selectSong(i)}>
+                    <div className='row d-flex align-items-center'>
                         <div className='col-3 col-md-4 thumbnails'>
                             <img className='result-img' src={songs[i].snippet.thumbnails.medium.url} alt=''></img>
                         </div>
@@ -34,7 +34,7 @@ const SearchResults = ({songs, selectSong}) => {
 
     return (
         <div className='search-container'>
-            <div className='row result-header'>
+            <div className='row result-header mb-2'>
                 <div className='offset-4 col-4 offset-md-3 col-md-2 text-md-end'>
                     Title
                 </div>

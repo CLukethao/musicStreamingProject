@@ -20,8 +20,8 @@ const Player = () => {
 
     if (selectedSong.hasOwnProperty('snippet') && selectedSong.length !== 0) {
         return (
-            <div className='container player vw-100 show'>
-                <div className='row player vw-100 show align-items-center'>
+            <div className='container player vw-100 player-show text-center'>
+                <div className='row player vw-100 player-show align-items-center'>
                     <UseYoutube selectedSong={selectedSong} songHistory={songHistory} setSong={changeSong}/>
 
                     <SongInformation selectedSong={selectedSong}/>
@@ -32,8 +32,8 @@ const Player = () => {
 
     else {
         return (
-            <div className='container player vw-100 hide'>
-                <div className='row player vw-100 hide'>
+            <div className='container player vw-100 player-hide'>
+                <div className='row player vw-100 player-hide'>
                     <div className='col-12'>
 
                     </div>
