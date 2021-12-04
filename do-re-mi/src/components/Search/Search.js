@@ -1,14 +1,24 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import './styles.css'
 import SearchResults from "./SearchResults/SearchResults";
 import {useDispatch, useSelector} from "react-redux";
 import {searchSong, songSelected, updateHistory} from "../../redux/actions/actions";
+import PlaylistModal from "../selectPlaylistModal/PlaylistModal";
 
 const Search = () => {
 
     const [inputData, setInputData] = useState({
         searchQuery: ''
     });
+
+    const [addSongToPlaylist, setAddSongToPlaylist] = useState()
+
+    const playlistModal = useRef(null)
+
+    const openPlaylistModal = (song) => {
+        setAddSongToPlaylist(song)
+        playlistModal.current.open()
+    }
 
     const dispatch = useDispatch()
 
@@ -40,6 +50,8 @@ const Search = () => {
         }
     })
 
+
+
     return (
         <div className='container'>
             <div className='row mb-5'>
@@ -61,7 +73,9 @@ const Search = () => {
                 </div>
             </div>
 
-            <SearchResults songs={searchResults} selectSong={selectSong}/>
+            <SearchResults songs={searchResults} selectSong={selectSong} addToPlaylist={openPlaylistModal}/>
+
+            <PlaylistModal ref={playlistModal} song={addSongToPlaylist}/>
         </div>
     )
 }

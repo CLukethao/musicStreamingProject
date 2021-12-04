@@ -84,3 +84,7 @@
 .search-btn:hover {
     transform: scale(1.05);
 }
+
+.playlist-btn {
+    color: white;
+}

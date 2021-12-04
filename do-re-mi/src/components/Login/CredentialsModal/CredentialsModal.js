@@ -4,7 +4,7 @@ import '../styles.css';
 import LogInModal from "./LogInModal/LogInModal";
 import SignUpModal from "./SignUpModal/SignUpModal";
 
-const modalElement = document.getElementById('modal-root')
+const modalElement = document.getElementById('login-modal-root')
 
 const CredentialsModal = ({ defaultOpened, modalType}, ref) => {
 
