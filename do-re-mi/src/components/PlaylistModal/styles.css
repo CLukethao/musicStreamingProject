@@ -1,0 +1,35 @@
+
+
+.modal {
+    background-color: rgba(0, 0, 0, 0.85);
+
+}
+
+.playlist-modal-header {
+    border-bottom: 1px solid white
+}
+
+.add-playlist-container {
+    cursor: pointer;
+}
+
+.confirm-btn {
+    color: #00fd0a;
+    margin-left: 5px;
+}
+
+.cancel-btn {
+    color: red;
+}
+
+.text-input {
+    outline-style: none;
+}
+
+.error {
+    color: red;
+}
+
+.hidden {
+    display: none;
+}

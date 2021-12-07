@@ -3,6 +3,8 @@
 export const UPDATE_HISTORY = 'UPDATE_HISTORY'
 export const SONG_SELECTED = 'SONG_SELECTED'
 export const SEARCH_SONG = 'SEARCH_SONG'
+export const ADD_PLAYLIST = 'ADD_PLAYLIST'
+export const ADD_SONG_TO_PLAYLIST = 'ADDS_SONG_TO_PLAYLIST'
 
 
 

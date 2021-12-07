@@ -4,18 +4,20 @@ import * as constantType from '../constants/constantTypes'
 export const updateHistory = (songHistory, data) => async (dispatch) => {
 
     try {
-        if (songHistory === undefined || songHistory.length === 0) {
-            dispatch({type: constantType.UPDATE_HISTORY, payload: data})
+        let getDate = new Date()
 
+        if (songHistory === undefined || songHistory.length === 0) {
+            dispatch({type: constantType.UPDATE_HISTORY, payload: {songInformation: data, dateListened: getDate}})
         }
 
-        else if (songHistory.map(songInHistory => songInHistory.id.videoId).indexOf(data.id.videoId) !== -1) {
+        else if (songHistory.map(song => song.songInformation.id.videoId).indexOf(data.id.videoId) !== -1) {
 
         }
 
         else {
-            dispatch({type: constantType.UPDATE_HISTORY, payload: data})
+            dispatch({type: constantType.UPDATE_HISTORY, payload: {songInformation: data, dateListened: getDate}})
         }
+
     }
 
     catch (error) {
@@ -31,8 +33,8 @@ export const songSelected = (data) => ({
 export const searchSong = (searchQuery) => async (dispatch) => {
     try {
 
-        const API_KEY = 'AIzaSyDhjCec7htgsdItR9p2cwpJlduGvouQ9sg'
-        // const API_KEY = 'AIzaSyDlnn9kjXhP8g6mrWbHZev0fivwxJQlOSA'
+        // const API_KEY = 'AIzaSyDhjCec7htgsdItR9p2cwpJlduGvouQ9sg'
+        const API_KEY = 'AIzaSyDlnn9kjXhP8g6mrWbHZev0fivwxJQlOSA'
 
         const getURL = 'https://www.googleapis.com/youtube/v3/search?key='
 
@@ -57,3 +59,23 @@ export const searchSong = (searchQuery) => async (dispatch) => {
 
 }
 
+export const addPlaylist = (data) => async (dispatch) => {
+    try {
+        dispatch({type: constantType.ADD_PLAYLIST, payload: data})
+    }
+
+    catch (error) {
+        console.log(error)
+    }
+}
+
+export const addSongToPlaylist = (data) => async (dispatch) => {
+
+    try {
+        dispatch({type: constantType.ADD_SONG_TO_PLAYLIST, payload: data})
+    }
+
+    catch (error) {
+        console.log(error)
+    }
+}

@@ -14,6 +14,8 @@
 .header-font {
     color: white;
     font-size: 25px;
+    height: 50px;
+    font-family: 'Kalam';
 }
 
 .menu-btn {
@@ -28,8 +30,7 @@
     background-color: black;
     width: 225px;
     position: fixed;
-    top: 38px
-
+    top: 50px
 }
 
 .menu-btn:hover {

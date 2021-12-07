@@ -142,12 +142,12 @@ const UseYoutube = ({selectedSong, songHistory, setSong}) => {
         if (indexOfNewSong >= 0) {
 
             player.loadVideoById({
-                'videoId': songHistory[indexOfNewSong].id.videoId
+                'videoId': songHistory[indexOfNewSong].songInformation.id.videoId
             });
 
             setPlayerInfo(prevState => ({...prevState, indexInHistory: playerInfo.indexInHistory - 1, currentPlayerTime: 0}));
 
-            setSong(songHistory[indexOfNewSong]);
+            setSong(songHistory[indexOfNewSong].songInformation);
         }
     }
 
@@ -165,12 +165,12 @@ const UseYoutube = ({selectedSong, songHistory, setSong}) => {
 
         if (playerInfo.indexInHistory !== (songHistory.length - 1)) {
             player.loadVideoById({
-                'videoId': songHistory[indexOfNewSong].id.videoId
+                'videoId': songHistory[indexOfNewSong].songInformation.id.videoId
             });
 
             setPlayerInfo(prevState => ({...prevState, indexInHistory: playerInfo.indexInHistory + 1, currentPlayerTime: 0}));
 
-            setSong(songHistory[indexOfNewSong]);
+            setSong(songHistory[indexOfNewSong].songInformation);
         }
 
         else {

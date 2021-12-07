@@ -1,9 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useRef, useState} from 'react'
 import './styles.css'
 import SearchResults from "./SearchResults/SearchResults";
 import {useDispatch, useSelector} from "react-redux";
 import {searchSong, songSelected, updateHistory} from "../../redux/actions/actions";
-import PlaylistModal from "../selectPlaylistModal/PlaylistModal";
+import PlaylistModal from "../PlaylistModal/PlaylistModal";
 
 const Search = () => {
 
@@ -35,28 +35,16 @@ const Search = () => {
     }
 
     const handleEnter = (event) => {
-        if (event.keyCode === 13) {
+        if (event.key === 'Enter') {
             searchForSong()
         }
     }
 
-    useEffect(() => {
-
-        document.addEventListener('keydown', handleEnter, false)
-
-
-        return () => {
-            document.removeEventListener('keydown', handleEnter, false)
-        }
-    })
-
-
-
     return (
         <div className='container'>
-            <div className='row mb-5'>
+            <div className='row mb-5 mt-2'>
                 <div className='col-6 offset-1 col-md-6 offset-md-3 mt-3 input-p'>
-                    <input className='form-control' type='text' placeholder='Search' value={inputData.searchQuery} onChange={(e) => setInputData({...inputData, searchQuery: e.target.value})}/>
+                    <input className='form-control' type='text' placeholder='Search' value={inputData.searchQuery} onChange={(e) => setInputData({...inputData, searchQuery: e.target.value})} onKeyDown={event => handleEnter(event)}/>
                 </div>
 
                 <div className='col-2 col-md-2 mt-3 btn-p'>

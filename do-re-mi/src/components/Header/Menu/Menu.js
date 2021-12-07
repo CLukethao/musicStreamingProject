@@ -26,7 +26,7 @@ const Menu = ({navIsOpen, toggleNav, toggleFalse}) => {
                                 Playlists
                         </NavLink>
 
-                        <NavLink to="/search" className='navbar-link' onClick={toggleNav}>
+                        <NavLink to="/history" className='navbar-link' onClick={toggleNav}>
                             History
                         </NavLink>
 

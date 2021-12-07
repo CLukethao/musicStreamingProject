@@ -1,5 +1,6 @@
 import React, {useRef, useState} from 'react'
 import CredentialsModal from "./CredentialsModal/CredentialsModal";
+import videoBg from '../../images/videoBg.mp4'
 import './styles.css'
 
 
@@ -23,7 +24,14 @@ const Login = () => {
     }
 
     return (
-        <div className='row align-content-center justify-content-center vh-100'>
+        <div className='row align-content-center justify-content-center vh-100 login-container'>
+
+            <video autoPlay loop muted className='bg-video'>
+                <source src={videoBg}/>
+                <a href="https://www.vecteezy.com/video/2421868-sci-fi-neon-circle-tunnel-abstract-background-with-neon-stars-animation">Sci-Fi Neon Circle Tunnel Abstract Background with Neon Stars Animation Stock Videos by Vecteezy</a>
+            </video>
+
+
             <div className='col-12 text-center menu-header'>
                 <h1 className='mb-3'>Do-Re-Mi</h1>
                 <h2>The only music stream you'll need.</h2>

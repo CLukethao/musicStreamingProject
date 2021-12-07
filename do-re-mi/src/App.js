@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 import Search from "./components/Search/Search";
 import Player from "./components/Player/Player";
 import Login from "./components/Login/Login";
+import History from "./components/History/History";
 
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
             <Routes>
                 <Route exact path='/' element={<Login />} />
                 <Route path='/search' element={<Search />} />
+                <Route path='/history' element={<History />} />
             </Routes>
 
             <Player />

@@ -23,7 +23,7 @@ const Header = () => {
 
     return (
         <div className='row header-font header'>
-            <div className='col-12 logo bg-color'>
+            <div className='col-12 logo bg-color d-flex align-items-center'>
                 <button className='menu-btn btn' onClick={event => {toggleNav(); event.currentTarget.blur()}}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          className="bi bi-list" viewBox="0 0 16 16">
@@ -32,7 +32,7 @@ const Header = () => {
                     </svg>
                 </button>
 
-                Do Re Mi
+                Do-Re-Mi
             </div>
 
             <Menu navIsOpen={navState.navIsOpen} toggleNav={toggleNav} toggleFalse={toggleFalse}/>
