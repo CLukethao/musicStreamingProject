@@ -84,8 +84,6 @@
     cursor: pointer;
 }
 
-
-
 .vol-range::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 15px;
@@ -140,4 +138,8 @@
 
 .toggled:hover {
     color: #09b00e;
+}
+
+.repeat-one {
+    font-size: 10px;
 }

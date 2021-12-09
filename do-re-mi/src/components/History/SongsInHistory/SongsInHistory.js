@@ -1,32 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 
-const SongsInHistory = ({date, songHistory}) => {
+const SongsInHistory = ({ songHistory, playSong }) => {
 
-    const [indexOfSongs, setIndexOfSongs] = useState([])
     const uploadDateRegex = /([0-9]+)-([0-9]+)-([0-9]+).*/
 
-    useEffect(() => {
-
-        let results = []
-
-        if (songHistory.length > 0) {
-
-            for (let i = songHistory.length - 1; i >= 0; i-- ) {
-                if (songHistory[i].dateListened.getDate() === date.getDate()) {
-                    results.push(i)
-                }
-            }
-        }
-
-        setIndexOfSongs(results)
-
-    }, [date, songHistory])
-
-    return indexOfSongs.map(index => (
-            <div className='results-display' key={songHistory[index].songInformation.id.videoId} id={songHistory[index].songInformation.id.videoId}>
+    return songHistory.slice(0).reverse().map(song => (
+            <div className='results-display' key={song.id.videoId} id={song.id.videoId} onClick={() => playSong(song)}>
                 <div className='row d-flex align-items-center'>
                     <div className='col-3 col-md-3 thumbnails'>
-                        <img className='result-img' src={songHistory[index].songInformation.snippet.thumbnails.medium.url} alt=''/>
+                        <img className='result-img' src={song.snippet.thumbnails.medium.url} alt=''/>
                     </div>
 
                     <div className='col-1'>
@@ -42,15 +24,15 @@ const SongsInHistory = ({date, songHistory}) => {
                     </div>
 
                     <div className='col-4 col-md-3'>
-                        {songHistory[index].songInformation.snippet.title}
+                        {song.snippet.title}
                     </div>
 
                     <div className='col-2 col-md-3'>
-                        <a href={`https://www.youtube.com/channel/${songHistory[index].songInformation.snippet.channelId}`} target="_blank">{songHistory[index].songInformation.snippet.channelTitle}</a>
+                        <a href={`https://www.youtube.com/channel/${song.snippet.channelId}`} target="_blank">{song.snippet.channelTitle}</a>
                     </div>
 
                     <div className='col-2 col-md-2'>
-                        {songHistory[index].songInformation.snippet.publishedAt.replace(uploadDateRegex, "$2-$3-$1")}
+                        {song.snippet.publishedAt.replace(uploadDateRegex, "$2-$3-$1")}
                     </div>
                 </div>
             </div>

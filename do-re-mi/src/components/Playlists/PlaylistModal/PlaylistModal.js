@@ -1,8 +1,8 @@
 import React, {forwardRef, useCallback, useEffect, useImperativeHandle, useState} from "react";
 import {createPortal} from "react-dom";
 import {useDispatch, useSelector} from "react-redux";
-import './styles.css';
-import {addPlaylist, addSongToPlaylist} from "../../redux/actions/actions";
+import '../styles.css';
+import {addPlaylist, addSongToPlaylist} from "../../../redux/actions/actions";
 
 const modalElement = document.getElementById('select-playlist-modal-root')
 
@@ -220,7 +220,7 @@ const AddPlaylist = ({newPlaylist, playlists}) => {
 
                 &nbsp;
 
-                Add new playlist
+                Add playlist
 
             </div>
         </div>

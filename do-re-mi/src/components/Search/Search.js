@@ -2,8 +2,8 @@ import React, {useRef, useState} from 'react'
 import './styles.css'
 import SearchResults from "./SearchResults/SearchResults";
 import {useDispatch, useSelector} from "react-redux";
-import {searchSong, songSelected, updateHistory} from "../../redux/actions/actions";
-import PlaylistModal from "../PlaylistModal/PlaylistModal";
+import {addToQueue, searchSong, songSelected, updateHistory} from "../../redux/actions/actions";
+import PlaylistModal from "../Playlists/PlaylistModal/PlaylistModal";
 
 const Search = () => {
 
@@ -15,7 +15,8 @@ const Search = () => {
 
     const playlistModal = useRef(null)
 
-    const openPlaylistModal = (song) => {
+    const openPlaylistModal = (song, event) => {
+        event.stopPropagation()
         setAddSongToPlaylist(song)
         playlistModal.current.open()
     }
@@ -24,14 +25,23 @@ const Search = () => {
 
     const searchResults = useSelector((state) => state.searchResults)
     const songHistory = useSelector((state) => state.songHistory)
+    const keyForDate = useSelector((state) => state.keyForDate)
+    const songsQueued = useSelector((state) => state.songsQueued)
+
 
     const searchForSong = () => {
         dispatch(searchSong(inputData.searchQuery))
+        console.log(songsQueued)
     }
 
-    const selectSong = (index) => {
-        dispatch(songSelected(searchResults[index]))
-        dispatch(updateHistory(songHistory, searchResults[index]))
+    const playSong = (song) => {
+        dispatch(songSelected(song))
+        dispatch(updateHistory(songHistory, song, keyForDate))
+    }
+
+    const addSongToQueue = (song, event) => {
+        event.stopPropagation()
+        dispatch(addToQueue(song))
     }
 
     const handleEnter = (event) => {
@@ -61,7 +71,7 @@ const Search = () => {
                 </div>
             </div>
 
-            <SearchResults songs={searchResults} selectSong={selectSong} addToPlaylist={openPlaylistModal}/>
+            <SearchResults songs={searchResults} playSong={playSong} addToPlaylist={openPlaylistModal} addSongToQueue={addSongToQueue}/>
 
             <PlaylistModal ref={playlistModal} song={addSongToPlaylist}/>
         </div>

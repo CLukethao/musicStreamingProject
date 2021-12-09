@@ -46,7 +46,6 @@
 }
 
 .search-btn {
-
     margin-left: 5px;
     color: #fff;
     display: inline-block;
@@ -87,4 +86,41 @@
 
 .playlist-btn {
     color: white;
+}
+
+.add-to-container {
+    position: relative;
+    margin-bottom: -45px;
+    left: 53px;
+    bottom: 42px;
+    background-color: rgb(28,28,28);
+    border: black solid 2px;
+    color: white;
+    font-size: 12px;
+    width: 130px;
+}
+
+.add-to-container:after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 100%;
+    top: 30%;
+    border-top: 10px solid transparent;
+    border-right: 10px solid black;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid transparent;
+}
+
+.add-to-middle-border {
+    border-bottom: solid 2px black;
+}
+
+.add-to-row {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.add-to-row:hover{
+    background: rgb(12,12,12);
 }

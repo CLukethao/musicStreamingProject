@@ -1,11 +1,11 @@
 
-import React, {useRef, useState} from 'react'
+import React, {useRef} from 'react'
 import './styles.css'
 import SongInformation from "./SongInformation/SongInformation";
 import UseYoutube from "./useYoutube/UseYoutube";
 import {useDispatch, useSelector} from "react-redux";
-import {songSelected} from "../../redux/actions/actions";
-import PlaylistModal from "../PlaylistModal/PlaylistModal";
+import {removeFromQueue, songSelected, updateHistory} from "../../redux/actions/actions";
+import PlaylistModal from "../Playlists/PlaylistModal/PlaylistModal";
 
 
 
@@ -13,13 +13,20 @@ const Player = () => {
 
     const dispatch = useDispatch()
     const selectedSong = useSelector((state) => state.songSelected)
+    const keyForDate = useSelector((state) => state.keyForDate)
     const songHistory = useSelector((state) => state.songHistory)
+    const songsQueued = useSelector((state) => state.songsQueued)
 
     const changeSong = (song) => {
         dispatch(songSelected(song))
     }
 
     const playlistModal = useRef(null)
+
+    const addQueueToHistory = (song) => {
+        dispatch(removeFromQueue(songsQueued))
+        dispatch(updateHistory(songHistory, song, keyForDate))
+    }
 
     const openPlaylistModal = () => {
 
@@ -30,7 +37,7 @@ const Player = () => {
         return (
             <div className='container player vw-100 player-show text-center'>
                 <div className='row player vw-100 player-show align-items-center'>
-                    <UseYoutube selectedSong={selectedSong} songHistory={songHistory} setSong={changeSong}/>
+                    <UseYoutube selectedSong={selectedSong} songHistory={songHistory[keyForDate]} setSong={changeSong} songsQueued={songsQueued} addQueToHistory={addQueueToHistory}/>
 
                     <div className='col-1'>
                         <button className='btn playlist-btn' onClick={openPlaylistModal}>

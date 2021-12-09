@@ -5,6 +5,8 @@ export const SONG_SELECTED = 'SONG_SELECTED'
 export const SEARCH_SONG = 'SEARCH_SONG'
 export const ADD_PLAYLIST = 'ADD_PLAYLIST'
 export const ADD_SONG_TO_PLAYLIST = 'ADDS_SONG_TO_PLAYLIST'
+export const ADD_TO_QUEUE = 'ADD_TO_QUEUE'
+export const REMOVE_FROM_QUEUE = 'REMOVE_FROM_QUEUE'
 
 
 

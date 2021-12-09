@@ -1,21 +1,30 @@
 
 import * as constantType from '../constants/constantTypes'
 
-export const updateHistory = (songHistory, data) => async (dispatch) => {
+export const updateHistory = (songHistory, data, keyForDate) => async (dispatch) => {
+
+    let newHistory = songHistory
 
     try {
-        let getDate = new Date()
 
-        if (songHistory === undefined || songHistory.length === 0) {
-            dispatch({type: constantType.UPDATE_HISTORY, payload: {songInformation: data, dateListened: getDate}})
+        if (songHistory[keyForDate] === undefined || songHistory[keyForDate].length === 0) {
+            newHistory[keyForDate].push(data)
+
+            dispatch({type: constantType.UPDATE_HISTORY, payload: newHistory[keyForDate]})
         }
 
-        else if (songHistory.map(song => song.songInformation.id.videoId).indexOf(data.id.videoId) !== -1) {
+        else if (songHistory[keyForDate].map(song => song.id.videoId).indexOf(data.id.videoId) !== -1) {
 
+            let indexOfSongInHistory = songHistory[keyForDate].map(song => song.id.videoId).indexOf(data.id.videoId)
+            newHistory[keyForDate].splice(indexOfSongInHistory, 1)
+            newHistory[keyForDate].push(data)
+
+            dispatch({type: constantType.UPDATE_HISTORY, payload: newHistory[keyForDate]})
         }
 
         else {
-            dispatch({type: constantType.UPDATE_HISTORY, payload: {songInformation: data, dateListened: getDate}})
+            newHistory[keyForDate].push(data)
+            dispatch({type: constantType.UPDATE_HISTORY, payload: newHistory[keyForDate]})
         }
 
     }
@@ -73,6 +82,30 @@ export const addSongToPlaylist = (data) => async (dispatch) => {
 
     try {
         dispatch({type: constantType.ADD_SONG_TO_PLAYLIST, payload: data})
+    }
+
+    catch (error) {
+        console.log(error)
+    }
+}
+
+export const addToQueue = (data) => async (dispatch) => {
+
+    try {
+        dispatch({type: constantType.ADD_TO_QUEUE, payload: data})
+    }
+
+    catch (error) {
+        console.log(error)
+    }
+}
+
+export const removeFromQueue = (songsQueued) => async (dispatch) => {
+    let newSongsQueuedArray = songsQueued
+    newSongsQueuedArray.shift()
+    try {
+
+        dispatch({type: constantType.REMOVE_FROM_QUEUE, payload: newSongsQueuedArray})
     }
 
     catch (error) {
