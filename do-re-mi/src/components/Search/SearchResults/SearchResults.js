@@ -29,7 +29,7 @@ const SearchResults = ({songs, playSong, addToPlaylist, addSongToQueue}) => {
             results.push(
                 <div className='results-display' key={songs[i].id.videoId} id={songs[i].id.videoId} onClick={() => playSong(songs[i])}>
                     <div className='row d-flex align-items-center'>
-                        <div className='col-3 col-md-3 thumbnails'>
+                        <div className='col-3 col-md-3'>
                             <img className='result-img' src={songs[i].snippet.thumbnails.medium.url} alt=''></img>
                         </div>
 

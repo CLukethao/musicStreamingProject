@@ -24,7 +24,7 @@ const Header = () => {
     return (
         <div className='row header-font header' onMouseLeave={() => closeMenu()}>
             <div className='col-12 logo bg-color d-flex align-items-center'>
-                <button className='menu-btn btn' onClick={event => {toggleNav(); event.currentTarget.blur()}}>
+                <button className='menu-btn btn title' onClick={event => {toggleNav(); event.currentTarget.blur()}}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          className="bi bi-list" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"

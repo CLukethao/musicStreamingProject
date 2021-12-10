@@ -26,12 +26,9 @@ const Search = () => {
     const searchResults = useSelector((state) => state.searchResults)
     const songHistory = useSelector((state) => state.songHistory)
     const keyForDate = useSelector((state) => state.keyForDate)
-    const songsQueued = useSelector((state) => state.songsQueued)
-
 
     const searchForSong = () => {
         dispatch(searchSong(inputData.searchQuery))
-        console.log(songsQueued)
     }
 
     const playSong = (song) => {

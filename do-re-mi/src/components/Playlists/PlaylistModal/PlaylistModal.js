@@ -6,9 +6,9 @@ import {addPlaylist, addSongToPlaylist} from "../../../redux/actions/actions";
 
 const modalElement = document.getElementById('select-playlist-modal-root')
 
-const PlaylistModal = ({ defaultOpened, song }, ref) => {
+const PlaylistModal = ({ song }, ref) => {
 
-    const [isOpen, setIsOpen] = useState(defaultOpened)
+    const [isOpen, setIsOpen] = useState(false)
 
     useImperativeHandle(ref, () => ({
         open: () => setIsOpen(true),
@@ -44,10 +44,12 @@ const PlaylistModal = ({ defaultOpened, song }, ref) => {
 
         let checkIfAdded = []
 
-        for (let i = 0; i < playlists.length; i++) {
-            for (let y = 0; y < playlists[i].songs.length; y++) {
-                if (song.id.videoId === playlists[i].songs[y].id.videoId) {
-                    checkIfAdded.push(playlists[i].playlistName)
+        if (song !== undefined) {
+            for (let i = 0; i < playlists.length; i++) {
+                for (let y = 0; y < playlists[i].songs.length; y++) {
+                    if (song.id.videoId === playlists[i].songs[y].id.videoId) {
+                        checkIfAdded.push(playlists[i].playlistName)
+                    }
                 }
             }
         }
@@ -183,7 +185,7 @@ const AddPlaylist = ({newPlaylist, playlists}) => {
     const [error, setError] = useState('')
 
     const confirm = () => {
-        console.log(newPlaylistName)
+
         let arrayOfPlaylists = playlists.map(playlist => {
             return playlist.playlistName
         })

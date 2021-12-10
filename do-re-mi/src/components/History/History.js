@@ -34,7 +34,7 @@ const History = () => {
     return (
         <div className='container history-container'>
             <div className='row result-header mt-4 mb-2'>
-                <div className='col-12 mb-4'>
+                <div className='col-12 mb-4 title'>
                     History
                 </div>
 
