@@ -1,10 +1,13 @@
 
 import {
     ADD_PLAYLIST,
-    ADD_SONG_TO_PLAYLIST, ADD_TO_QUEUE, REMOVE_FROM_QUEUE,
+    ADD_PLAYLIST_SONG, ADD_TO_QUEUE, REMOVE_FROM_QUEUE,
     SEARCH_SONG,
+    MENU_OPEN,
     SONG_SELECTED,
-    UPDATE_HISTORY
+    UPDATE_HISTORY,
+    PLAYLIST_SELECTED,
+    REMOVE_PLAYLIST_SONG
 } from "../constants/constantTypes";
 
 const history = {}
@@ -28,10 +31,12 @@ let keyForDate = monthNames[date.getMonth()] + date.getDate()
 const reducer = (state = {
     songHistory: history,
     songSelected: {},
+    playlistSelected: null,
     searchResults: [],
     searchHistory: [],
     keyForDate: keyForDate,
     songsQueued: [],
+    menuOpen: false,
     playlists: [
         {
             playlistName: 'rnb',
@@ -75,14 +80,21 @@ const reducer = (state = {
         case ADD_PLAYLIST:
             return {...state, playlists: [...state.playlists, {playlistName: action.payload, songs: []}]}
 
-        case ADD_SONG_TO_PLAYLIST:
-            return {...state, playlists: action.payload}
+        case ADD_PLAYLIST_SONG:
+        case REMOVE_PLAYLIST_SONG:
+            return {...state, playlists: state.playlists.map(playlist => playlist.playlistName === action.payload.playlistName ? action.payload : playlist)}
 
         case ADD_TO_QUEUE:
             return {...state, songsQueued: [...state.songsQueued, action.payload]}
 
         case REMOVE_FROM_QUEUE:
             return {...state, songsQueued: action.payload}
+
+        case PLAYLIST_SELECTED:
+            return {...state, playlistSelected: action.payload}
+
+        case MENU_OPEN:
+            return {...state, menuOpen: action.payload}
 
         default: return state
     }

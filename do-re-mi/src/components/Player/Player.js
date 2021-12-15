@@ -16,8 +16,9 @@ const Player = () => {
     const keyForDate = useSelector((state) => state.keyForDate)
     const songHistory = useSelector((state) => state.songHistory)
     const songsQueued = useSelector((state) => state.songsQueued)
+    const playlistSelected = useSelector((state) => state.playlistSelected)
 
-    const changeSong = (song) => {
+    const setSongInformation = (song) => {
         dispatch(songSelected(song))
     }
 
@@ -25,7 +26,7 @@ const Player = () => {
 
     const addQueueToHistory = (song) => {
         dispatch(removeFromQueue(songsQueued))
-        dispatch(updateHistory(songHistory, song, keyForDate))
+        addSongToHistory(song)
     }
 
     const openPlaylistModal = () => {
@@ -33,11 +34,15 @@ const Player = () => {
         playlistModal.current.open()
     }
 
+    const addSongToHistory = (song) => {
+        dispatch(updateHistory(songHistory, song, keyForDate))
+    }
+
     if (selectedSong.hasOwnProperty('snippet') && selectedSong.length !== 0) {
         return (
             <div className='container player vw-100 player-show text-center'>
                 <div className='row player vw-100 player-show align-items-center'>
-                    <UseYoutube selectedSong={selectedSong} songHistory={songHistory[keyForDate]} setSong={changeSong} songsQueued={songsQueued} addQueToHistory={addQueueToHistory}/>
+                    <UseYoutube selectedSong={selectedSong} songHistory={songHistory[keyForDate]} setSongInformation={setSongInformation} songsQueued={songsQueued} addQueToHistory={addQueueToHistory} playlistSelected={playlistSelected} addSongToHistory={addSongToHistory}/>
 
                     <div className='col-1'>
                         <button className='btn playlist-btn' onClick={openPlaylistModal}>

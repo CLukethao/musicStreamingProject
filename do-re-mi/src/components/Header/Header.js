@@ -1,9 +1,9 @@
-
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Menu from "./Menu/Menu";
 import './styles.css'
 
 const Header = () => {
+
 
     const [navState, setNavState] = useState({
         navIsOpen: false
@@ -13,6 +13,8 @@ const Header = () => {
         setNavState({
             navIsOpen: !navState.navIsOpen
         })
+
+
     }
 
     const closeMenu = () => {

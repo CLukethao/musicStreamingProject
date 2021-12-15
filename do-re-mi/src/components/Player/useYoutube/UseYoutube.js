@@ -7,12 +7,13 @@ import Volume from "./Controls/Volume";
 import Timeline from "./Controls/Timeline";
 
 
-const UseYoutube = ({selectedSong, songHistory, setSong, songsQueued, addQueToHistory}) => {
+const UseYoutube = ({selectedSong, songHistory, setSongInformation, songsQueued, addQueToHistory, playlistSelected, addSongToHistory}) => {
 
     const [player, setPlayer] = useState()
 
     const [playerInfo, setPlayerInfo] = useState({
         playerHistory: songHistory,
+        playlistSelected: playlistSelected,
         indexInHistory: songHistory.length - 1,
         songLength: 0,
         currentPlayerTime: 0,
@@ -25,9 +26,25 @@ const UseYoutube = ({selectedSong, songHistory, setSong, songsQueued, addQueToHi
     })
 
     useEffect(() => {
-        setPlayerInfo(prevState => ({...prevState, indexInHistory: songHistory.length - 1, playerHistory: songHistory}))
 
-    }, [songHistory]);
+        if (playlistSelected !== null) {
+            if (playerInfo.playlistSelected === playlistSelected.playlistName) {
+
+                setPlayerInfo(prevState => ({...prevState, playerHistory: playlistSelected.songs}));
+            }
+
+            else {
+                setPlayerInfo(prevState => ({...prevState, indexInHistory: 0, playerHistory: playlistSelected.songs, playlistSelected: playlistSelected.playlistName, repeat: 'all'}));
+                playPlaylist(playlistSelected.songs[0]);
+            }
+        }
+
+
+        else {
+            setPlayerInfo(prevState => ({...prevState, indexInHistory: songHistory.length - 1, playerHistory: songHistory, playlistSelected: null, repeat: false}))
+        }
+
+    }, [songHistory, playlistSelected]);
 
     useEffect(() => {
 
@@ -55,26 +72,28 @@ const UseYoutube = ({selectedSong, songHistory, setSong, songsQueued, addQueToHi
 
     useEffect(() => {
 
-        if (playerInfo.playSong && (playerInfo.currentPlayerTime < Math.floor(playerInfo.songLength))) {
+        if ((playerInfo.currentPlayerTime === Math.floor(playerInfo.songLength)) && playerInfo.repeat === 'one') {
+            rewind()
+        }
+
+        else if ((playerInfo.currentPlayerTime === Math.floor(playerInfo.songLength)) && songsQueued.length > 0) {
+            setSongInformation(songsQueued[0])
+            addQueToHistory(songsQueued[0])
+        }
+
+        else if ((playerInfo.currentPlayerTime === Math.floor(playerInfo.songLength)) && playerInfo.repeat === 'all') {
+            skipToNext()
+        }
+
+        else if (playerInfo.playSong && (playerInfo.currentPlayerTime < Math.floor(playerInfo.songLength))) {
+
             playerInfo.timelineTimer = setInterval(() => {
                 setPlayerInfo(prevState => ({...prevState, currentPlayerTime: playerInfo.currentPlayerTime + 1}))
             }, 1000)
         }
 
-        else if ((playerInfo.currentPlayerTime === Math.floor(playerInfo.songLength)) && playerInfo.repeat === 'repeatOne') {
-            rewind()
-        }
-
-        else if ((playerInfo.currentPlayerTime === Math.floor(playerInfo.songLength)) && songsQueued.length > 0) {
-            setSong(songsQueued[0])
-            addQueToHistory(songsQueued[0])
-        }
-
-        else if ((playerInfo.currentPlayerTime === Math.floor(playerInfo.songLength)) && playerInfo.repeat === 'repeatAll') {
-            skipToNext()
-        }
-
         else if (playerInfo.currentPlayerTime === Math.floor(playerInfo.songLength)) {
+
             clearInterval(playerInfo.timelineTimer)
             setPlayerInfo(prevState => ({...prevState, timelineTimer: 0, currentPlayerTime: 0, playSong: false}))
         }
@@ -115,6 +134,30 @@ const UseYoutube = ({selectedSong, songHistory, setSong, songsQueued, addQueToHi
 
     }
 
+    const playPlaylist = (song) => {
+        try {
+            player.loadVideoById({
+                'videoId': song,
+            })
+
+            // player.seekTo(0);
+        }
+
+        catch {
+            setTimeout(() => {
+                player.loadVideoById({
+                    'videoId': song,
+                });
+
+                // player.seekTo(0);
+            }, 700)
+        }
+
+        setSongInformation(song);
+        addSongToHistory(song);
+        setPlayerInfo(prevState => ({...prevState, currentPlayerTime: 0, repeat: 'all'}));
+    }
+
     const play = () => {
 
         if (!playerInfo.playSong) {
@@ -132,6 +175,7 @@ const UseYoutube = ({selectedSong, songHistory, setSong, songsQueued, addQueToHi
             player.loadVideoById({
                 'videoId': selectedSong.id.videoId,
             })
+
         }
 
         catch {
@@ -148,6 +192,17 @@ const UseYoutube = ({selectedSong, songHistory, setSong, songsQueued, addQueToHi
     const skipToPrev = () => {
         let indexOfNewSong = playerInfo.indexInHistory - 1;
 
+        if (playerInfo.playlistSelected !== null) {
+            if (indexOfNewSong >= 0) {
+
+                addSongToHistory(playerInfo.playerHistory[indexOfNewSong])
+            }
+
+            else {
+                addSongToHistory(playerInfo.playerHistory[playerInfo.playerHistory.length - 1])
+            }
+        }
+
         if (indexOfNewSong >= 0) {
 
             player.loadVideoById({
@@ -156,7 +211,7 @@ const UseYoutube = ({selectedSong, songHistory, setSong, songsQueued, addQueToHi
 
             setPlayerInfo(prevState => ({...prevState, indexInHistory: playerInfo.indexInHistory - 1, currentPlayerTime: 0}));
 
-            setSong(playerInfo.playerHistory[indexOfNewSong]);
+            setSongInformation(playerInfo.playerHistory[indexOfNewSong]);
         }
 
         else if (playerInfo.playerHistory.length > 1) {
@@ -166,7 +221,7 @@ const UseYoutube = ({selectedSong, songHistory, setSong, songsQueued, addQueToHi
 
             setPlayerInfo(prevState => ({...prevState, indexInHistory: playerInfo.playerHistory.length - 1, currentPlayerTime: 0}));
 
-            setSong(playerInfo.playerHistory[playerInfo.playerHistory.length - 1]);
+            setSongInformation(playerInfo.playerHistory[playerInfo.playerHistory.length - 1]);
 
         }
     }
@@ -182,8 +237,19 @@ const UseYoutube = ({selectedSong, songHistory, setSong, songsQueued, addQueToHi
     const skipToNext = () => {
         let indexOfNewSong = playerInfo.indexInHistory + 1
 
+        if (playerInfo.playlistSelected !== null) {
+            if (playerInfo.indexInHistory !== (playerInfo.playerHistory.length - 1)) {
+
+                addSongToHistory(playerInfo.playerHistory[playerInfo.indexInHistory + 1])
+            }
+
+            else {
+                addSongToHistory(playerInfo.playerHistory[0])
+            }
+        }
+
         if (songsQueued.length > 0) {
-            setSong(songsQueued[0])
+            setSongInformation(songsQueued[0])
             addQueToHistory(songsQueued[0])
         }
 
@@ -194,7 +260,7 @@ const UseYoutube = ({selectedSong, songHistory, setSong, songsQueued, addQueToHi
 
             setPlayerInfo(prevState => ({...prevState, indexInHistory: playerInfo.indexInHistory + 1, currentPlayerTime: 0}));
 
-            setSong(playerInfo.playerHistory[indexOfNewSong]);
+            setSongInformation(playerInfo.playerHistory[indexOfNewSong]);
         }
 
         else {
@@ -203,7 +269,7 @@ const UseYoutube = ({selectedSong, songHistory, setSong, songsQueued, addQueToHi
             });
 
             setPlayerInfo(prevState => ({...prevState, indexInHistory: 0, currentPlayerTime: 0}))
-            setSong(playerInfo.playerHistory[0])
+            setSongInformation(playerInfo.playerHistory[0])
         }
     }
 
@@ -220,11 +286,11 @@ const UseYoutube = ({selectedSong, songHistory, setSong, songsQueued, addQueToHi
 
     const toggleRepeat = () => {
         if (playerInfo.repeat === false) {
-            setPlayerInfo(prevState => ({...prevState, repeat: 'repeatAll'}));
+            setPlayerInfo(prevState => ({...prevState, repeat: 'all'}));
         }
 
-        else if (playerInfo.repeat === 'repeatAll') {
-            setPlayerInfo(prevState => ({...prevState, repeat: 'repeatOne'}));
+        else if (playerInfo.repeat === 'all') {
+            setPlayerInfo(prevState => ({...prevState, repeat: 'one'}));
         }
 
         else {

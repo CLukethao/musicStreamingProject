@@ -3,7 +3,7 @@ import React from "react";
 const Repeat = ({ toggleRepeat, repeat }) => {
 
     return (
-        <button className={'btn ' + (repeat === 'repeatOne' || repeat === 'repeatAll' ? 'toggled': 'player-btn')} onClick={(e) => {toggleRepeat(); e.currentTarget.blur()}}>
+        <button className={'btn ' + (repeat === 'one' || repeat === 'all' ? 'toggled': 'player-btn')} onClick={(e) => {toggleRepeat(); e.currentTarget.blur()}}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                  className="bi bi-arrow-repeat" viewBox="0 0 16 16">
                 <path
@@ -11,7 +11,7 @@ const Repeat = ({ toggleRepeat, repeat }) => {
                 <path fill-rule="evenodd"
                       d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
             </svg>
-            <span className={repeat === 'repeatOne' ? 'repeat-one' : 'collapse'}>1</span>
+            <span className={repeat === 'one' ? 'repeat-one' : 'collapse'}>1</span>
         </button>
     )
 

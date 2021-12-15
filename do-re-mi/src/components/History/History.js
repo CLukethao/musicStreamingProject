@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from "react-redux";
 import './styles.css'
 import SongsInHistory from "./SongsInHistory/SongsInHistory";
 import DateSelector from "./DateSelector/DateSelector";
-import {songSelected, updateHistory} from "../../redux/actions/actions";
+import {playlistSelected, songSelected, updateHistory} from "../../redux/actions/actions";
 
 const History = () => {
 
@@ -29,6 +29,7 @@ const History = () => {
     const playSong = (song) => {
         dispatch(songSelected(song))
         dispatch(updateHistory(songHistory, song, keyForDate))
+        dispatch(playlistSelected(null))
     }
 
     return (

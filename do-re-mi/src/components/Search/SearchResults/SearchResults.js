@@ -82,6 +82,8 @@ const SearchResults = ({songs, playSong, addToPlaylist, addSongToQueue}) => {
                         </div>
                     </div>
                 </div>
+
+
             )
         }
     }
@@ -112,3 +114,8 @@ const SearchResults = ({songs, playSong, addToPlaylist, addSongToQueue}) => {
 
 
 export default SearchResults
+
+// "start": "react-scripts start",
+//     "build": "react-scripts build",
+//     "test": "react-scripts test",
+//     "eject": "react-scripts eject"

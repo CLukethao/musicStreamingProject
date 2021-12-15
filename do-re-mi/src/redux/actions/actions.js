@@ -42,8 +42,8 @@ export const songSelected = (data) => ({
 export const searchSong = (searchQuery) => async (dispatch) => {
     try {
 
-        // const API_KEY = 'AIzaSyDhjCec7htgsdItR9p2cwpJlduGvouQ9sg'
-        const API_KEY = 'AIzaSyDlnn9kjXhP8g6mrWbHZev0fivwxJQlOSA'
+        const API_KEY = 'AIzaSyDhjCec7htgsdItR9p2cwpJlduGvouQ9sg'
+        // const API_KEY = 'AIzaSyDlnn9kjXhP8g6mrWbHZev0fivwxJQlOSA'
 
         const getURL = 'https://www.googleapis.com/youtube/v3/search?key='
 
@@ -78,17 +78,6 @@ export const addPlaylist = (data) => async (dispatch) => {
     }
 }
 
-export const addSongToPlaylist = (data) => async (dispatch) => {
-
-    try {
-        dispatch({type: constantType.ADD_SONG_TO_PLAYLIST, payload: data})
-    }
-
-    catch (error) {
-        console.log(error)
-    }
-}
-
 export const addToQueue = (data) => async (dispatch) => {
 
     try {
@@ -111,4 +100,48 @@ export const removeFromQueue = (songsQueued) => async (dispatch) => {
     catch (error) {
         console.log(error)
     }
+}
+
+export const playlistSelected = (playlist) => async (dispatch) => {
+    try {
+        dispatch({type: constantType.PLAYLIST_SELECTED, payload: playlist})
+    }
+
+    catch (error) {
+        console.log(error)
+    }
+}
+
+export const addPlaylistSong = (playlist) => async (dispatch) => {
+
+    try {
+        dispatch({type: constantType.ADD_PLAYLIST_SONG, payload: playlist})
+    }
+
+    catch (error) {
+        console.log(error)
+    }
+}
+
+export const removePlaylistSong = (playlist) => async (dispatch) => {
+
+    try {
+        dispatch({type: constantType.REMOVE_PLAYLIST_SONG, payload: playlist})
+    }
+
+    catch (error) {
+        console.log(error)
+    }
+}
+
+export const menuOpen = (data) => async (dispatch) => {
+    try {
+        dispatch({type: constantType.MENU_OPEN, payload:data})
+    }
+
+    catch (error) {
+        console.log(error)
+    }
+
+
 }

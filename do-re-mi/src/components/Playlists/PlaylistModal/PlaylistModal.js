@@ -2,13 +2,13 @@ import React, {forwardRef, useCallback, useEffect, useImperativeHandle, useState
 import {createPortal} from "react-dom";
 import {useDispatch, useSelector} from "react-redux";
 import '../styles.css';
-import {addPlaylist, addSongToPlaylist} from "../../../redux/actions/actions";
+import {addPlaylist, removePlaylistSong, addPlaylistSong} from "../../../redux/actions/actions";
 
 const modalElement = document.getElementById('select-playlist-modal-root')
 
 const PlaylistModal = ({ song }, ref) => {
 
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
 
     useImperativeHandle(ref, () => ({
         open: () => setIsOpen(true),
@@ -16,16 +16,16 @@ const PlaylistModal = ({ song }, ref) => {
     }))
 
     const handleEscape = useCallback(event => {
-        if (event.keyCode === 27) closeModal()
+        if (event.keyCode === 27) closeModal();
     }, [])
 
     useEffect(() => {
         if (isOpen) {
-            document.addEventListener('keydown', handleEscape, false)
+            document.addEventListener('keydown', handleEscape, false);
         }
 
         return () => {
-            document.removeEventListener('keydown', handleEscape, false)
+            document.removeEventListener('keydown', handleEscape, false);
         }
     }, [handleEscape, isOpen])
 
@@ -33,12 +33,12 @@ const PlaylistModal = ({ song }, ref) => {
         setIsOpen(false)
     }
 
-    const dispatch = useDispatch()
-    const playlists = useSelector((state) => state.playlists)
+    const dispatch = useDispatch();
+    const playlists = useSelector((state) => state.playlists);
 
-    const [existsInPlaylists, setExistsInPlaylists] = useState([])
+    const [existsInPlaylists, setExistsInPlaylists] = useState([]);
 
-    const [selectedPlaylists, setSelectedPlaylists] = useState([])
+    const [selectedPlaylists, setSelectedPlaylists] = useState([]);
 
     useEffect(() => {
 
@@ -48,7 +48,7 @@ const PlaylistModal = ({ song }, ref) => {
             for (let i = 0; i < playlists.length; i++) {
                 for (let y = 0; y < playlists[i].songs.length; y++) {
                     if (song.id.videoId === playlists[i].songs[y].id.videoId) {
-                        checkIfAdded.push(playlists[i].playlistName)
+                        checkIfAdded.push(playlists[i].playlistName);
                     }
                 }
             }
@@ -64,8 +64,8 @@ const PlaylistModal = ({ song }, ref) => {
         let playlist = event.target.name
 
         if (selectedPlaylists.includes(playlist)) {
-            let newSelectedArray = [...selectedPlaylists]
-            let index = newSelectedArray.indexOf(playlist)
+            let newSelectedArray = [...selectedPlaylists];
+            let index = newSelectedArray.indexOf(playlist);
             if (index !== -1) {
                 newSelectedArray.splice(index, 1);
                 setSelectedPlaylists(newSelectedArray);
@@ -74,7 +74,7 @@ const PlaylistModal = ({ song }, ref) => {
         }
 
         else {
-            setSelectedPlaylists(prevState => ([...prevState, playlist]))
+            setSelectedPlaylists(prevState => ([...prevState, playlist]));
         }
     }
 
@@ -82,22 +82,25 @@ const PlaylistModal = ({ song }, ref) => {
 
         for (let i = 0; i < playlists.length; i++) {
             if (selectedPlaylists.includes(playlists[i].playlistName) && !(existsInPlaylists.includes(playlists[i].playlistName))) {
-                let updatedPlaylists = playlists
-                updatedPlaylists[i].songs.push(song)
+                let updatedPlaylists = playlists;
+                updatedPlaylists[i].songs.push(song);
 
-                dispatch(addSongToPlaylist(updatedPlaylists))
+                dispatch(addPlaylistSong(updatedPlaylists[i]));
+
             }
 
             else if (existsInPlaylists.includes(playlists[i].playlistName) && !(selectedPlaylists.includes(playlists[i].playlistName))) {
-                let updatedPlaylists = playlists
+                let updatedPlaylists = playlists;
                 let arrayOfSongs = updatedPlaylists[i].songs.map(song => {
                     return song.id.videoId
                 })
 
-                let indexOfSong = arrayOfSongs.indexOf(song.id.videoId)
-                updatedPlaylists[i].songs.splice(indexOfSong, 1)
+                let indexOfSong = arrayOfSongs.indexOf(song.id.videoId);
 
-                dispatch(addSongToPlaylist(updatedPlaylists))
+                updatedPlaylists[i].songs.splice(indexOfSong, 1);
+
+                dispatch(removePlaylistSong(updatedPlaylists[i]));
+
             }
         }
 
@@ -106,7 +109,7 @@ const PlaylistModal = ({ song }, ref) => {
 
     const newPlaylist = (name) => {
 
-        dispatch(addPlaylist(name))
+        dispatch(addPlaylist(name));
 
     }
 
