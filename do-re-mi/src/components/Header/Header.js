@@ -14,7 +14,6 @@ const Header = () => {
             navIsOpen: !navState.navIsOpen
         })
 
-
     }
 
     const closeMenu = () => {

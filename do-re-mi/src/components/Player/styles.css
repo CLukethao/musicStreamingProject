@@ -8,6 +8,7 @@
     color: white;
     height: 50px;
     min-width: 1150px;
+    z-index: 9;
 }
 
 .player-title {

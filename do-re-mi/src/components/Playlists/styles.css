@@ -178,3 +178,16 @@
 .playlist-songs:hover {
     animation: animate 2s linear infinite;
 }
+
+.remove-btn {
+    color: darkred;
+}
+
+.remove-btn:hover {
+    color: red;
+    transform: scale(1.3);
+}
+
+.move-song-btn {
+ cursor: grab !important;
+}

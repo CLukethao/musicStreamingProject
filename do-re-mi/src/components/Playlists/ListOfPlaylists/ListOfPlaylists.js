@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react'
 import placeholderImg from "../../../images/playlistPlaceholder.jpg";
 import playlistIcon from "../../../images/playlist-icon.png";
 
-const ListOfPlaylists = ({playlists, playlistSelect, editBtn}) => {
+const ListOfPlaylists = ({playlists, playPlaylist, editBtn}) => {
 
     const [playlistsDisplay, setPlaylistsDisplay] = useState()
 
@@ -12,7 +12,7 @@ const ListOfPlaylists = ({playlists, playlistSelect, editBtn}) => {
         let listOfPlaylists = [];
 
         if (playlists.length > 0) {
-            playlists.map((playlist) => {
+            playlists.map((playlist, index) => {
                 let image;
 
                 if (playlist.songs.length > 0) {
@@ -28,7 +28,7 @@ const ListOfPlaylists = ({playlists, playlistSelect, editBtn}) => {
 
                 listOfPlaylists.push(
                     <div className='col-3 text-white mt-4 d-flex justify-content-center'>
-                        <div className='row playlists' onClick={(event) => playlistSelect(playlist)} >
+                        <div className='row playlists' onClick={(event) => playPlaylist(playlist)} >
 
                             <div className='col-12 playlist-img-container'>
 
@@ -51,7 +51,7 @@ const ListOfPlaylists = ({playlists, playlistSelect, editBtn}) => {
                                 </svg>
                             </div>
 
-                            <button className='btn text-white edit-playlist-btn' onClick={event => editBtn(playlist, event)}>
+                            <button className='btn text-white edit-playlist-btn' onClick={event => editBtn(index, event)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                      fill="currentColor" className="bi bi-pencil-square"
                                      viewBox="0 0 16 16">
@@ -66,8 +66,6 @@ const ListOfPlaylists = ({playlists, playlistSelect, editBtn}) => {
                 )
             })
         }
-
-
 
         setPlaylistsDisplay(listOfPlaylists)
 

@@ -2,7 +2,7 @@ import React, {forwardRef, useCallback, useEffect, useImperativeHandle, useState
 import {createPortal} from "react-dom";
 import {useDispatch, useSelector} from "react-redux";
 import '../styles.css';
-import {addPlaylist, removePlaylistSong, addPlaylistSong} from "../../../redux/actions/actions";
+import {updatePlaylistSongs, addPlaylist} from "../../../redux/actions/actions";
 
 const modalElement = document.getElementById('select-playlist-modal-root')
 
@@ -85,8 +85,8 @@ const PlaylistModal = ({ song }, ref) => {
                 let updatedPlaylists = playlists;
                 updatedPlaylists[i].songs.push(song);
 
-                dispatch(addPlaylistSong(updatedPlaylists[i]));
-
+                dispatch(updatePlaylistSongs(updatedPlaylists[i]));
+        
             }
 
             else if (existsInPlaylists.includes(playlists[i].playlistName) && !(selectedPlaylists.includes(playlists[i].playlistName))) {
@@ -99,7 +99,7 @@ const PlaylistModal = ({ song }, ref) => {
 
                 updatedPlaylists[i].songs.splice(indexOfSong, 1);
 
-                dispatch(removePlaylistSong(updatedPlaylists[i]));
+                dispatch(updatePlaylistSongs(updatedPlaylists[i]));
 
             }
         }

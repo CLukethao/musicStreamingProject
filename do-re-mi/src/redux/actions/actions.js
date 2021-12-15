@@ -112,36 +112,13 @@ export const playlistSelected = (playlist) => async (dispatch) => {
     }
 }
 
-export const addPlaylistSong = (playlist) => async (dispatch) => {
+export const updatePlaylistSongs = (playlist) => async (dispatch) => {
 
     try {
-        dispatch({type: constantType.ADD_PLAYLIST_SONG, payload: playlist})
+        dispatch({type: constantType.UPDATE_PLAYLIST_SONGS, payload: playlist})
     }
 
     catch (error) {
         console.log(error)
     }
-}
-
-export const removePlaylistSong = (playlist) => async (dispatch) => {
-
-    try {
-        dispatch({type: constantType.REMOVE_PLAYLIST_SONG, payload: playlist})
-    }
-
-    catch (error) {
-        console.log(error)
-    }
-}
-
-export const menuOpen = (data) => async (dispatch) => {
-    try {
-        dispatch({type: constantType.MENU_OPEN, payload:data})
-    }
-
-    catch (error) {
-        console.log(error)
-    }
-
-
 }

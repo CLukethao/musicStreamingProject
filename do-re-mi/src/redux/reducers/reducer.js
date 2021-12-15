@@ -1,13 +1,11 @@
 
 import {
     ADD_PLAYLIST,
-    ADD_PLAYLIST_SONG, ADD_TO_QUEUE, REMOVE_FROM_QUEUE,
+    UPDATE_PLAYLIST_SONGS, ADD_TO_QUEUE, REMOVE_FROM_QUEUE,
     SEARCH_SONG,
-    MENU_OPEN,
     SONG_SELECTED,
     UPDATE_HISTORY,
     PLAYLIST_SELECTED,
-    REMOVE_PLAYLIST_SONG
 } from "../constants/constantTypes";
 
 const history = {}
@@ -80,8 +78,7 @@ const reducer = (state = {
         case ADD_PLAYLIST:
             return {...state, playlists: [...state.playlists, {playlistName: action.payload, songs: []}]}
 
-        case ADD_PLAYLIST_SONG:
-        case REMOVE_PLAYLIST_SONG:
+        case UPDATE_PLAYLIST_SONGS:
             return {...state, playlists: state.playlists.map(playlist => playlist.playlistName === action.payload.playlistName ? action.payload : playlist)}
 
         case ADD_TO_QUEUE:
@@ -93,8 +90,7 @@ const reducer = (state = {
         case PLAYLIST_SELECTED:
             return {...state, playlistSelected: action.payload}
 
-        case MENU_OPEN:
-            return {...state, menuOpen: action.payload}
+
 
         default: return state
     }
