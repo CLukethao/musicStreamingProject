@@ -17,7 +17,6 @@ const Menu = ({navIsOpen, closeMenu}) => {
         <div className={(navIsOpen ? "col-2 text-start nav-list vh-100 menu show" : "col-2 text-start nav-list vh-100 menu hide")} >
                 <div className="container">
                     <div className='row'>
-
                         <span className='menu-underline'>
                             <NavLink to="/search" className='navbar-link' onClick={closeMenu}>
                                 Search

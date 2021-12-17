@@ -1,11 +1,14 @@
 
 import {
     ADD_PLAYLIST,
-    UPDATE_PLAYLIST_SONGS, ADD_TO_QUEUE, REMOVE_FROM_QUEUE,
+    UPDATE_PLAYLIST_SONGS,
+    ADD_TO_QUEUE,
+    REMOVE_FROM_QUEUE,
     SEARCH_SONG,
     SONG_SELECTED,
     UPDATE_HISTORY,
     PLAYLIST_SELECTED,
+    UPDATE_USER_INFO
 } from "../constants/constantTypes";
 
 const history = {}
@@ -27,6 +30,11 @@ let date = new Date()
 let keyForDate = monthNames[date.getMonth()] + date.getDate()
 
 const reducer = (state = {
+    user: {
+        name: 'User Name',
+        email: '123@123.com',
+        password: 'password'
+    },
     songHistory: history,
     songSelected: {},
     playlistSelected: null,
@@ -60,7 +68,7 @@ const reducer = (state = {
             playlistName: 'classical',
             songs: []
         }
-    ]
+    ],
 
 }, action) => {
 
@@ -90,6 +98,8 @@ const reducer = (state = {
         case PLAYLIST_SELECTED:
             return {...state, playlistSelected: action.payload}
 
+        case UPDATE_USER_INFO:
+            return {...state, userInfo: action.payload}
 
 
         default: return state

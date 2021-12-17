@@ -4,8 +4,8 @@ import React from "react";
 const LogInModal = ({closeModal}) => {
 
     return (
-        <div className='row modal d-flex justify-content-center align-items-center'>
-            <div className='col-10 text-center mb-2 text-white'>
+        <div className='row modal d-flex justify-content-center align-items-center vw-100'>
+            <div className='col-10 text-center mb-2 text-white credentials-modal-container'>
                 <div className='row justify-content-center'>
                     <div className='offset-2 col-6'>
                         <h1>Sign In</h1>

@@ -30,16 +30,15 @@ const CredentialsModal = ({ defaultOpened, modalType}, ref) => {
     }, [handleEscape, isOpen])
 
     const closeModal = () => {
-        console.log(modalType)
         setIsOpen(false)
     }
 
     if (modalType === 'login') {
         return createPortal(
             isOpen ?
-                <div className='container'>
+
                     <LogInModal closeModal={closeModal}/>
-                </div>
+
 
                 : null, modalElement
         )

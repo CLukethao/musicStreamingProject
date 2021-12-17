@@ -46,6 +46,14 @@
     padding: 0;
 }
 
+.credentials-modal-container {
+    margin-top: -150px;
+}
+
+.error {
+    border: red 2px solid;
+}
+
 
 
 

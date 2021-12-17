@@ -1,0 +1,11 @@
+
+.btn-submit {
+    color: black;
+    background-color: white;
+    border-radius: 40px;
+    font-weight: bold;
+}
+
+.btn-submit:hover{
+    transform: scale(1.1);
+}

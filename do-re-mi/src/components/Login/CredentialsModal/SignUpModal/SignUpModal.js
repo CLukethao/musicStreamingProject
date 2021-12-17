@@ -10,13 +10,22 @@ const SignUpModal = ({closeModal}) => {
             day: '',
             year: ''
         },
+        password: ''
     })
 
     const [signUpError, setSignUpError] = useState({
         name: null,
         email: null,
+        password: null,
         dob: null
     })
+
+    const errMess = {
+        name: 'Enter 1 or more characters',
+        email: 'Invalid Email',
+        password:  'Password must be 6-12 characters',
+        dob: 'Invalid Date'
+    }
 
     const setDate = (date, id) => {
         if (id === 'month') {
@@ -34,37 +43,60 @@ const SignUpModal = ({closeModal}) => {
 
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
 
-    const onNext = () => {
-
-
-        if (userInfo.name.length > 0 && emailRegex.test(userInfo.email) && userInfo.dob.month.length > 0 && userInfo.dob.month !== 'Month'  && userInfo.dob.day > 0 && userInfo.dob.year.length === 4) {
-            console.log('everything is correct')
-        }
-
-        else if (userInfo.name.length === 0) {
+    const nameCheck = () => {
+        if (userInfo.name.length === 0) {
             setSignUpError((prevState => ({...prevState, name: true})))
             console.log('name error')
         }
 
-        else if (!emailRegex.test(userInfo.email)) {
+        else {
+            setSignUpError((prevState => ({...prevState, name: false})))
+        }
+    }
+
+    const emailCheck = () => {
+        if (!emailRegex.test(userInfo.email)) {
             setSignUpError((prevState => ({...prevState, email: true})))
             console.log('email error')
         }
 
-        else if (!(userInfo.dob.month.length > 0) || userInfo.dob.month !== 'Month'  || !(userInfo.dob.day > 0) || userInfo.dob.year.length !== 4) {
+        else {
+            setSignUpError((prevState => ({...prevState, email: false})))
+        }
+    }
+
+    const passwordCheck = () => {
+        if (userInfo.password.length < 6) {
+            setSignUpError((prevState => ({...prevState, password: true})))
+            console.log('email error')
+        }
+
+        else {
+            setSignUpError((prevState => ({...prevState, password: false})))
+        }
+    }
+
+    const monthCheck = () => {
+        if ((userInfo.dob.month.length === 0) || userInfo.dob.month === 'Month'  || (userInfo.dob.day <= 0) || userInfo.dob.year.length !== 4) {
             setSignUpError((prevState => ({...prevState, dob: true})))
             console.log('dob error')
         }
+
         else {
-            console.log('no clue')
+            setSignUpError((prevState => ({...prevState, dob: false})))
         }
-        console.log(userInfo)
-        console.log(signUpError)
     }
 
+    const signUp = () => {
+        if (signUpError.name === false && signUpError.email === false && signUpError.password === false && signUpError.dob === false) {
+            console.log('signed up!')
+        }
+    }
+
+
     return (
-        <div className='row modal d-flex justify-content-center align-items-center'>
-            <div className='col-10 text-center mb-2 text-white'>
+        <div className='row modal d-flex justify-content-center align-items-center vw-100'>
+            <div className='col-10 text-center mb-2 text-white credentials-modal-container'>
                 <div className='row justify-content-center'>
                     <div className='offset-2 col-6'>
                         <h1>Sign Up</h1>
@@ -86,17 +118,44 @@ const SignUpModal = ({closeModal}) => {
                 <div className='row justify-content-center'>
                     <div className='col-5'>
                         <div className='row'>
-                            <div className='col-12 pb-3'>
-                                <input type='text' className='form-control' id='name' placeholder='Name' value={userInfo.name} onChange={(e) => setUserInfo({...userInfo, name: e.target.value})}/>
+
+                            <div className='col-12 pb-2'>
+                                <input type='text'
+                                       className={signUpError.name ? 'form-control error' : 'form-control'}
+                                       id='name' placeholder='Name' value={userInfo.name} onBlur={() => nameCheck()}
+                                       onChange={(e) => setUserInfo({...userInfo, name: e.target.value})}/>
                             </div>
 
-                            <div className='col-12 pb-3'>
-                                <input type='text' className='form-control' id='email' placeholder='Email' value={userInfo.email} onChange={(e) => setUserInfo({...userInfo, email: e.target.value})}/>
+                            <span className={signUpError.name ? 'col-12 pb-1 text-start text-danger' : 'hidden'}>{errMess.name}</span>
+
+                            <div className='col-12 pb-2'>
+                                <input type='text'
+                                       className={signUpError.email === true ? 'form-control error' : 'form-control'}
+                                       id='email' placeholder='Email' value={userInfo.email}
+                                       onBlur={() => emailCheck()}
+                                       onChange={(e) => setUserInfo({...userInfo, email: e.target.value})}/>
                             </div>
+
+                            <span className={signUpError.email ? 'col-12 pb-1 text-start text-danger' : 'hidden'}>{errMess.email}</span>
+
+                            <div className='col-12 pb-2'>
+                                <input type='password'
+                                       className={signUpError.password === true ? 'form-control error' : 'form-control'}
+                                       id='password' placeholder='Password'
+                                       value={userInfo.password}
+                                       onBlur={() => passwordCheck()}
+                                       onChange={(e) => setUserInfo({...userInfo, password: e.target.value})}
+                                />
+                            </div>
+
+                            <span className={signUpError.password ? 'col-12 pb-1 text-start text-danger' : 'hidden'}>{errMess.password}</span>
+
 
                             <div className='col-12'>
-                                <DateSelection setDate={setDate}/>
+                                <DateSelection setDate={setDate} check={monthCheck} error={signUpError.dob}/>
                             </div>
+
+                            <span className={signUpError.dob ? 'col-12 pb-1 text-start text-danger' : 'hidden'}>{errMess.dob}</span>
 
                         </div>
                     </div>
@@ -104,7 +163,7 @@ const SignUpModal = ({closeModal}) => {
                     <div className='row justify-content-center'>
                         <div className='col-3 mt-3'>
                             <div className='row'>
-                                <button className='btn bg-primary text-white btn-login' onClick={onNext}>Next</button>
+                                <button className='btn btn-login' onClick={() => signUp()}>Sign Up</button>
                             </div>
                         </div>
                     </div>
@@ -114,7 +173,7 @@ const SignUpModal = ({closeModal}) => {
     )
 }
 
-const DateSelection = ({setDate}) => {
+const DateSelection = ({setDate, check, error}) => {
 
     const Months = {
         January: 31,
@@ -153,21 +212,21 @@ const DateSelection = ({setDate}) => {
 
         <div className='row'>
             <div className='col-5'>
-                <select className="form-select" id="month" onChange={event => setDate(event.target.value, event.target.id)}>
+                <select className={error === true ? 'form-select error' : 'form-select'}  id="month" onChange={event => setDate(event.target.value, event.target.id)}>
                     <option defaultValue='Month'>Month</option>
                     {months}
                 </select>
             </div>
 
             <div className='col-3'>
-                <select className="form-select" id="day" onChange={event => setDate(event.target.value, event.target.id)}>
+                <select className={error === true ? 'form-select error' : 'form-select'} id="day" onChange={event => setDate(event.target.value, event.target.id)}>
                     <option defaultValue='Day'>Day</option>
                     {days}
                 </select>
             </div>
 
             <div className='col-4'>
-                <select className="form-select" id="year" onChange={event => setDate(event.target.value, event.target.id)}>
+                <select className={error === true ? 'form-select error' : 'form-select'} id="year" onChange={event => setDate(event.target.value, event.target.id)} onBlur={() => check()}>
                     <option defaultValue='Years'>Years</option>
                     {years}
                 </select>
@@ -175,6 +234,5 @@ const DateSelection = ({setDate}) => {
         </div>
     )
 }
-
 
 export default SignUpModal

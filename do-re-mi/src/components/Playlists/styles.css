@@ -1,8 +1,7 @@
 
 
-.modal {
-    background-color: rgba(0, 0, 0, 0.85);
-
+.modal-container {
+    margin-top: 250px;
 }
 
 .playlist-modal-header {
@@ -13,13 +12,14 @@
     cursor: pointer;
 }
 
+.border-bottom {
+    border-bottom: white 1px solid;
+}
+
 .playlist-header {
     font-size: 2vw;
     font-weight: bold;
     color: white;
-    padding-bottom: 5px;
-    border-bottom: white 1px solid;
-
 }
 
 .confirm-btn {
@@ -35,7 +35,7 @@
     outline-style: none;
 }
 
-.error {
+.playlist-error {
     color: red;
 }
 
@@ -190,4 +190,8 @@
 
 .move-song-btn {
  cursor: grab !important;
+}
+
+.back-btn:hover {
+    transform: scale(1.4);
 }

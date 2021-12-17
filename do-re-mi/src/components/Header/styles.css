@@ -1,14 +1,12 @@
 
-.bg-color {
-    background-color: black;
-}
-
 .header {
     position: sticky;
     top: 0;
     width: 100%;
     margin-left: 0;
     z-index: 100;
+    background-color: black;
+    height: 50px;
 }
 
 .menu-btn {
@@ -17,6 +15,11 @@
     margin-right: 5px;
     padding: 0 0 0 0;
     color: white;
+}
+
+.profile-btn {
+    color: white;
+    text-decoration: none;
 }
 
 .nav-list {
@@ -100,12 +103,15 @@
     overflow: hidden;
 }
 
+.profile-btn:hover{
+    animation:  header-animate 2s linear infinite !important;
+}
+
 .header-font {
     color: white;
     font-size: 25px;
-    height: 50px;
     font-family: 'Kalam';
-    animation: header-animate 2s linear infinite
+    animation: header-animate 2s linear infinite !important
 }
 
 @keyframes header-animate {

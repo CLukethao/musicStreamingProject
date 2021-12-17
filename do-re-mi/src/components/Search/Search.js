@@ -23,9 +23,9 @@ const Search = () => {
 
     const dispatch = useDispatch()
 
-    const searchResults = useSelector((state) => state.searchResults)
-    const songHistory = useSelector((state) => state.songHistory)
-    const keyForDate = useSelector((state) => state.keyForDate)
+    const searchResults = useSelector((state) => state.reducer.searchResults)
+    const songHistory = useSelector((state) => state.reducer.songHistory)
+    const keyForDate = useSelector((state) => state.reducer.keyForDate)
 
     const searchForSong = () => {
         dispatch(searchSong(inputData.searchQuery))

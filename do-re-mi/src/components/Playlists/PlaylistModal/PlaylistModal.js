@@ -1,8 +1,9 @@
 import React, {forwardRef, useCallback, useEffect, useImperativeHandle, useState} from "react";
 import {createPortal} from "react-dom";
 import {useDispatch, useSelector} from "react-redux";
-import '../styles.css';
+import '../styles.css'
 import {updatePlaylistSongs, addPlaylist} from "../../../redux/actions/actions";
+import {createPlaylist} from "../../../redux/actions/playlistActions";
 
 const modalElement = document.getElementById('select-playlist-modal-root')
 
@@ -34,7 +35,7 @@ const PlaylistModal = ({ song }, ref) => {
     }
 
     const dispatch = useDispatch();
-    const playlists = useSelector((state) => state.playlists);
+    const playlists = useSelector((state) => state.playlists)
 
     const [existsInPlaylists, setExistsInPlaylists] = useState([]);
 
@@ -107,18 +108,20 @@ const PlaylistModal = ({ song }, ref) => {
         closeModal()
     }
 
-    const newPlaylist = (name) => {
+    const newPlaylist = (playlist) => {
 
-        dispatch(addPlaylist(name));
+        dispatch(createPlaylist(playlist))
+
+        // dispatch(addPlaylist(name));
 
     }
 
     return createPortal(isOpen ?
             <div className='container'>
                 <div className='row modal d-flex justify-content-center'>
-                    <div className='col-10 text-center text-white mt-5'>
+                    <div className='col-10 text-center text-white modal-container'>
                         <div className='row justify-content-center'>
-                            <div className='offset-2 col-6 mb-3'>
+                            <div className='offset-2 col-3 mb-3'>
                                 <h1 className='playlist-modal-header'>Playlists</h1>
                             </div>
 
@@ -180,7 +183,7 @@ const AddPlaylist = ({newPlaylist, playlists}) => {
     const [isAddingPlaylist, setIsAddingPlaylist] = useState(false)
 
     const addingPlaylist = () => {
-        setIsAddingPlaylist(prevState => !prevState)
+        setIsAddingPlaylist(true)
     }
 
     const [newPlaylistName, setNewPlaylistName] = useState('')
@@ -202,7 +205,7 @@ const AddPlaylist = ({newPlaylist, playlists}) => {
         }
 
         else {
-            newPlaylist(newPlaylistName)
+            newPlaylist({playlistName: newPlaylistName})
             setIsAddingPlaylist(false)
         }
     }
@@ -214,7 +217,7 @@ const AddPlaylist = ({newPlaylist, playlists}) => {
     }
 
     return (!isAddingPlaylist ?
-        <div className='row justify-content-center add-playlist-container' onClick={addingPlaylist}>
+        <div className='row justify-content-center add-playlist-container' onClick={() => addingPlaylist()}>
             <div className='col-2 text-start text-white'>
 
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -236,14 +239,14 @@ const AddPlaylist = ({newPlaylist, playlists}) => {
             <div className='col-4 offset-2 text-start text-white'>
                 <input type='text' className='text-input' value={newPlaylistName} onChange={(event) => setNewPlaylistName(event.target.value)} onKeyDown={event => onPress(event)}/>
 
-                <button className='btn confirm-btn' onClick={confirm}>
+                <button className='btn confirm-btn' onClick={() => confirm()}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check-lg" viewBox="0 0 16 16">
                         <path
                             d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
                     </svg>
                 </button>
 
-                <button className='btn cancel-btn' onClick={addingPlaylist}>
+                <button className='btn cancel-btn' onClick={() => addingPlaylist()}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
                               d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
@@ -253,7 +256,7 @@ const AddPlaylist = ({newPlaylist, playlists}) => {
                 </button>
             </div>
 
-            <div className={error !== undefined ? 'row justify-content-center error' : 'row justify-content-center hidden'}>
+            <div className={error.length > 0 ? 'row justify-content-center playlist-error' : 'row justify-content-center hidden'}>
                 <div className='col-2 text-start'>
                     {error}
                 </div>

@@ -12,11 +12,11 @@ import PlaylistModal from "../Playlists/PlaylistModal/PlaylistModal";
 const Player = () => {
 
     const dispatch = useDispatch()
-    const selectedSong = useSelector((state) => state.songSelected)
-    const keyForDate = useSelector((state) => state.keyForDate)
-    const songHistory = useSelector((state) => state.songHistory)
-    const songsQueued = useSelector((state) => state.songsQueued)
-    const playlistSelected = useSelector((state) => state.playlistSelected)
+    const selectedSong = useSelector((state) => state.reducer.songSelected)
+    const keyForDate = useSelector((state) => state.reducer.keyForDate)
+    const songHistory = useSelector((state) => state.reducer.songHistory)
+    const songsQueued = useSelector((state) => state.reducer.songsQueued)
+    const playlistSelected = useSelector((state) => state.reducer.playlistSelected)
 
 
     const setSongSelected = (song) => {
