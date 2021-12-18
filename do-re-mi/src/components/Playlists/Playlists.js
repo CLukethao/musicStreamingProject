@@ -1,23 +1,23 @@
 
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import './styles.css'
 import {useDispatch, useSelector} from "react-redux";
-import {playlistSelected, songSelected, updatePlaylistSongs} from "../../redux/actions/actions";
+import {songSelected} from "../../redux/actions/actions";
+import {updatePlaylistSongs} from "../../redux/actions/playlistActions";
 import ListOfPlaylists from "./ListOfPlaylists/ListOfPlaylists";
 import EditPlaylist from "./EditPlaylist/EditPlaylist";
+import {playlistSelected} from "../../redux/actions/playlistActions";
 
 const Playlists = () => {
 
     const dispatch = useDispatch()
-    const playlists = useSelector((state) => state.playlists)
-    const selectedPlaylist = useSelector((state) => state.reducer.playlistSelected)
+    const playlists = useSelector((state) => state.playlists.playlists)
+    const selectedPlaylist = useSelector((state) => state.playlists.playlistSelected)
 
     const [playlistToEdit, setPlaylistToEdit] = useState(null)
 
-    console.log(playlists)
-
     const editPlaylistSongs = (songs) => {
-        dispatch(updatePlaylistSongs({...playlists[playlistToEdit], songs: songs}))
+        dispatch(updatePlaylistSongs(playlists[playlistToEdit]._id, {...playlists[playlistToEdit], songs: songs}))
 
         if (selectedPlaylist !== null && playlists[playlistToEdit] !== null) {
             if (selectedPlaylist.playlistName === playlists[playlistToEdit].playlistName) {

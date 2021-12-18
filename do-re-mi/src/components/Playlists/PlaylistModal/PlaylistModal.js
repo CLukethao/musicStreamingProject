@@ -2,7 +2,7 @@ import React, {forwardRef, useCallback, useEffect, useImperativeHandle, useState
 import {createPortal} from "react-dom";
 import {useDispatch, useSelector} from "react-redux";
 import '../styles.css'
-import {updatePlaylistSongs, addPlaylist} from "../../../redux/actions/actions";
+import {updatePlaylistSongs} from "../../../redux/actions/playlistActions";
 import {createPlaylist} from "../../../redux/actions/playlistActions";
 
 const modalElement = document.getElementById('select-playlist-modal-root')
@@ -35,7 +35,7 @@ const PlaylistModal = ({ song }, ref) => {
     }
 
     const dispatch = useDispatch();
-    const playlists = useSelector((state) => state.playlists)
+    const playlists = useSelector((state) => state.playlists.playlists)
 
     const [existsInPlaylists, setExistsInPlaylists] = useState([]);
 
@@ -46,10 +46,12 @@ const PlaylistModal = ({ song }, ref) => {
         let checkIfAdded = []
 
         if (song !== undefined) {
+
             for (let i = 0; i < playlists.length; i++) {
                 for (let y = 0; y < playlists[i].songs.length; y++) {
                     if (song.id.videoId === playlists[i].songs[y].id.videoId) {
-                        checkIfAdded.push(playlists[i].playlistName);
+                        checkIfAdded.push(playlists[i]._id);
+                        // checkIfAdded.push(playlists[i].playlistName);
                     }
                 }
             }
@@ -82,15 +84,15 @@ const PlaylistModal = ({ song }, ref) => {
     const updatePlaylists = () => {
 
         for (let i = 0; i < playlists.length; i++) {
-            if (selectedPlaylists.includes(playlists[i].playlistName) && !(existsInPlaylists.includes(playlists[i].playlistName))) {
+            if (selectedPlaylists.includes(playlists[i]._id) && !(existsInPlaylists.includes(playlists[i]._id))) {
                 let updatedPlaylists = playlists;
                 updatedPlaylists[i].songs.push(song);
 
-                dispatch(updatePlaylistSongs(updatedPlaylists[i]));
+                dispatch(updatePlaylistSongs(updatedPlaylists[i]._id, updatedPlaylists[i]));
         
             }
 
-            else if (existsInPlaylists.includes(playlists[i].playlistName) && !(selectedPlaylists.includes(playlists[i].playlistName))) {
+            else if (existsInPlaylists.includes(playlists[i]._id) && !(selectedPlaylists.includes(playlists[i]._id))) {
                 let updatedPlaylists = playlists;
                 let arrayOfSongs = updatedPlaylists[i].songs.map(song => {
                     return song.id.videoId
@@ -100,7 +102,7 @@ const PlaylistModal = ({ song }, ref) => {
 
                 updatedPlaylists[i].songs.splice(indexOfSong, 1);
 
-                dispatch(updatePlaylistSongs(updatedPlaylists[i]));
+                dispatch(updatePlaylistSongs(updatedPlaylists[i]._id, updatedPlaylists[i]));
 
             }
         }
@@ -111,8 +113,6 @@ const PlaylistModal = ({ song }, ref) => {
     const newPlaylist = (playlist) => {
 
         dispatch(createPlaylist(playlist))
-
-        // dispatch(addPlaylist(name));
 
     }
 
@@ -151,7 +151,7 @@ const PlaylistModal = ({ song }, ref) => {
                         <div className='row justify-content-center'>
                             <div className='col-2 mt-3'>
                                 <div className='row'>
-                                    <button className='btn bg-primary text-white btn-login' onClick={updatePlaylists}>Update</button>
+                                    <button className='btn bg-primary text-white btn-login' onClick={(event) => updatePlaylists()}>Update</button>
                                 </div>
                             </div>
                         </div>
@@ -172,7 +172,7 @@ const DisplayPlaylists = ({playlists, onSelect, selectedPlaylists}) => {
                 <label className="">
                     {playlist.playlistName}
                 </label>
-                <input className="form-check-input" type="checkbox" checked={selectedPlaylists.includes(playlist.playlistName)} name={playlist.playlistName} onChange={event => onSelect(event)}/>
+                <input className="form-check-input" type="checkbox" checked={selectedPlaylists.includes(playlist._id)} name={playlist._id} onChange={event => onSelect(event)}/>
             </div>
         )
     )

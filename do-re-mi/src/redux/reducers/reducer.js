@@ -37,45 +37,45 @@ const reducer = (state = {
     },
     songHistory: history,
     songSelected: {},
-    playlistSelected: null,
-    searchResults: [],
+    // playlistSelected: null,
+    // searchResults: [],
     searchHistory: [],
     keyForDate: keyForDate,
     songsQueued: [],
     menuOpen: false,
-    playlists: [
-        {
-            playlistName: 'rnb',
-            songs: []
-        },
-
-        {
-            playlistName: 'Country',
-            songs: []
-        },
-
-        {
-            playlistName: 'Melodic',
-            songs: []
-        },
-
-        {
-            playlistName: 'Dubstep wub',
-            songs: []
-        },
-
-        {
-            playlistName: 'classical',
-            songs: []
-        }
-    ],
+    // playlists: [
+    //     {
+    //         playlistName: 'rnb',
+    //         songs: []
+    //     },
+    //
+    //     {
+    //         playlistName: 'Country',
+    //         songs: []
+    //     },
+    //
+    //     {
+    //         playlistName: 'Melodic',
+    //         songs: []
+    //     },
+    //
+    //     {
+    //         playlistName: 'Dubstep wub',
+    //         songs: []
+    //     },
+    //
+    //     {
+    //         playlistName: 'classical',
+    //         songs: []
+    //     }
+    // ],
 
 }, action) => {
 
     switch (action.type) {
 
-        case SEARCH_SONG:
-            return {...state, searchResults: action.payload[0], searchHistory: [...state.searchHistory, action.payload[1]]}
+        // case SEARCH_SONG:
+        //     return {...state, searchResults: action.payload[0], searchHistory: [...state.searchHistory, action.payload[1]]}
 
         case UPDATE_HISTORY:
             return {...state, songHistory: {...state.songHistory, [keyForDate]: [...action.payload]}}
@@ -83,11 +83,11 @@ const reducer = (state = {
         case SONG_SELECTED:
             return {...state, songSelected: action.payload}
 
-        case ADD_PLAYLIST:
-            return {...state, playlists: [...state.playlists, {playlistName: action.payload, songs: []}]}
+        // case ADD_PLAYLIST:
+        //     return {...state, playlists: [...state.playlists, {playlistName: action.payload, songs: []}]}
 
-        case UPDATE_PLAYLIST_SONGS:
-            return {...state, playlists: state.playlists.map(playlist => playlist.playlistName === action.payload.playlistName ? action.payload : playlist)}
+        // case UPDATE_PLAYLIST_SONGS:
+        //     return {...state, playlists: state.playlists.map(playlist => playlist.playlistName === action.payload.playlistName ? action.payload : playlist)}
 
         case ADD_TO_QUEUE:
             return {...state, songsQueued: [...state.songsQueued, action.payload]}
@@ -95,8 +95,8 @@ const reducer = (state = {
         case REMOVE_FROM_QUEUE:
             return {...state, songsQueued: action.payload}
 
-        case PLAYLIST_SELECTED:
-            return {...state, playlistSelected: action.payload}
+        // case PLAYLIST_SELECTED:
+        //     return {...state, playlistSelected: action.payload}
 
         case UPDATE_USER_INFO:
             return {...state, userInfo: action.payload}

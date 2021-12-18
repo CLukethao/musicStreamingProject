@@ -3,7 +3,9 @@ import {useSelector, useDispatch} from "react-redux";
 import './styles.css'
 import SongsInHistory from "./SongsInHistory/SongsInHistory";
 import DateSelector from "./DateSelector/DateSelector";
-import {playlistSelected, songSelected, updateHistory} from "../../redux/actions/actions";
+import { songSelected, updateHistory} from "../../redux/actions/actions";
+import {playlistSelected} from "../../redux/actions/playlistActions";
+import {updateHistoryy} from "../../redux/actions/historyActions";
 
 const History = () => {
 
@@ -16,7 +18,8 @@ const History = () => {
     let keyForDate = monthNames[date.getMonth()] + date.getDate()
 
     const songHistory = useSelector((state) => state.reducer.songHistory)
-
+    const history = useSelector((state) => state.history.history)
+    const [historyIndex, setHistoryIndex] = useState(0)
     useEffect(() => {
         let currentDate = new Date()
         setDate(currentDate)
@@ -30,6 +33,8 @@ const History = () => {
         dispatch(songSelected(song))
         dispatch(updateHistory(songHistory, song, keyForDate))
         dispatch(playlistSelected(null))
+
+        dispatch(updateHistoryy(history[historyIndex]._id, history, song))
     }
 
     return (
@@ -39,7 +44,9 @@ const History = () => {
                     History
                 </div>
 
-                <DateSelector date={date} changeDate={changeDate} monthNames={monthNames}/>
+                <DateSelector history={history} changeDate={changeDate}/>
+
+                {/*<DateSelector date={date} changeDate={changeDate} monthNames={monthNames}/>*/}
 
                 <div className='col-4 col-md-2 text-md-center'>
                     Title
@@ -55,7 +62,8 @@ const History = () => {
 
             </div>
 
-            <SongsInHistory date={date} songHistory={songHistory[keyForDate]} playSong={playSong}/>
+            <SongsInHistory songHistory={history[historyIndex].songs} playSong={playSong}/>
+            {/*<SongsInHistory date={date} songHistory={songHistory[keyForDate]} playSong={playSong}/>*/}
 
         </div>
 

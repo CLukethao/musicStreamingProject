@@ -39,34 +39,34 @@ export const songSelected = (data) => ({
     payload: data
 })
 
-export const searchSong = (searchQuery) => async (dispatch) => {
-    try {
-
-        const API_KEY = 'AIzaSyDhjCec7htgsdItR9p2cwpJlduGvouQ9sg'
-        // const API_KEY = 'AIzaSyDlnn9kjXhP8g6mrWbHZev0fivwxJQlOSA'
-
-        const getURL = 'https://www.googleapis.com/youtube/v3/search?key='
-
-        const data = await fetch(
-            getURL + API_KEY + '&type=video&part=snippet&maxResults=14&q=' + searchQuery)
-                .then((results) => {
-
-                    return results.json()
-
-                }).then((data) => {
-
-                    return(data.items)
-
-            })
-
-        dispatch({type: constantType.SEARCH_SONG, payload: [data, searchQuery]})
-    }
-
-    catch (error) {
-        console.log(error)
-    }
-
-}
+// export const searchSong = (searchQuery) => async (dispatch) => {
+//     try {
+//
+//         const API_KEY = 'AIzaSyDhjCec7htgsdItR9p2cwpJlduGvouQ9sg'
+//         // const API_KEY = 'AIzaSyDlnn9kjXhP8g6mrWbHZev0fivwxJQlOSA'
+//
+//         const getURL = 'https://www.googleapis.com/youtube/v3/search?key='
+//
+//         const data = await fetch(
+//             getURL + API_KEY + '&type=video&part=snippet&maxResults=14&q=' + searchQuery)
+//                 .then((results) => {
+//
+//                     return results.json()
+//
+//                 }).then((data) => {
+//
+//                     return(data.items)
+//
+//             })
+//
+//         dispatch({type: constantType.SEARCH_SONG, payload: [data, searchQuery]})
+//     }
+//
+//     catch (error) {
+//         console.log(error)
+//     }
+//
+// }
 
 export const addPlaylist = (data) => async (dispatch) => {
     try {
@@ -102,26 +102,26 @@ export const removeFromQueue = (songsQueued) => async (dispatch) => {
     }
 }
 
-export const playlistSelected = (playlist) => async (dispatch) => {
-    try {
-        dispatch({type: constantType.PLAYLIST_SELECTED, payload: playlist})
-    }
+// export const playlistSelected = (playlist) => async (dispatch) => {
+//     try {
+//         dispatch({type: constantType.PLAYLIST_SELECTED, payload: playlist})
+//     }
+//
+//     catch (error) {
+//         console.log(error)
+//     }
+// }
 
-    catch (error) {
-        console.log(error)
-    }
-}
-
-export const updatePlaylistSongs = (playlist) => async (dispatch) => {
-
-    try {
-        dispatch({type: constantType.UPDATE_PLAYLIST_SONGS, payload: playlist})
-    }
-
-    catch (error) {
-        console.log(error)
-    }
-}
+// export const updatePlaylistSongs = (playlist) => async (dispatch) => {
+//
+//     try {
+//         dispatch({type: constantType.UPDATE_PLAYLIST_SONGS, payload: playlist})
+//     }
+//
+//     catch (error) {
+//         console.log(error)
+//     }
+// }
 
 export const updateUserInfo = (data) => (dispatch) => {
     try {

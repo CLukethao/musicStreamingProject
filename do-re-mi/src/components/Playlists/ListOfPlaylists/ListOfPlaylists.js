@@ -12,7 +12,7 @@ const ListOfPlaylists = ({playlists, playPlaylist, editBtn}) => {
         let listOfPlaylists = [];
 
         if (playlists.length > 0) {
-            playlists.map((playlist, index) => {
+            playlists.map((playlist) => {
                 let image;
 
                 if (playlist.songs.length > 0) {
@@ -27,7 +27,7 @@ const ListOfPlaylists = ({playlists, playPlaylist, editBtn}) => {
                 let playlistLength = playlist.songs.length
 
                 listOfPlaylists.push(
-                    <div className='col-3 text-white mt-4 d-flex justify-content-center'>
+                    <div className='col-3 text-white mt-4 d-flex justify-content-center' key={playlist._id}>
                         <div className='row playlists' onClick={(event) => playPlaylist(playlist)} >
 
                             <div className='col-12 playlist-img-container'>
@@ -51,7 +51,7 @@ const ListOfPlaylists = ({playlists, playPlaylist, editBtn}) => {
                                 </svg>
                             </div>
 
-                            <button className='btn text-white edit-playlist-btn' onClick={event => editBtn(index, event)}>
+                            <button className='btn text-white edit-playlist-btn' onClick={event => editBtn(playlist._id, event)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                      fill="currentColor" className="bi bi-pencil-square"
                                      viewBox="0 0 16 16">

@@ -1,5 +1,6 @@
 
 import Playlist from "../models/playlist.js";
+import mongoose from "mongoose";
 
 export const getPlaylists = async (req, res) => {
     try {
@@ -29,4 +30,19 @@ export const createPlaylist = async (req, res) => {
     catch (error) {
         res.status(409).json({message: error.message});
     }
+}
+
+export const updatePlaylist = async (req, res) => {
+
+    const { id: _id } = req.params;
+    const playlist = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+        return res.status(404).send('No playlist with that Id')
+    }
+
+    const updatedPlaylist = await Playlist.findByIdAndUpdate(_id, playlist, {new: true});
+
+    res.json(updatedPlaylist)
+
 }

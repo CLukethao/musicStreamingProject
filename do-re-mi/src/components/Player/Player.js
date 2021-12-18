@@ -16,7 +16,7 @@ const Player = () => {
     const keyForDate = useSelector((state) => state.reducer.keyForDate)
     const songHistory = useSelector((state) => state.reducer.songHistory)
     const songsQueued = useSelector((state) => state.reducer.songsQueued)
-    const playlistSelected = useSelector((state) => state.reducer.playlistSelected)
+    const playlistSelected = useSelector((state) => state.playlists.playlistSelected)
 
 
     const setSongSelected = (song) => {
