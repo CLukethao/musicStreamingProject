@@ -1,5 +1,5 @@
 import {
-    CREATE_PLAYLIST,
+    CREATE_PLAYLIST, DELETE_PLAYLIST,
     FETCH_ALL_PLAYLISTS,
     PLAYLIST_SELECTED,
     UPDATE_PLAYLIST_SONGS
@@ -22,6 +22,9 @@ export default (state = {
 
         case PLAYLIST_SELECTED:
             return {...state, playlistSelected: action.payload};
+
+        case DELETE_PLAYLIST:
+            return {...state, playlists: state.playlists.filter(playlist => playlist._id !== action.payload._id)}
 
         default:
             return state;

@@ -1,14 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
 const DateSelector = ({history, changeDate}) => {
 
-    const [selectedDate, setSelectedDate] = useState(0)
+    const [selectedDate, setSelectedDate] = useState(history.length - 1)
 
     const selectDate = (event) => {
         setSelectedDate(parseInt(event.target.value))
+        changeDate(event.target.value)
     }
-
-    console.log(history)
 
     return history.map((days, index) => (
         <button

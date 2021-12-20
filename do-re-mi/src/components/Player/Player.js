@@ -4,19 +4,16 @@ import './styles.css'
 import SongInformation from "./SongInformation/SongInformation";
 import UseYoutube from "./useYoutube/UseYoutube";
 import {useDispatch, useSelector} from "react-redux";
-import {removeFromQueue, songSelected, updateHistory} from "../../redux/actions/actions";
 import PlaylistModal from "../Playlists/PlaylistModal/PlaylistModal";
-
-
+import {updateHistory, removeFromQueue, songSelected} from "../../redux/actions/historyActions";
 
 const Player = () => {
 
     const dispatch = useDispatch()
-    const selectedSong = useSelector((state) => state.reducer.songSelected)
-    const keyForDate = useSelector((state) => state.reducer.keyForDate)
-    const songHistory = useSelector((state) => state.reducer.songHistory)
-    const songsQueued = useSelector((state) => state.reducer.songsQueued)
+    const selectedSong = useSelector((state) => state.history.songSelected)
+    const songsQueued = useSelector((state) => state.history.songsQueued)
     const playlistSelected = useSelector((state) => state.playlists.playlistSelected)
+    const history = useSelector((state) => state.history.history[state.history.history.length - 1])
 
 
     const setSongSelected = (song) => {
@@ -36,14 +33,14 @@ const Player = () => {
     }
 
     const addSongToHistory = (song) => {
-        dispatch(updateHistory(songHistory, song, keyForDate))
+        dispatch(updateHistory(history._id, history, song))
     }
 
     if (selectedSong.hasOwnProperty('snippet') && selectedSong.length !== 0 || playlistSelected !== null) {
         return (
             <div className='container player vw-100 player-show text-center'>
                 <div className='row player vw-100 player-show align-items-center'>
-                    <UseYoutube selectedSong={selectedSong} songHistory={songHistory[keyForDate]} setSongSelected={setSongSelected} songsQueued={songsQueued} addQueToHistory={addQueueToHistory} playlistSelected={playlistSelected} addSongToHistory={addSongToHistory}/>
+                    <UseYoutube selectedSong={selectedSong} songHistory={history.songs} setSongSelected={setSongSelected} songsQueued={songsQueued} addQueToHistory={addQueueToHistory} playlistSelected={playlistSelected} addSongToHistory={addSongToHistory}/>
 
                     <div className='col-1'>
                         <button className='btn playlist-btn' onClick={openPlaylistModal}>

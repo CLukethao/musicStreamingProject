@@ -46,3 +46,15 @@ export const updatePlaylist = async (req, res) => {
     res.json(updatedPlaylist)
 
 }
+
+export const deletePlaylist = async (req, res) => {
+    const { id: _id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+        return res.status(404).send('No playlist with that Id')
+    }
+
+    const updatedPlaylists = await Playlist.findByIdAndDelete(_id);
+
+    res.json(updatedPlaylists)
+}

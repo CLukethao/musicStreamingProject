@@ -34,8 +34,6 @@ export const updatePlaylistSongs = (id, playlist) => async (dispatch) => {
     try {
         const { data } = await api.updatePlaylist(id, playlist);
 
-        console.log(data)
-
         dispatch({type: constantType.UPDATE_PLAYLIST_SONGS, payload: data})
     }
 
@@ -52,4 +50,17 @@ export const playlistSelected = (playlist) => async (dispatch) => {
     catch (error) {
         console.log(error)
     }
+}
+
+export const deletePlaylist = (id) => async (dispatch) => {
+
+    try {
+        const { data } = await api.deletePlaylist(id);
+        dispatch({type: constantType.DELETE_PLAYLIST, payload: data})
+    }
+
+    catch (error) {
+        console.log(error)
+    }
+
 }

@@ -2,11 +2,11 @@
 import React, {useState} from 'react'
 import './styles.css'
 import {useDispatch, useSelector} from "react-redux";
-import {songSelected} from "../../redux/actions/actions";
-import {updatePlaylistSongs} from "../../redux/actions/playlistActions";
+import {updatePlaylistSongs, deletePlaylist} from "../../redux/actions/playlistActions";
 import ListOfPlaylists from "./ListOfPlaylists/ListOfPlaylists";
 import EditPlaylist from "./EditPlaylist/EditPlaylist";
 import {playlistSelected} from "../../redux/actions/playlistActions";
+import {songSelected} from "../../redux/actions/historyActions";
 
 const Playlists = () => {
 
@@ -17,6 +17,7 @@ const Playlists = () => {
     const [playlistToEdit, setPlaylistToEdit] = useState(null)
 
     const editPlaylistSongs = (songs) => {
+
         dispatch(updatePlaylistSongs(playlists[playlistToEdit]._id, {...playlists[playlistToEdit], songs: songs}))
 
         if (selectedPlaylist !== null && playlists[playlistToEdit] !== null) {
@@ -26,12 +27,15 @@ const Playlists = () => {
         }
     }
 
-    const editBtn = (index, event) => {
+    const editPlaylist = (index, event) => {
         event.stopPropagation()
-        setPlaylistToEdit(index)
+        if (playlists[index].songs.length > 0) {
+            setPlaylistToEdit(index)
+        }
+
     }
 
-    const goBack = () => {
+    const exitPlaylistEdit = () => {
         setPlaylistToEdit(null)
     }
 
@@ -40,6 +44,11 @@ const Playlists = () => {
             dispatch(songSelected(playlist.songs[0]))
             dispatch(playlistSelected(playlist));
         }
+    }
+
+    const deleteSelectedPlaylist = (id, event) => {
+        event.stopPropagation(event)
+        dispatch(deletePlaylist(id))
     }
 
     const playSong = (song, playlist) => {
@@ -59,7 +68,7 @@ const Playlists = () => {
                 </div>
 
                 <div className='row text-center'>
-                    <ListOfPlaylists editBtn={editBtn} playlists={playlists} playPlaylist={playPlaylist}/>
+                    <ListOfPlaylists editPlaylist={editPlaylist} playlists={playlists} playPlaylist={playPlaylist} deletePlaylist={deleteSelectedPlaylist}/>
                 </div>
             </div>
         )
@@ -75,7 +84,7 @@ const Playlists = () => {
 
                     <div className='row text-white border-bottom playlist-header'>
                         <div className='col-1'>
-                            <button className='btn text-white back-btn' onClick={event => goBack()}>
+                            <button className='btn text-white back-btn' onClick={() => exitPlaylistEdit()}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                      className="bi bi-arrow-left" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
@@ -100,7 +109,7 @@ const Playlists = () => {
                     </div>
                 </div>
 
-                <EditPlaylist playlistToEdit={playlists[playlistToEdit]} editPlaylistSongs={editPlaylistSongs} playPlaylist={playPlaylist} playSong={playSong}/>
+                <EditPlaylist playlistToEdit={playlists[playlistToEdit]} editPlaylistSongs={editPlaylistSongs} playPlaylist={playPlaylist} playSong={playSong} />
 
             </div>
         )

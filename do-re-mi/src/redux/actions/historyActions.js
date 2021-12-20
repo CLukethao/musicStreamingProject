@@ -24,7 +24,7 @@ export const getHistory = (currentDate) => async (dispatch) => {
 
 }
 
-export const updateHistoryy = (id, history, songToAdd) => async (dispatch) => {
+export const updateHistory = (id, history, songToAdd) => async (dispatch) => {
 
     let newHistory = history
 
@@ -38,7 +38,7 @@ export const updateHistoryy = (id, history, songToAdd) => async (dispatch) => {
 
             const { data } = await api.updateHistory(id, newHistory);
 
-            dispatch({type: constantType.UPDATE_HISTORYY, payload: data})
+            dispatch({type: constantType.UPDATE_HISTORY, payload: data})
         }
 
         else {
@@ -46,7 +46,7 @@ export const updateHistoryy = (id, history, songToAdd) => async (dispatch) => {
 
             const { data } = await api.updateHistory(id, newHistory);
 
-            dispatch({type: constantType.UPDATE_HISTORYY, payload: data})
+            dispatch({type: constantType.UPDATE_HISTORY, payload: data})
         }
     }
 
@@ -68,5 +68,35 @@ export const createHistory = (date) => async (dispatch) => {
     catch (error) {
         console.log(error)
     }
+}
 
+export const songSelected = (data) => ({
+    type: constantType.SONG_SELECTED,
+    payload: data
+})
+
+
+export const removeFromQueue = (songsQueued) => async (dispatch) => {
+    let newSongsQueuedArray = songsQueued
+    newSongsQueuedArray.shift()
+    try {
+
+        dispatch({type: constantType.REMOVE_FROM_QUEUE, payload: newSongsQueuedArray})
+    }
+
+    catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const addToQueue = (data) => async (dispatch) => {
+
+    try {
+        dispatch({type: constantType.ADD_TO_QUEUE, payload: data})
+    }
+
+    catch (error) {
+        console.log(error)
+    }
 }

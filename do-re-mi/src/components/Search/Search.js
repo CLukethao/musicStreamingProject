@@ -1,12 +1,11 @@
 import React, {useRef, useState} from 'react'
 import './styles.css'
 import SearchResults from "./SearchResults/SearchResults";
-import {useDispatch, useSelector} from "react-redux";
-import {addToQueue, songSelected, updateHistory} from "../../redux/actions/actions";
-import {playlistSelected} from "../../redux/actions/playlistActions";
 import PlaylistModal from "../Playlists/PlaylistModal/PlaylistModal";
+import {useDispatch, useSelector} from "react-redux";
+import {playlistSelected} from "../../redux/actions/playlistActions";
 import {getSearch} from "../../redux/actions/searchActions";
-import {updateHistoryy} from "../../redux/actions/historyActions";
+import {updateHistory, addToQueue, songSelected} from "../../redux/actions/historyActions";
 
 const Search = () => {
 
@@ -27,10 +26,8 @@ const Search = () => {
     const dispatch = useDispatch()
 
     const searchResults = useSelector((state) => state.searchResults)
-    const songHistory = useSelector((state) => state.reducer.songHistory)
-    const keyForDate = useSelector((state) => state.reducer.keyForDate)
 
-    const history = useSelector((state) => state.history.history[0])
+    const history = useSelector((state) => state.history.history[state.history.history.length - 1])
 
 
     const searchForSong = () => {
@@ -39,12 +36,8 @@ const Search = () => {
 
     const playSong = (song) => {
         dispatch(songSelected(song))
-        dispatch(updateHistory(songHistory, song, keyForDate))
         dispatch(playlistSelected(null))
-
-        dispatch(updateHistoryy(history._id, history, song))
-
-        // dispatch(updateHistoryy(history._id, {...history, songs: [song, ...history.songs]}))
+        dispatch(updateHistory(history._id, history, song))
     }
 
     const addSongToQueue = (song, event) => {

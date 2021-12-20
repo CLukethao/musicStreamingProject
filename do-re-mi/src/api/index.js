@@ -12,6 +12,8 @@ export const createPlaylist = (newPlaylist) => axios.post(playlistUrl, newPlayli
 
 export const updatePlaylist = (id, updatedPlaylist) => axios.patch(`${playlistUrl}/${id}`, updatedPlaylist)
 
+export const deletePlaylist = (id) => axios.delete(`${playlistUrl}/${id}`)
+
 export const fetchHistory = () => axios.get(historyUrl);
 
 export const createHistory = (newHistory) => axios.post(historyUrl, newHistory)

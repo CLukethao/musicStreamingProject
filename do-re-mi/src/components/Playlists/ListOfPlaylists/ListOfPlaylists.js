@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react'
 import placeholderImg from "../../../images/playlistPlaceholder.jpg";
 import playlistIcon from "../../../images/playlist-icon.png";
 
-const ListOfPlaylists = ({playlists, playPlaylist, editBtn}) => {
+const ListOfPlaylists = ({playlists, playPlaylist, editPlaylist, deletePlaylist}) => {
 
     const [playlistsDisplay, setPlaylistsDisplay] = useState()
 
@@ -12,7 +12,7 @@ const ListOfPlaylists = ({playlists, playPlaylist, editBtn}) => {
         let listOfPlaylists = [];
 
         if (playlists.length > 0) {
-            playlists.map((playlist) => {
+            playlists.map((playlist, index) => {
                 let image;
 
                 if (playlist.songs.length > 0) {
@@ -45,13 +45,23 @@ const ListOfPlaylists = ({playlists, playPlaylist, editBtn}) => {
                                 </div>
                             </div>
 
+                            <div className='playlist-del-btn'>
+                                <button className='btn text-danger' onClick={event => deletePlaylist(playlist._id, event)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         className="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                                    </svg>
+                                </button>
+                            </div>
+
                             <div className='playlist-play-icon text-white'>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" className="bi bi-play-fill" viewBox="0 0 16 16">
                                     <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
                                 </svg>
                             </div>
 
-                            <button className='btn text-white edit-playlist-btn' onClick={event => editBtn(playlist._id, event)}>
+                            <button className='btn text-white edit-playlist-btn' onClick={event => editPlaylist(index, event)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                      fill="currentColor" className="bi bi-pencil-square"
                                      viewBox="0 0 16 16">

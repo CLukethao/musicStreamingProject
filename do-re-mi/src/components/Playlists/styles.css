@@ -93,13 +93,6 @@
     pointer-events: all
 }
 
-.playlist-play-icon {
-    color: white;
-    position: relative;
-    margin-bottom: -80px;
-    bottom: 120px;
-}
-
 .edit-playlist-btn:hover {
     transform: scale(1.3);
 }
@@ -125,7 +118,24 @@
     bottom: 120px;
 }
 
-.playlists:hover .playlist-play-icon{
+.playlists .playlist-del-btn {
+    display: none;
+    position: relative;
+    margin-bottom: -80px;
+    left: 122px;
+    bottom: 158px;
+}
+
+.playlist-del-btn:hover {
+
+    transform: scale(1.1);
+}
+
+.playlists:hover .playlist-del-btn{
+    display: block;
+}
+
+.playlists:hover .playlist-play-icon {
     display: block;
 }
 

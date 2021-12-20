@@ -10,14 +10,12 @@ import Playlists from "./components/Playlists/Playlists";
 import UserSettings from "./components/UserSettings/UserSettings";
 import {getPlaylists} from "./redux/actions/playlistActions";
 import {useDispatch, useSelector} from "react-redux";
-import {createHistory, getHistory} from "./redux/actions/historyActions";
+import {getHistory} from "./redux/actions/historyActions";
 
 
 const App = () => {
 
     const dispatch = useDispatch()
-
-    const history = useSelector((state) => state.history.history)
     const currentDate = useSelector((state) => state.history.currentDate)
 
     useEffect(() => {
@@ -25,16 +23,6 @@ const App = () => {
         dispatch(getHistory(currentDate))
 
     }, [dispatch])
-
-    // useEffect(() => {
-    //     console.log(currentDate)
-    //     console.log(history)
-    //
-    //     if (history.length === 0 || history[0].date !== currentDate) {
-    //         dispatch(createHistory(currentDate))
-    //     }
-    //
-    // }, history)
 
     return (
         <div className="">
