@@ -1,6 +1,19 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {clearError, createUser} from "../../../../redux/actions/userActions";
+import ErrorMessage from "../Error/Error";
+
 
 const SignUpModal = ({closeModal}) => {
+
+    const dispatch = useDispatch();
+    const error = useSelector((state) => state.user.error);
+
+
+    const removeError = () => {
+        dispatch(clearError())
+    }
+
 
     const [userInfo, setUserInfo] = useState({
         name: '',
@@ -89,7 +102,7 @@ const SignUpModal = ({closeModal}) => {
 
     const signUp = () => {
         if (signUpError.name === false && signUpError.email === false && signUpError.password === false && signUpError.dob === false) {
-            console.log('signed up!')
+            dispatch(createUser(userInfo))
         }
     }
 
@@ -98,12 +111,13 @@ const SignUpModal = ({closeModal}) => {
         <div className='row modal d-flex justify-content-center align-items-center vw-100'>
             <div className='col-10 text-center mb-2 text-white credentials-modal-container'>
                 <div className='row justify-content-center'>
+
                     <div className='offset-2 col-6'>
                         <h1>Sign Up</h1>
                     </div>
 
                     <div className='col-2 text-start'>
-                        <button className='btn text-white' onClick={closeModal}>
+                        <button className='btn text-white' onClick={() => {closeModal(); removeError()}}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  className="bi bi-x-lg" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
@@ -167,6 +181,13 @@ const SignUpModal = ({closeModal}) => {
                             </div>
                         </div>
                     </div>
+
+                    <div className='row justify-content-center'>
+                        <div className='col-3 mt-3'>
+                            {error ? <ErrorMessage variant='danger'>{error}</ErrorMessage> : null}
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

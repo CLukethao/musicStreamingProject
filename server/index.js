@@ -6,6 +6,8 @@ import cors from 'cors';
 
 import playlist from "./routes/playlist.js";
 import history from "./routes/history.js"
+import user from './routes/users.js'
+
 
 const app = express();
 dotenv.config()
@@ -14,8 +16,11 @@ app.use(bodyParser.json({limit: "30mb", extended: true}));
 app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
 app.use(cors());
 
+app.use('/user', user)
 app.use('/playlists', playlist)
 app.use('/history', history)
+
+
 
 // const CONNECTION_URL = process.env.CONNECTION_URL;
 const PORT = process.env.PORT || 5000;

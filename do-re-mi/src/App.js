@@ -19,10 +19,12 @@ const App = () => {
     const currentDate = useSelector((state) => state.history.currentDate)
 
     useEffect(() => {
+
         dispatch(getPlaylists())
         dispatch(getHistory(currentDate))
 
     }, [dispatch])
+
 
     return (
         <div className="">
