@@ -15,7 +15,7 @@ export const DELETE_PLAYLIST = 'DELETE_PLAYLIST'
 
 
 export const CREATE_USER = 'CREATE_USER'
-export const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
+export const LOGGED_IN = 'LOGGED_IN'
 export const DUPLICATE_EMAIL = 'DUPLICATE_EMAIL'
 export const CLEAR_INPUT = 'CLEAR_INPUT'
 export const LOGIN = 'LOGIN'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import {useSelector, useDispatch} from "react-redux";
 import './styles.css'
 import SongsInHistory from "./SongsInHistory/SongsInHistory";
@@ -6,12 +6,15 @@ import DateSelector from "./DateSelector/DateSelector";
 import {playlistSelected} from "../../redux/actions/playlistActions";
 
 import {getHistory, updateHistory, songSelected} from "../../redux/actions/historyActions";
+import {loggedIn} from "../../redux/actions/userActions";
 
 const History = () => {
 
     const dispatch = useDispatch()
 
     const history = useSelector((state) => state.history.history)
+    const user = useSelector(state => state.user)
+
     const [historyIndex, setHistoryIndex] = useState(history.length - 1)
 
     const changeDate = (index) => {
@@ -21,7 +24,7 @@ const History = () => {
     const playSong = (song) => {
         dispatch(songSelected(song))
         dispatch(playlistSelected(null))
-        dispatch(updateHistory(history[history.length - 1]._id, history[history.length - 1], song))
+        dispatch(updateHistory(user._id, history[history.length - 1], song))
 
     }
 

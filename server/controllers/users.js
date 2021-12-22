@@ -4,26 +4,21 @@ import mongoose from "mongoose";
 import {generateToken} from "../utils/generateToken.js";
 
 export const registerUser = async (req, res) => {
+    const { userInfo } = req.body;
 
     try {
-        const { name, email, dob, password } = req.body;
 
         const user = await User.create({
-            name,
-            email,
-            dob,
-            password
+            userInfo
+
         });
 
-        if (user) {
-            res.status(201).json({
-                _id: user._id,
-                name: user.name,
-                dob: user.dob,
-                email: user.email,
-                token: generateToken(user._id)
-            })
-        }
+        res.status(201).json({
+
+            _id: user._id,
+            userInfo: user.userInfo
+
+        })
 
     }
 
@@ -32,7 +27,10 @@ export const registerUser = async (req, res) => {
             return res.json({status: 'error', error:'Email already in use'})
         }
 
-        throw error
+        else {
+            console.log(error.message)
+            res.status(409).json({message: error.message});
+        }
     }
 }
 
@@ -41,13 +39,13 @@ export const authUser = asyncHandler(async (req, res) => {
     const {email, password} = req.body;
 
     try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ "userInfo.email": email});
 
         if (user && (await user.matchPassword(password))) {
             res.json({
                 _id: user._id,
-                name: user.name,
-                email: user.email,
+                name: user.userInfo.name,
+                email: user.userInfo.email,
                 token: generateToken(user._id)
             })
         }

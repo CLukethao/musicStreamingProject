@@ -1,22 +1,16 @@
-import {CREATE_USER, DUPLICATE_EMAIL, UPDATE_USER_INFO, CLEAR_INPUT, LOGIN} from "../constants/constantTypes";
+import {CREATE_USER, DUPLICATE_EMAIL, LOGGED_IN, CLEAR_INPUT, LOGIN} from "../constants/constantTypes";
 
 
 export default (user = {
-    name: '',
-    email: '',
-    dob: {
-        month: '',
-        day: '',
-        year: ''
-    },
-    password: ''
+
+    history: []
 
 }, action) => {
 
     switch (action.type) {
 
-        case UPDATE_USER_INFO:
-            return {...user, user: action.payload}
+        case LOGGED_IN:
+            return action.payload
 
         case CREATE_USER:
             return action.payload

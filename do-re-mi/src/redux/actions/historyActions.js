@@ -2,14 +2,14 @@ import * as constantType from "../constants/constantTypes";
 import * as api from "../../api";
 
 
-export const getHistory = (currentDate) => async (dispatch) => {
+export const getHistory = (currentDate, id) => async (dispatch) => {
 
     try {
 
-        const { data } = await api.fetchHistory();
+        const { data } = await api.fetchHistory(id);
 
         if (data.length === 0 || data[data.length - 1].date !== currentDate) {
-            dispatch(createHistory(currentDate))
+            dispatch(createHistory(currentDate, id))
         }
 
         else {
@@ -55,12 +55,12 @@ export const updateHistory = (id, history, songToAdd) => async (dispatch) => {
     }
 }
 
-export const createHistory = (date) => async (dispatch) => {
+export const createHistory = (date, id) => async (dispatch) => {
 
     console.log(date)
 
     try {
-        const { data } = await api.createHistory({date: date});
+        const { data } = await api.createHistory({date: date, id: id});
 
         dispatch ({type: constantType.CREATE_HISTORY, payload: data})
     }

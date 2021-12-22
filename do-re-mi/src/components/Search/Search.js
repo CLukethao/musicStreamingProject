@@ -28,16 +28,17 @@ const Search = () => {
     const searchResults = useSelector((state) => state.searchResults)
 
     const history = useSelector((state) => state.history.history[state.history.history.length - 1])
-
+    const user = useSelector(state => state.user)
 
     const searchForSong = () => {
+        console.log(user)
         dispatch(getSearch(inputData.searchQuery))
     }
 
     const playSong = (song) => {
         dispatch(songSelected(song))
         dispatch(playlistSelected(null))
-        dispatch(updateHistory(history._id, history, song))
+        dispatch(updateHistory(user._id, history, song))
     }
 
     const addSongToQueue = (song, event) => {

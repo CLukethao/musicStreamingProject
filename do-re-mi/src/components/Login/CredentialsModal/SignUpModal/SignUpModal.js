@@ -102,7 +102,8 @@ const SignUpModal = ({closeModal}) => {
 
     const signUp = () => {
         if (signUpError.name === false && signUpError.email === false && signUpError.password === false && signUpError.dob === false) {
-            dispatch(createUser(userInfo))
+
+            dispatch(createUser({userInfo: userInfo}))
         }
     }
 
@@ -184,7 +185,7 @@ const SignUpModal = ({closeModal}) => {
 
                     <div className='row justify-content-center'>
                         <div className='col-3 mt-3'>
-                            {error ? <ErrorMessage variant='danger'>{error}</ErrorMessage> : null}
+                            {error ? <ErrorMessage>{error}</ErrorMessage> : null}
                         </div>
                     </div>
 

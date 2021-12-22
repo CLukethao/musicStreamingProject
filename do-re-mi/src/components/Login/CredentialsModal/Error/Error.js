@@ -1,7 +1,7 @@
 import React from 'react'
 import {Alert} from "reactstrap";
 
-const ErrorMessage = ({variant = 'info', children}) => {
+const ErrorMessage = ({ children }) => {
     return (
         <Alert color="danger" style={{fontSize: 20}}>
             <strong>{children}</strong>

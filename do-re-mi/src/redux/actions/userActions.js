@@ -3,9 +3,9 @@ import * as api from '../../api';
 import * as constantType from '../constants/constantTypes'
 import data from "bootstrap/js/src/dom/data";
 
-export const updateUserInfo = (data) => (dispatch) => {
+export const loggedIn = (userInfo) => (dispatch) => {
     try {
-        dispatch({type: constantType.UPDATE_USER_INFO, payload: data})
+        dispatch({type: constantType.LOGGED_IN, payload: userInfo})
     }
 
     catch (error) {
@@ -21,18 +21,6 @@ export const createUser = (userInfo) => async (dispatch) => {
         const { data } = await api.createUser(userInfo)
 
         dispatch({type: constantType.CREATE_USER, payload: data})
-
-        // if (data.error) {
-        //     alert('Email is already used')
-        // }
-
-        // if (data) {
-        //     dispatch({type: constantType.DUPLICATE_EMAIL, payload: data})
-        // }
-        //
-        // else {
-        //     dispatch({type: constantType.CREATE_USER, payload: data})
-        // }
 
     }
 

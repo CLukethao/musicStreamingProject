@@ -11,6 +11,7 @@ import UserSettings from "./components/UserSettings/UserSettings";
 import {getPlaylists} from "./redux/actions/playlistActions";
 import {useDispatch, useSelector} from "react-redux";
 import {getHistory} from "./redux/actions/historyActions";
+import {loggedIn} from "./redux/actions/userActions";
 
 
 const App = () => {
@@ -19,9 +20,18 @@ const App = () => {
     const currentDate = useSelector((state) => state.history.currentDate)
 
     useEffect(() => {
+        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+        if (userInfo) {
+            dispatch(loggedIn(userInfo))
+        }
+
+    }, [dispatch])
+
+    useEffect(() => {
 
         dispatch(getPlaylists())
-        dispatch(getHistory(currentDate))
+        dispatch(getHistory(currentDate, '61c2310641b678f005c3bdab'))
 
     }, [dispatch])
 

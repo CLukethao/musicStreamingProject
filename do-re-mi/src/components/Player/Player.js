@@ -14,7 +14,7 @@ const Player = () => {
     const songsQueued = useSelector((state) => state.history.songsQueued)
     const playlistSelected = useSelector((state) => state.playlists.playlistSelected)
     const history = useSelector((state) => state.history.history[state.history.history.length - 1])
-
+    const user = useSelector(state => state.user)
 
     const setSongSelected = (song) => {
         dispatch(songSelected(song))
@@ -33,7 +33,7 @@ const Player = () => {
     }
 
     const addSongToHistory = (song) => {
-        dispatch(updateHistory(history._id, history, song))
+        dispatch(updateHistory(user._id, history, song))
     }
 
     if (selectedSong.hasOwnProperty('snippet') && selectedSong.length !== 0 || playlistSelected !== null) {
