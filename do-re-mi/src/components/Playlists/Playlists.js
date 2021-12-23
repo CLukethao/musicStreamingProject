@@ -13,12 +13,16 @@ const Playlists = () => {
     const dispatch = useDispatch()
     const playlists = useSelector((state) => state.playlists.playlists)
     const selectedPlaylist = useSelector((state) => state.playlists.playlistSelected)
+    const user = useSelector(state => state.user)
 
     const [playlistToEdit, setPlaylistToEdit] = useState(null)
 
     const editPlaylistSongs = (songs) => {
 
-        dispatch(updatePlaylistSongs(playlists[playlistToEdit]._id, {...playlists[playlistToEdit], songs: songs}))
+        let updatedPlaylist = {...playlists[playlistToEdit], songs: songs}
+        let updatedPlaylistsArray = [...playlists.slice(0, playlistToEdit), updatedPlaylist, ...playlists.slice(playlistToEdit + 1)]
+
+        dispatch(updatePlaylistSongs(user._id, updatedPlaylistsArray))
 
         if (selectedPlaylist !== null && playlists[playlistToEdit] !== null) {
             if (selectedPlaylist.playlistName === playlists[playlistToEdit].playlistName) {
@@ -48,7 +52,8 @@ const Playlists = () => {
 
     const deleteSelectedPlaylist = (id, event) => {
         event.stopPropagation(event)
-        dispatch(deletePlaylist(id))
+
+        dispatch(deletePlaylist(user._id, id))
     }
 
     const playSong = (song, playlist) => {

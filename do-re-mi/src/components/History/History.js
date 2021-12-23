@@ -5,8 +5,7 @@ import SongsInHistory from "./SongsInHistory/SongsInHistory";
 import DateSelector from "./DateSelector/DateSelector";
 import {playlistSelected} from "../../redux/actions/playlistActions";
 
-import {getHistory, updateHistory, songSelected} from "../../redux/actions/historyActions";
-import {loggedIn} from "../../redux/actions/userActions";
+import {updateHistory, songSelected} from "../../redux/actions/historyActions";
 
 const History = () => {
 
@@ -15,17 +14,20 @@ const History = () => {
     const history = useSelector((state) => state.history.history)
     const user = useSelector(state => state.user)
 
-    const [historyIndex, setHistoryIndex] = useState(history.length - 1)
+    const [historyIndex, setHistoryIndex] = useState(0)
 
-    const changeDate = (index) => {
-        setHistoryIndex(index)
+    useEffect(() => {
+        setHistoryIndex(history.length - 1)
+    }, [history])
+
+    const changeDate = (event) => {
+        setHistoryIndex(parseInt(event.target.value))
     }
 
     const playSong = (song) => {
         dispatch(songSelected(song))
         dispatch(playlistSelected(null))
         dispatch(updateHistory(user._id, history[history.length - 1], song))
-
     }
 
     return (
@@ -36,7 +38,7 @@ const History = () => {
                 </div>
 
                 <div className='col-md-4 text-start'>
-                    <DateSelector history={history} changeDate={changeDate}/>
+                    <DateSelector history={history} changeDate={changeDate} historyIndex={historyIndex}/>
                 </div>
 
                 <div className='col-4 col-md-2 text-md-center'>
@@ -50,10 +52,9 @@ const History = () => {
                 <div className='col-2 col-md-2 text-md-center'>
                     Date
                 </div>
-
             </div>
 
-            <SongsInHistory songHistory={history[historyIndex].songs} playSong={playSong}/>
+            <SongsInHistory songHistory={history} historyIndex={historyIndex} playSong={playSong}/>
 
         </div>
 

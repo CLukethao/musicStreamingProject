@@ -30,7 +30,7 @@ const App = () => {
 
     useEffect(() => {
 
-        dispatch(getPlaylists())
+        dispatch(getPlaylists('61c2310641b678f005c3bdab'))
         dispatch(getHistory(currentDate, '61c2310641b678f005c3bdab'))
 
     }, [dispatch])

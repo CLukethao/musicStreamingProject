@@ -35,11 +35,14 @@ const PlaylistModal = ({ song }, ref) => {
     }
 
     const dispatch = useDispatch();
+
     const playlists = useSelector((state) => state.playlists.playlists)
+    const user = useSelector(state => state.user)
 
     const [existsInPlaylists, setExistsInPlaylists] = useState([]);
 
     const [selectedPlaylists, setSelectedPlaylists] = useState([]);
+
 
     useEffect(() => {
 
@@ -88,7 +91,7 @@ const PlaylistModal = ({ song }, ref) => {
                 let updatedPlaylists = playlists;
                 updatedPlaylists[i].songs.push(song);
 
-                dispatch(updatePlaylistSongs(updatedPlaylists[i]._id, updatedPlaylists[i]));
+                dispatch(updatePlaylistSongs(user._id, updatedPlaylists));
         
             }
 
@@ -102,7 +105,7 @@ const PlaylistModal = ({ song }, ref) => {
 
                 updatedPlaylists[i].songs.splice(indexOfSong, 1);
 
-                dispatch(updatePlaylistSongs(updatedPlaylists[i]._id, updatedPlaylists[i]));
+                dispatch(updatePlaylistSongs(user._id, updatedPlaylists));
 
             }
         }
@@ -111,8 +114,7 @@ const PlaylistModal = ({ song }, ref) => {
     }
 
     const newPlaylist = (playlist) => {
-
-        dispatch(createPlaylist(playlist))
+        dispatch(createPlaylist(playlist, user._id))
 
     }
 
@@ -205,7 +207,7 @@ const AddPlaylist = ({newPlaylist, playlists}) => {
         }
 
         else {
-            newPlaylist({playlistName: newPlaylistName})
+            newPlaylist(newPlaylistName)
             setIsAddingPlaylist(false)
         }
     }

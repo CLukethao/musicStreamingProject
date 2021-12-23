@@ -5,7 +5,6 @@ export default (searchResults = [], action) => {
     switch (action.type) {
 
         case FETCH_SEARCH:
-            console.log(action.payload)
             return action.payload
 
         default:

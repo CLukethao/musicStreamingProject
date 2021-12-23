@@ -15,16 +15,16 @@ export default (state = {
             return {...state, playlists: action.payload};
 
         case UPDATE_PLAYLIST_SONGS:
-            return {...state, playlists: state.playlists.map(playlist => playlist._id === action.payload._id ? action.payload : playlist)}
+            return {...state, playlists: action.payload}
 
         case CREATE_PLAYLIST:
-            return {...state, playlists: [...state.playlists, action.payload]};
+            return {...state, playlists: action.payload};
 
         case PLAYLIST_SELECTED:
             return {...state, playlistSelected: action.payload};
 
         case DELETE_PLAYLIST:
-            return {...state, playlists: state.playlists.filter(playlist => playlist._id !== action.payload._id)}
+            return {...state, playlists: action.payload}
 
         default:
             return state;

@@ -31,7 +31,6 @@ const Search = () => {
     const user = useSelector(state => state.user)
 
     const searchForSong = () => {
-        console.log(user)
         dispatch(getSearch(inputData.searchQuery))
     }
 

@@ -6,14 +6,13 @@ const playlistUrl = 'http://localhost:5000/playlists';
 const historyUrl = 'http://localhost:5000/history'
 const userUrl = 'http://localhost:5000/user'
 
-
-export const fetchPlaylists = () => axios.get(playlistUrl);
+export const fetchPlaylists = (id) => axios.get(`${playlistUrl}/${id}`);
 
 export const createPlaylist = (newPlaylist) => axios.post(playlistUrl, newPlaylist);
 
-export const updatePlaylist = (id, updatedPlaylist) => axios.patch(`${playlistUrl}/${id}`, updatedPlaylist)
+export const updatePlaylist = (updatedPlaylist) => axios.patch(`${playlistUrl}/${updatedPlaylist.id}`, updatedPlaylist.playlist)
 
-export const deletePlaylist = (id) => axios.delete(`${playlistUrl}/${id}`)
+export const deletePlaylist = (data) => axios.delete(`${playlistUrl}/${data.id}`, {data: data})
 
 export const fetchHistory = (id) => axios.get(`${historyUrl}/${id}`);
 
