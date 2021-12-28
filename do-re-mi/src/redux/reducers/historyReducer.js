@@ -3,7 +3,7 @@ import {
     UPDATE_HISTORY,
     FETCH_HISTORY,
     ADD_TO_QUEUE,
-    REMOVE_FROM_QUEUE, SONG_SELECTED
+    REMOVE_FROM_QUEUE, SONG_SELECTED, CLEAR_HISTORY
 } from "../constants/constantTypes";
 
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May","June","July", "Aug", "Sep", "Oct", "Nov","Dec"];
@@ -24,7 +24,7 @@ export default (state = {
             return {...state, history: action.payload}
 
         case CREATE_HISTORY:
-            return {...state, history: [...state.history, action.payload]}
+            return {...state, history: action.payload}
 
         case UPDATE_HISTORY:
             return {...state, history: state.history.map(date => date._id === action.payload._id ? action.payload : date)}
@@ -37,6 +37,14 @@ export default (state = {
 
         case SONG_SELECTED:
             return {...state, songSelected: action.payload}
+
+        case CLEAR_HISTORY:
+            return {
+                history: [],
+                songSelected: {},
+                currentDate: currentDate,
+                songsQueued: []
+            }
 
         default:
             return state;

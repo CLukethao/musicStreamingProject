@@ -1,12 +1,18 @@
-import React, {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
-import {login} from "../../../../redux/actions/userActions";
+import React, { useState } from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {clearError, login} from "../../../../redux/actions/userActions";
+import ErrorMessage from "../Error/Error";
 
 
 
 const LogInModal = ({closeModal}) => {
 
     const dispatch = useDispatch()
+    const error = useSelector((state) => state.user.error);
+
+    const removeError = () => {
+        dispatch(clearError())
+    }
 
     const [loginInfo, setLoginInfo] = useState({
         email: '',
@@ -25,8 +31,6 @@ const LogInModal = ({closeModal}) => {
         dispatch(login(loginInfo))
     }
 
-
-
     return (
         <div className='row modal d-flex justify-content-center align-items-center vw-100'>
             <div className='col-10 text-center mb-2 text-white credentials-modal-container'>
@@ -36,7 +40,7 @@ const LogInModal = ({closeModal}) => {
                     </div>
 
                     <div className='col-2 text-start'>
-                        <button className='btn text-white' onClick={() => closeModal()}>
+                        <button className='btn text-white' onClick={() => {closeModal(); removeError()}}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  className="bi bi-x-lg" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
@@ -62,6 +66,12 @@ const LogInModal = ({closeModal}) => {
                             <div className='row'>
                                 <button className='btn bg-primary text-white btn-login' onClick={() => onLogin()}>Log in</button>
                             </div>
+                        </div>
+                    </div>
+
+                    <div className='row justify-content-center'>
+                        <div className='col-3 mt-3'>
+                            {error ? <ErrorMessage>{error}</ErrorMessage> : null}
                         </div>
                     </div>
                 </div>

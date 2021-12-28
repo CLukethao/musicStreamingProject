@@ -1,9 +1,9 @@
-import {CREATE_USER, DUPLICATE_EMAIL, LOGGED_IN, CLEAR_INPUT, LOGIN} from "../constants/constantTypes";
+import {CREATE_USER, DUPLICATE_EMAIL, LOGGED_IN, CLEAR_INPUT, LOGIN, LOG_OUT} from "../constants/constantTypes";
 
 
 export default (user = {
 
-    history: []
+    // history: []
 
 }, action) => {
 
@@ -23,6 +23,9 @@ export default (user = {
 
         case LOGIN:
             return action.payload
+
+        case LOG_OUT:
+            return {}
 
         default:
             return user;

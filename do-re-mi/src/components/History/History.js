@@ -30,6 +30,8 @@ const History = () => {
         dispatch(updateHistory(user._id, history[history.length - 1], song))
     }
 
+
+
     return (
         <div className='container history-container'>
             <div className='row result-header mt-4 mb-2'>

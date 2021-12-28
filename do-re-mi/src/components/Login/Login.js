@@ -1,9 +1,7 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useRef, useState} from 'react'
 import CredentialsModal from "./CredentialsModal/CredentialsModal";
 import videoBg from '../../images/videoBg.mp4'
 import './styles.css'
-import {useNavigate} from "react-router-dom";
-
 
 const Login = () => {
 
@@ -11,7 +9,6 @@ const Login = () => {
 
     const [modalType, setModalType] = useState(null)
 
-    const navigate = useNavigate()
 
     const openModal = (event) => {
 
@@ -25,15 +22,6 @@ const Login = () => {
 
         modal.current.open()
     }
-
-    useEffect(() => {
-        const userInfo = localStorage.getItem("userInfo");
-
-        if (userInfo) {
-            navigate('/search')
-        }
-
-    }, [])
 
 
     return (

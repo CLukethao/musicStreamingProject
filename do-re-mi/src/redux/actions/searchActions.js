@@ -15,3 +15,15 @@ export const getSearch = (searchQuery) => async (dispatch) => {
     }
 
 }
+
+export const clearSearch = () => async (dispatch) => {
+    try {
+
+        dispatch({type: constantType.CLEAR_SEARCH})
+    }
+
+    catch (error) {
+        console.log(error)
+    }
+
+}

@@ -2,7 +2,7 @@ import {
     CREATE_PLAYLIST, DELETE_PLAYLIST,
     FETCH_ALL_PLAYLISTS,
     PLAYLIST_SELECTED,
-    UPDATE_PLAYLIST_SONGS
+    UPDATE_PLAYLIST_SONGS, CLEAR_PLAYLIST
 } from "../constants/constantTypes";
 
 export default (state = {
@@ -25,6 +25,12 @@ export default (state = {
 
         case DELETE_PLAYLIST:
             return {...state, playlists: action.payload}
+
+        case CLEAR_PLAYLIST:
+            return {
+                playlists: [],
+                playlistSelected: null,
+            }
 
         default:
             return state;

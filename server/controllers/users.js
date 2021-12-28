@@ -51,7 +51,7 @@ export const authUser = asyncHandler(async (req, res) => {
         }
 
         else {
-            res.status(400);
+            res.json({status: 'error', error: 'Invalid email or password'})
             throw new Error('invalid email or password')
         }
     }
@@ -60,7 +60,6 @@ export const authUser = asyncHandler(async (req, res) => {
 
     catch (error) {
         console.log(error)
-        res.json('invalid email or password')
     }
 
 })

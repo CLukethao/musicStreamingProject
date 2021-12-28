@@ -1,14 +1,37 @@
 import React, {useEffect, useState} from "react";
 import Menu from "./Menu/Menu";
 import {NavLink} from "react-router-dom";
-
+import {logOut} from "../../redux/actions/userActions";
+import {clearHistory} from "../../redux/actions/historyActions";
+import {clearPlaylist} from "../../redux/actions/playlistActions";
+import {clearSearch} from "../../redux/actions/searchActions";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router";
 import './styles.css'
 
+
+
+
 const Header = () => {
+
+    const [loggedIn, setLoggedIn] = useState(false)
+    const user = useSelector(state => state.user)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (user._id) {
+            setLoggedIn(true)
+        }
+
+        else {setLoggedIn(false)}
+
+    }, [user])
 
     const [navState, setNavState] = useState({
         navIsOpen: false
     })
+
     const [displayName, setDisplayName] = useState('User')
 
     const toggleNav = () => {
@@ -22,6 +45,15 @@ const Header = () => {
         setNavState({
             navIsOpen: false
         })
+    }
+
+    const logOutUser = () => {
+        dispatch(logOut())
+        dispatch(clearHistory())
+        dispatch(clearPlaylist())
+        dispatch(clearSearch())
+
+        navigate('/')
     }
 
     return (
@@ -48,13 +80,13 @@ const Header = () => {
 
                         &nbsp;
 
-                        {displayName}
+                        {user.name}
 
                     </NavLink>
                 </span>
             </div>
 
-            <Menu navIsOpen={navState.navIsOpen} toggleNav={toggleNav} closeNav={closeNav}/>
+            <Menu navIsOpen={navState.navIsOpen} toggleNav={toggleNav} closeNav={closeNav} logOut={logOutUser} loggedIn={loggedIn}/>
         </div>
 
     )

@@ -32,7 +32,6 @@ export const createHistory = async (req, res) => {
 
     try {
         const user = await User.findByIdAndUpdate(_id, {$push: {"history": newHistory}}, {new: true});
-        console.log(user.history)
         res.json(user.history)
     }
 

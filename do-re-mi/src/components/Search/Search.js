@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import './styles.css'
 import SearchResults from "./SearchResults/SearchResults";
 import PlaylistModal from "../Playlists/PlaylistModal/PlaylistModal";
@@ -7,7 +7,16 @@ import {playlistSelected} from "../../redux/actions/playlistActions";
 import {getSearch} from "../../redux/actions/searchActions";
 import {updateHistory, addToQueue, songSelected} from "../../redux/actions/historyActions";
 
+
 const Search = () => {
+
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.user)
+
+    const history = useSelector((state) => state.history.history[state.history.history.length - 1])
+
+    const searchResults = useSelector((state) => state.searchResults)
+
 
     const [inputData, setInputData] = useState({
         searchQuery: ''
@@ -23,15 +32,9 @@ const Search = () => {
         playlistModal.current.open()
     }
 
-    const dispatch = useDispatch()
-
-    const searchResults = useSelector((state) => state.searchResults)
-
-    const history = useSelector((state) => state.history.history[state.history.history.length - 1])
-    const user = useSelector(state => state.user)
-
     const searchForSong = () => {
         dispatch(getSearch(inputData.searchQuery))
+
     }
 
     const playSong = (song) => {

@@ -62,5 +62,15 @@ export const deletePlaylist = (id, playlistId) => async (dispatch) => {
     catch (error) {
         console.log(error)
     }
+}
 
+export const clearPlaylist = () => async (dispatch) => {
+    try {
+
+        dispatch({type: constantType.CLEAR_PLAYLIST})
+    }
+
+    catch (error) {
+        console.log(error)
+    }
 }

@@ -57,11 +57,9 @@ export const updateHistory = (id, history, songToAdd) => async (dispatch) => {
 
 export const createHistory = (date, id) => async (dispatch) => {
 
-    console.log(date)
-
     try {
         const { data } = await api.createHistory({date: date, id: id});
-
+        console.log(data)
         dispatch ({type: constantType.CREATE_HISTORY, payload: data})
     }
 
@@ -94,6 +92,16 @@ export const addToQueue = (data) => async (dispatch) => {
 
     try {
         dispatch({type: constantType.ADD_TO_QUEUE, payload: data})
+    }
+
+    catch (error) {
+        console.log(error)
+    }
+}
+
+export const clearHistory = () => async (dispatch) => {
+    try {
+        dispatch({type: constantType.CLEAR_HISTORY})
     }
 
     catch (error) {

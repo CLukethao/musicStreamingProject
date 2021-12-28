@@ -1,16 +1,23 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import './styles.css'
 import {useSelector} from "react-redux";
 
 const UserSettings = () => {
 
-    const userInfo = useSelector((state) => state.reducer.user)
+    const userInfo = useSelector((state) => state.user)
 
+    const [readyToSubmit, setReadyToSubmit] = useState(false)
 
     const [updatedInfo, setUpdatedInfo] = useState({
-        name: null,
-        email: null,
-        password: null
+        name: '',
+        email: '',
+        password: ''
+    })
+
+    const [disabled, setDisabled] = useState({
+        name: true,
+        email: true,
+        password: true
     })
 
     const [signUpError, setSignUpError] = useState({
@@ -41,60 +48,62 @@ const UserSettings = () => {
 
     const editInfo = (label) => {
         if (label === 'Name') {
-            setUpdatedInfo(prevState => ({...prevState, name: ''}))
+            setDisabled(prevState => ({...prevState, name: false}))
         }
 
         else if (label === 'Email') {
-            setUpdatedInfo(prevState => ({...prevState, email: ''}))
+            setDisabled(prevState => ({...prevState, email: false}))
         }
 
         else if (label === 'Password') {
-            setUpdatedInfo(prevState => ({...prevState, password: ''}))
+            setDisabled(prevState => ({...prevState, password: false}))
         }
     }
 
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
 
-    const nameCheck = () => {
-        if (updatedInfo.name.length > 0) {
-            setSignUpError((prevState => ({...prevState, name: false})))
+    useEffect(() => {
+        if (disabled.name === false) {
+            if (updatedInfo.name.length > 0) {
+                setSignUpError((prevState => ({...prevState, name: false})))
 
+            }
+
+            else {
+                setSignUpError((prevState => ({...prevState, name: true})))
+            }
         }
 
-        else {
-            setSignUpError((prevState => ({...prevState, name: true})))
-        }
-    }
+        if (disabled.email === false) {
+            if (emailRegex.test(updatedInfo.email)) {
+                setSignUpError((prevState => ({...prevState, email: false})))
 
-    const emailCheck = () => {
-        if (emailRegex.test(updatedInfo.email)) {
-            setSignUpError((prevState => ({...prevState, email: false})))
+            }
 
-        }
-
-        else {
-            setSignUpError((prevState => ({...prevState, email: true})))
-        }
-    }
-
-    const passwordCheck = () => {
-        if (updatedInfo.password.length > 6 && updatedInfo.password.length <= 12) {
-            setSignUpError((prevState => ({...prevState, password: false})))
-
+            else {
+                setSignUpError((prevState => ({...prevState, email: true})))
+            }
         }
 
-        else {
-            setSignUpError((prevState => ({...prevState, password: true})))
+        if (disabled.password === false) {
+            if (updatedInfo.password.length > 6 && updatedInfo.password.length <= 12) {
+                setSignUpError((prevState => ({...prevState, password: false})))
+
+            }
+
+            else {
+                setSignUpError((prevState => ({...prevState, password: true})))
+            }
         }
-    }
+
+
+    }, [disabled, updatedInfo])
 
     const onSubmit = () => {
-        if (signUpError.name === false && signUpError.email === false && signUpError.password === false) {
+        if (readyToSubmit) {
             console.log('success')
         }
-
     }
-
 
     return (
         <div className='container mt-4'>
@@ -106,9 +115,9 @@ const UserSettings = () => {
 
             <div className='row justify-content-center'>
                 <div className='col-6 text-white mt-4'>
-                    {settings('Name', userInfo.name, updatedInfo.name, updateInfo, editInfo, nameCheck, signUpError.name, errMess.name)}
-                    {settings('Email', userInfo.email, updatedInfo.email, updateInfo, editInfo, emailCheck, signUpError.email, errMess.email)}
-                    {settings('Password', 'Password', updatedInfo.password, updateInfo, editInfo, passwordCheck, signUpError.password, errMess.password)}
+                    {settings('Name', userInfo.name, updatedInfo.name, updateInfo, editInfo, signUpError.name, errMess.name,disabled.name)}
+                    {settings('Email', userInfo.email, updatedInfo.email, updateInfo, editInfo, signUpError.email, errMess.email,disabled.email)}
+                    {settings('Password', 'Password', updatedInfo.password, updateInfo, editInfo, signUpError.password, errMess.password,disabled.password)}
                 </div>
             </div>
 
@@ -123,7 +132,7 @@ const UserSettings = () => {
     )
 }
 
-const settings = (label, placeholder, value, onChange, editBtn, check, error, errMess) => {
+const settings = (label, placeholder, value, onChange, editBtn, error, errMess, editing) => {
 
     return (
         <div className='row mb-2 d-flex align-items-center justify-content-center'>
@@ -138,8 +147,7 @@ const settings = (label, placeholder, value, onChange, editBtn, check, error, er
                        value={value}
                        name={label}
                        onChange={(event) => onChange(event)}
-                       disabled={value === null ? true : false}
-                       onBlur={() => check()}
+                       disabled={editing}
                 />
 
                 <button className='btn text-white' onClick={event => editBtn(label)}>

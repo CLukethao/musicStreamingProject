@@ -34,8 +34,10 @@ export const login = (userInfo) => async (dispatch) => {
     try {
 
         const { data } = await api.login(userInfo)
-        console.log(data)
-        localStorage.setItem('userInfo', JSON.stringify(data))
+        if (!data.error) {
+            localStorage.setItem('userInfo', JSON.stringify(data))
+        }
+        
         dispatch({type: constantType.LOGIN, payload: data})
 
 
@@ -67,3 +69,13 @@ export const clearError = () => async (dispatch) => {
     }
 }
 
+export const logOut = () => async (dispatch) => {
+    try {
+        localStorage.removeItem("userInfo")
+        dispatch({type: constantType.LOG_OUT})
+    }
+
+    catch (error) {
+        console.log(error)
+    }
+}

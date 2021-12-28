@@ -4,7 +4,10 @@ import {NavLink} from "react-router-dom";
 import CredentialsModal from "../../Login/CredentialsModal/CredentialsModal";
 
 
-const Menu = ({navIsOpen, closeNav}) => {
+
+
+
+const Menu = ({navIsOpen, closeNav, logOut, loggedIn}) => {
 
     const modal = useRef(null)
 
@@ -35,9 +38,16 @@ const Menu = ({navIsOpen, closeNav}) => {
                             </NavLink>
                         </span>
 
-                        <button className="login-btn navbar-link mt-2" onClick={() => {openModal(); closeNav()}}>
-                            Sign in
-                        </button>
+                        {loggedIn ?
+
+                            <button className="login-btn navbar-link mt-2" onClick={() => {logOut(); closeNav()}}>
+                                Sign Out
+                            </button>
+                            :
+                            <button className="login-btn navbar-link mt-2" onClick={() => {openModal(); closeNav()}}>
+                                Sign in
+                            </button>
+                        }
 
                     </div>
                 </div>
