@@ -1,7 +1,6 @@
 
 import * as api from '../../api';
 import * as constantType from '../constants/constantTypes'
-import data from "bootstrap/js/src/dom/data";
 
 export const loggedIn = (userInfo) => (dispatch) => {
     try {
@@ -29,6 +28,26 @@ export const createUser = (userInfo) => async (dispatch) => {
     }
 }
 
+export const updateUserInfo = (userInfo) => async (dispatch) => {
+    try {
+
+        const { data } = await api.updateUserInfo(userInfo)
+
+        if (data.updated !== "error") {
+            localStorage.setItem('userInfo', JSON.stringify(data))
+            dispatch({type: constantType.UPDATE_USER_SETTINGS, payload: data})
+        }
+
+        else {
+            dispatch({type: constantType.UPDATE_USER_ERROR, payload: data})
+        }
+    }
+
+    catch (error) {
+        console.log(error)
+    }
+}
+
 export const login = (userInfo) => async (dispatch) => {
 
     try {
@@ -48,20 +67,21 @@ export const login = (userInfo) => async (dispatch) => {
     }
 }
 
-export const clearError = () => async (dispatch) => {
-    let user = {
-        name: '',
-        email: '',
-        dob: {
-            month: '',
-            day: '',
-            year: ''
-        },
-        password: ''
+export const clearUpdateMess = () => async (dispatch) => {
+    try {
+        dispatch({type: constantType.CLEAR_UPDATE_MESS})
     }
 
+    catch (error) {
+        console.log(error)
+    }
+
+}
+
+export const clearError = () => async (dispatch) => {
+
     try {
-        dispatch({type: constantType.CLEAR_INPUT, payload: data})
+        dispatch({type: constantType.CLEAR_INPUT, payload: {}})
     }
 
     catch (error) {

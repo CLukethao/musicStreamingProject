@@ -1,5 +1,6 @@
 import User from "../models/user.js";
 import asyncHandler from 'express-async-handler'
+import bcrypt from 'bcryptjs'
 import mongoose from "mongoose";
 import {generateToken} from "../utils/generateToken.js";
 
@@ -63,3 +64,57 @@ export const authUser = asyncHandler(async (req, res) => {
     }
 
 })
+
+export const updateUserInfo = async (req, res) => {
+
+    const updatedUserInfo = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(updatedUserInfo._id)) {
+        return res.status(404).send('No User with that Id')
+    }
+
+    try {
+        const user = await User.findById(updatedUserInfo._id)
+        const userInfo = user.userInfo
+
+        if (updatedUserInfo.email !== userInfo.email) {
+            const dupeEmail = await User.findOne({ "userInfo.email": updatedUserInfo.email});
+
+            if (dupeEmail === null) {
+                await User.findByIdAndUpdate(updatedUserInfo._id,{"userInfo.email": updatedUserInfo.email}, {new: true})
+            }
+
+            else {
+                return res.json({updated:'error'})
+            }
+        }
+
+        if (updatedUserInfo.name !== userInfo.name) {
+            await User.findByIdAndUpdate(updatedUserInfo._id,{"userInfo.name": updatedUserInfo.name}, {new: true})
+        }
+
+        if (updatedUserInfo.password !== '') {
+
+            const salt = await bcrypt.genSalt(10);
+
+            updatedUserInfo.password = await bcrypt.hash(updatedUserInfo.password, salt);
+
+            await User.findByIdAndUpdate(updatedUserInfo._id,{"userInfo.password": updatedUserInfo.password}, {new: true})
+        }
+
+        const updatedUser = await User.findById(updatedUserInfo._id)
+
+        res.json({
+            _id: updatedUser._id,
+            name: updatedUser.userInfo.name,
+            email: updatedUser.userInfo.email,
+            token: generateToken(updatedUser._id),
+            updated: 'success'
+        })
+
+    }
+
+    catch (error) {
+        res.status(409).json({message: error.message});
+    }
+}

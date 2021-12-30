@@ -47,7 +47,7 @@ export const updateHistory = async (req, res) => {
     const history = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
-        return res.status(404).send('No history with that Id')
+        return res.status(404).send('No user with that Id')
     }
 
     try {

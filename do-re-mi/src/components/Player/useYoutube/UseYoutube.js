@@ -123,7 +123,7 @@ const UseYoutube = ({selectedSong, songHistory, setSongSelected, songsQueued, ad
 
     const playerState = (event) => {
         if (event.data === 1) {
-            setPlayerInfo(prevState => ({...prevState, playSong: true, songLength: event.target.getDuration()}))
+            setPlayerInfo(prevState => ({...prevState, playSong: true, songLength: event.target.getDuration(), currentPlayerTime: event.target.getCurrentTime()}))
         }
     }
 
@@ -149,6 +149,7 @@ const UseYoutube = ({selectedSong, songHistory, setSongSelected, songsQueued, ad
         try {
             player.loadVideoById({
                 'videoId': selectedSong.id.videoId,
+                'startSeconds': 1
             })
 
         }
@@ -157,6 +158,7 @@ const UseYoutube = ({selectedSong, songHistory, setSongSelected, songsQueued, ad
             setTimeout(() => {
                 player.loadVideoById({
                     'videoId': selectedSong.id.videoId,
+                    'startSeconds': 1
                 });
             }, 700)
         }

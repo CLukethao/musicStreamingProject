@@ -1,13 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {clearError, createUser} from "../../../../redux/actions/userActions";
-import ErrorMessage from "../Error/Error";
+import ErrorMessage from "../../../Error/Error";
+import Success from "../../../Success/Success";
 
 
 const SignUpModal = ({closeModal}) => {
 
     const dispatch = useDispatch();
     const error = useSelector((state) => state.user.error);
+    const user = useSelector(state => state.user)
 
 
     const removeError = () => {
@@ -121,9 +123,9 @@ const SignUpModal = ({closeModal}) => {
                         <button className='btn text-white' onClick={() => {closeModal(); removeError()}}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  className="bi bi-x-lg" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
+                                <path fillRule="evenodd"
                                       d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
-                                <path fill-rule="evenodd"
+                                <path fillRule="evenodd"
                                       d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
                             </svg>
                         </button>
@@ -186,6 +188,7 @@ const SignUpModal = ({closeModal}) => {
                     <div className='row justify-content-center'>
                         <div className='col-3 mt-3'>
                             {error ? <ErrorMessage>{error}</ErrorMessage> : null}
+                            {user._id ? <Success>Account Created!</Success> : null}
                         </div>
                     </div>
 

@@ -79,7 +79,7 @@ const Song = ({song, updateOrder, updatedSongPosition, index, removeSong, songSe
                     <button className='btn text-white move-song-btn'>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              className="bi bi-chevron-expand" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
+                            <path fillRule="evenodd"
                                   d="M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708zm0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708z"/>
                         </svg>
                     </button>
@@ -87,7 +87,7 @@ const Song = ({song, updateOrder, updatedSongPosition, index, removeSong, songSe
 
 
                 <div className='col-3 col-md-2'>
-                    <img className='result-img' src={song.snippet.thumbnails.medium.url} alt=''></img>
+                    <img className='result-img' src={song.snippet.thumbnails.medium.url} alt='video cover'/>
                 </div>
 
                 <div className='col-4 col-md-3'>
@@ -95,7 +95,7 @@ const Song = ({song, updateOrder, updatedSongPosition, index, removeSong, songSe
                 </div>
 
                 <div className='col-2 col-md-3'>
-                    <a href={`https://www.youtube.com/channel/${song.snippet.channelId}`} target="_blank">{song.snippet.channelTitle}</a>
+                    <a href={`https://www.youtube.com/channel/${song.snippet.channelId}`} target="_blank" rel="noreferrer">{song.snippet.channelTitle}</a>
                 </div>
 
                 <div className='col-2 col-md-2'>

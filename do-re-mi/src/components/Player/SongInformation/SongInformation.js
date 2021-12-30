@@ -10,7 +10,7 @@ const SongInformation = ({selectedSong}) => {
                 <div className='row align-items-center'>
 
                     <div className='col-3 col-md-3  text-end player-thumbnail'>
-                        <img className='player-img' src={selectedSong.snippet.thumbnails.medium.url}></img>
+                        <img className='player-img' src={selectedSong.snippet.thumbnails.medium.url} alt='video cover'/>
                     </div>
 
                     <div className='col-5 col-md-9 text-start player-title' data-bs-toggle="tooltip" title={selectedSong.snippet.title}>

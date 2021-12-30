@@ -24,24 +24,21 @@ const App = () => {
     const user = useSelector(state => state.user)
 
     useEffect(() => {
-        dispatch(getPlaylists(user._id))
-        dispatch(getHistory(currentDate, user._id))
-    }, [user])
-
-    useEffect(() => {
         const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
         if (userInfo) {
-            dispatch(loggedIn(userInfo))
+            if (!user._id) {
+                dispatch(loggedIn(userInfo))
+            }
             dispatch(getPlaylists(userInfo._id))
             dispatch(getHistory(currentDate, userInfo._id))
             navigate('/search')
         }
 
-    }, [])
+    }, [user._id, currentDate, dispatch])
 
     return (
-        <div className="">
+        <div>
             <Header />
 
             <Routes>
