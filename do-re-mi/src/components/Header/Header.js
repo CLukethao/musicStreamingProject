@@ -56,7 +56,7 @@ const Header = () => {
 
     return (
         <div className='row header align-items-center bg-color d-flex' onMouseLeave={() => closeNav()}>
-            <div className='col-10 header-font'>
+            <div className='col-9 col-md-10 header-font'>
                 <button className='menu-btn btn title' onClick={event => {toggleNav(); event.currentTarget.blur()}}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          className="bi bi-list" viewBox="0 0 16 16">
@@ -68,7 +68,7 @@ const Header = () => {
                 Do-Re-Mi
             </div>
 
-            <div className='col-2 text-end'>
+            <div className='col-3 col-md-2 text-end'>
                 <span>
                     <NavLink to="/settings" className='profile-btn' onClick={() => closeNav()}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

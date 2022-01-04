@@ -9,10 +9,10 @@ const SearchResults = ({songs, playSong, addToPlaylist, addSongToQueue}) => {
 
     const [addTo, setAddTo] = useState(false)
 
-    const addToClicked = (i, event) => {
+    const addToClicked = (song, event) => {
         event.stopPropagation()
-        if (i !== addTo) {
-            setAddTo(i)
+        if (song !== addTo) {
+            setAddTo(song)
         }
 
         else {
@@ -29,11 +29,11 @@ const SearchResults = ({songs, playSong, addToPlaylist, addSongToQueue}) => {
             results.push(
                 <div className='results-display' key={songs[i].id.videoId} id={songs[i].id.videoId} onClick={() => playSong(songs[i])}>
                     <div className='row d-flex align-items-center'>
-                        <div className='col-3 col-md-3'>
+                        <div className='col-4 col-md-3'>
                             <img className='result-img' src={songs[i].snippet.thumbnails.medium.url} alt='video cover'/>
                         </div>
 
-                        <div className='col-1' onMouseLeave={closeAddTo}>
+                        <div className='col-1 offset-md-0 col-md-1' onMouseLeave={() => closeAddTo()}>
                             <button className='btn playlist-btn' onClick={(event) => {addToClicked(i, event); event.currentTarget.blur()}}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      className="bi bi-music-note-list" viewBox="0 0 16 16">

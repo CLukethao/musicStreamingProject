@@ -8,7 +8,8 @@
 }
 
 .result-img {
-    max-width: 12vw;
+    min-width: 110px;
+    max-width: 9vw;
     height: auto;
 }
 
@@ -28,7 +29,8 @@
     border: black solid 2px;
     color: white;
     margin-bottom: 4px;
-    font-size: 1.3vw;
+    font-size: 1vw;
+
 }
 
 .results-display:hover {

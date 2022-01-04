@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {useSelector, useDispatch} from "react-redux";
 import './styles.css'
 import SongsInHistory from "./SongsInHistory/SongsInHistory";
 import DateSelector from "./DateSelector/DateSelector";
 import {playlistSelected} from "../../redux/actions/playlistActions";
 
-import {updateHistory, songSelected} from "../../redux/actions/historyActions";
+import {updateHistory, songSelected, addToQueue} from "../../redux/actions/historyActions";
+import PlaylistModal from "../Playlists/PlaylistModal/PlaylistModal";
 
 const History = () => {
 
@@ -30,7 +31,20 @@ const History = () => {
         dispatch(updateHistory(user._id, history[history.length - 1], song))
     }
 
+    const playlistModal = useRef(null)
 
+    const [addSongToPlaylist, setAddSongToPlaylist] = useState()
+
+    const openPlaylistModal = (song, event) => {
+        event.stopPropagation()
+        setAddSongToPlaylist(song)
+        playlistModal.current.open()
+    }
+
+    const addSongToQueue = (song, event) => {
+        event.stopPropagation()
+        dispatch(addToQueue(song))
+    }
 
     return (
         <div className='container history-container'>
@@ -56,8 +70,9 @@ const History = () => {
                 </div>
             </div>
 
-            <SongsInHistory songHistory={history} historyIndex={historyIndex} playSong={playSong}/>
+            <SongsInHistory songHistory={history} historyIndex={historyIndex} playSong={playSong} addToPlaylist={openPlaylistModal} addSongToQueue={addSongToQueue}/>
 
+            <PlaylistModal ref={playlistModal} song={addSongToPlaylist}/>
         </div>
 
     )

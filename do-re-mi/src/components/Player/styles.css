@@ -6,16 +6,17 @@
     border: black solid 1px;
     bottom: 0;
     color: white;
-    height: 50px;
-    min-width: 1150px;
     z-index: 9;
+}
+
+.player-info-container {
+    max-height: 50px;
 }
 
 .player-title {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    padding-left: 20px;
 }
 
 .player-title-overlay{
@@ -101,7 +102,7 @@
 }
 
 .timeline-range {
-    width: 28vw;
+    width: 19vw;
     height: 10px;
     -webkit-appearance: none;
     background: #111;

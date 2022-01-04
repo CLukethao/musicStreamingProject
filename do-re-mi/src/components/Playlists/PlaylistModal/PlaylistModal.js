@@ -54,7 +54,6 @@ const PlaylistModal = ({ song }, ref) => {
                 for (let y = 0; y < playlists[i].songs.length; y++) {
                     if (song.id.videoId === playlists[i].songs[y].id.videoId) {
                         checkIfAdded.push(playlists[i]._id);
-                        // checkIfAdded.push(playlists[i].playlistName);
                     }
                 }
             }
@@ -123,11 +122,11 @@ const PlaylistModal = ({ song }, ref) => {
                 <div className='row modal d-flex justify-content-center'>
                     <div className='col-10 text-center text-white modal-container'>
                         <div className='row justify-content-center'>
-                            <div className='offset-2 col-3 mb-3'>
+                            <div className='offset-2 col-8 offset-md-2 col-md-3 mb-3'>
                                 <h1 className='playlist-modal-header'>Playlists</h1>
                             </div>
 
-                            <div className='col-2 text-start'>
+                            <div className='col-1 col-md-2 text-start'>
                                 <button className='btn text-white' onClick={closeModal}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          className="bi bi-x-lg" viewBox="0 0 16 16">
@@ -141,7 +140,7 @@ const PlaylistModal = ({ song }, ref) => {
                         </div>
 
                         <div className='row justify-content-center' >
-                            <div className='col-2 text-start text-white'>
+                            <div className='col-6 col-md-2 text-start text-white'>
 
                                 <DisplayPlaylists playlists={playlists} onSelect={selectPlaylists} selectedPlaylists={selectedPlaylists} alreadyExists={existsInPlaylists}/>
 
@@ -151,7 +150,7 @@ const PlaylistModal = ({ song }, ref) => {
                         <AddPlaylist newPlaylist={newPlaylist} playlists={playlists}/>
 
                         <div className='row justify-content-center'>
-                            <div className='col-2 mt-3'>
+                            <div className='col-6 col-md-2 mt-3'>
                                 <div className='row'>
                                     <button className='btn bg-primary text-white btn-login' onClick={(event) => updatePlaylists()}>Update</button>
                                 </div>
@@ -185,7 +184,7 @@ const AddPlaylist = ({newPlaylist, playlists}) => {
     const [isAddingPlaylist, setIsAddingPlaylist] = useState(false)
 
     const addingPlaylist = () => {
-        setIsAddingPlaylist(true)
+        setIsAddingPlaylist(prevState => !prevState)
     }
 
     const [newPlaylistName, setNewPlaylistName] = useState('')
@@ -220,7 +219,7 @@ const AddPlaylist = ({newPlaylist, playlists}) => {
 
     return (!isAddingPlaylist ?
         <div className='row justify-content-center add-playlist-container' onClick={() => addingPlaylist()}>
-            <div className='col-2 text-start text-white'>
+            <div className='col-6 col-md-2 text-start text-white'>
 
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                      className="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -238,7 +237,7 @@ const AddPlaylist = ({newPlaylist, playlists}) => {
         :
 
         <div className='row justify-content-center add-playlist-container'>
-            <div className='col-4 offset-2 text-start text-white'>
+            <div className='col-6 col-md-4 offset-md-2 text-start text-white'>
                 <input type='text' className='text-input' value={newPlaylistName} onChange={(event) => setNewPlaylistName(event.target.value)} onKeyDown={event => onPress(event)}/>
 
                 <button className='btn confirm-btn' onClick={() => confirm()}>
@@ -259,7 +258,7 @@ const AddPlaylist = ({newPlaylist, playlists}) => {
             </div>
 
             <div className={error.length > 0 ? 'row justify-content-center playlist-error' : 'row justify-content-center hidden'}>
-                <div className='col-2 text-start'>
+                <div className='col-6 col-md-2 text-start'>
                     {error}
                 </div>
             </div>

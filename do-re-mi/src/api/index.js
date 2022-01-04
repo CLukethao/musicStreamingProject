@@ -1,8 +1,17 @@
 import axios from 'axios';
 
-const playlistUrl = 'http://localhost:5000/playlists';
-const historyUrl = 'http://localhost:5000/history'
-const userUrl = 'http://localhost:5000/user'
+// const playlistUrl = 'http://localhost:5000/playlists';
+// const historyUrl = 'http://localhost:5000/history'
+// const userUrl = 'http://localhost:5000/user'
+
+axios.defaults.baseURL = 'http://localhost:5000/'
+// axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('')
+
+const playlistUrl = 'playlists';
+const historyUrl = 'history'
+const userUrl = 'user'
+
+
 
 export const fetchPlaylists = (id) => axios.get(`${playlistUrl}/${id}`);
 

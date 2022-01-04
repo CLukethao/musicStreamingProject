@@ -53,6 +53,7 @@ export const login = (userInfo) => async (dispatch) => {
     try {
 
         const { data } = await api.login(userInfo)
+
         if (!data.error) {
             localStorage.setItem('userInfo', JSON.stringify(data))
         }

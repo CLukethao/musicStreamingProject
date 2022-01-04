@@ -47,9 +47,9 @@ const CredentialsModal = ({ defaultOpened, modalType}, ref) => {
     else {
         return createPortal(
             isOpen ?
-                <div className='container'>
+
                     <SignUpModal closeModal={closeModal}/>
-                </div>
+
 
                 : null, modalElement
         )

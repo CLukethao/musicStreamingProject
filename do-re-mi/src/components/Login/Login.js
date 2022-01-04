@@ -1,14 +1,16 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import CredentialsModal from "./CredentialsModal/CredentialsModal";
 import videoBg from '../../images/videoBg.mp4'
 import './styles.css'
 
 const Login = () => {
 
+
     const modal = useRef(null)
 
     const [modalType, setModalType] = useState(null)
-
 
     const openModal = (event) => {
 
@@ -23,6 +25,16 @@ const Login = () => {
         modal.current.open()
     }
 
+    const user = useSelector(state => state.user)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+
+        if (user._id) {
+            navigate('/search')
+        }
+
+    }, [user._id])
 
     return (
         <div className='row align-content-center justify-content-center vh-100 login-container'>
@@ -38,7 +50,7 @@ const Login = () => {
                 <h2>The only music stream you'll need.</h2>
             </div>
 
-            <div className='col-3 text-center btn-login-container'>
+            <div className='col-6 col-md-2 text-center btn-login-container'>
                 <div className='row'>
                     <button className='btn btn-login' id='login' onClick={(event) => openModal(event)}>Sign In</button>
                 </div>

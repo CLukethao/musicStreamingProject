@@ -1,12 +1,13 @@
 
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import './styles.css'
-import {useDispatch, useSelector} from "react-redux";
-import {updatePlaylistSongs, deletePlaylist} from "../../redux/actions/playlistActions";
+import { useDispatch, useSelector } from "react-redux";
+import { updatePlaylistSongs, deletePlaylist } from "../../redux/actions/playlistActions";
+import { playlistSelected } from "../../redux/actions/playlistActions";
+import { songSelected } from "../../redux/actions/historyActions";
 import ListOfPlaylists from "./ListOfPlaylists/ListOfPlaylists";
 import EditPlaylist from "./EditPlaylist/EditPlaylist";
-import {playlistSelected} from "../../redux/actions/playlistActions";
-import {songSelected} from "../../redux/actions/historyActions";
+
 
 const Playlists = () => {
 
@@ -81,7 +82,7 @@ const Playlists = () => {
 
     else {
         return (
-            <div className='container mt-4 '>
+            <div className='container mt-4'>
                 <div className='row'>
                     <div className='col-12 text-start title playlist-header'>
                         Playlists/{playlists[playlistToEdit].playlistName}

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {clearError, login} from "../../../../redux/actions/userActions";
 import ErrorMessage from "../../../Error/Error";
 
 
 
-const LogInModal = ({closeModal}) => {
+const LogInModal = ({ closeModal }) => {
 
     const dispatch = useDispatch()
     const error = useSelector((state) => state.user.error);
@@ -28,14 +28,35 @@ const LogInModal = ({closeModal}) => {
     }
 
     const onLogin = () => {
+        console.log(loginInfo)
         dispatch(login(loginInfo))
     }
+
+    const handleEnter = (event) => {
+        if (event.key === 'Enter') {
+            console.log(loginInfo)
+            dispatch(login(loginInfo))
+        }
+    }
+
+    useEffect(() => {
+
+        if (loginInfo.email) {
+            document.addEventListener('keydown', handleEnter, false);
+        }
+
+
+
+        return () => {
+            document.removeEventListener('keydown', handleEnter, false);
+        }
+    }, [loginInfo])
 
     return (
         <div className='row modal d-flex justify-content-center align-items-center vw-100'>
             <div className='col-10 text-center mb-2 text-white credentials-modal-container'>
                 <div className='row justify-content-center'>
-                    <div className='offset-2 col-6'>
+                    <div className='offset-2 col-3'>
                         <h1>Sign In</h1>
                     </div>
 
@@ -53,18 +74,23 @@ const LogInModal = ({closeModal}) => {
                 </div>
 
                 <div className='row justify-content-center'>
-                    <div className='col-3'>
-                        <input type='text' className='form-control' id='email' placeholder='Email' value={loginInfo.email} onChange={(event => onEmailChange(event))}/>
-                    </div>
-
-                    <div className='col-3'>
-                        <input type='password' className='form-control' id='password' placeholder='Password' value={loginInfo.password} onChange={(event => onPasswordChange(event))}/>
+                    <div className='row justify-content-center mb-2'>
+                        <div className='col-12 mb-2 mb-md-0 col-md-3'>
+                            <input type='text' className='form-control' id='email' placeholder='Email' value={loginInfo.email} onChange={(event => onEmailChange(event))}/>
+                        </div>
                     </div>
 
                     <div className='row justify-content-center'>
-                        <div className='col-6 mt-3'>
+                        <div className='col-12 col-md-3'>
+                            <input type='password' className='form-control' id='password' placeholder='Password' value={loginInfo.password} onChange={(event => onPasswordChange(event))}/>
+                        </div>
+                    </div>
+
+
+                    <div className='row justify-content-center'>
+                        <div className='col-6 col-md-2 mt-3'>
                             <div className='row'>
-                                <button className='btn bg-primary text-white btn-login' onClick={() => onLogin()}>Log in</button>
+                                <button className='btn text-black btn-login' onClick={() => onLogin()}>Log in</button>
                             </div>
                         </div>
                     </div>

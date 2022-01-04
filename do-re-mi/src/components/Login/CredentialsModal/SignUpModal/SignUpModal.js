@@ -133,7 +133,7 @@ const SignUpModal = ({closeModal}) => {
                 </div>
 
                 <div className='row justify-content-center'>
-                    <div className='col-5'>
+                    <div className='col-12 col-md-3'>
                         <div className='row'>
 
                             <div className='col-12 pb-2'>
@@ -178,7 +178,7 @@ const SignUpModal = ({closeModal}) => {
                     </div>
 
                     <div className='row justify-content-center'>
-                        <div className='col-3 mt-3'>
+                        <div className='col-6 col-md-2 mt-3'>
                             <div className='row'>
                                 <button className='btn btn-login' onClick={() => signUp()}>Sign Up</button>
                             </div>
@@ -243,7 +243,7 @@ const DateSelection = ({setDate, check, error}) => {
                 </select>
             </div>
 
-            <div className='col-3'>
+            <div className='col-3 p-0'>
                 <select className={error === true ? 'form-select error' : 'form-select'} id="day" onChange={event => setDate(event.target.value, event.target.id)}>
                     <option defaultValue='Day'>Day</option>
                     {days}

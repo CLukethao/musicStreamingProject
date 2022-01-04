@@ -71,27 +71,27 @@ const UseYoutube = ({selectedSong, songHistory, setSongSelected, songsQueued, ad
 
     useEffect(() => {
 
-        if ((playerInfo.currentPlayerTime === Math.floor(playerInfo.songLength)) && playerInfo.repeat === 'one') {
+        if (playerInfo.currentPlayerTime === playerInfo.songLength && playerInfo.repeat === 'one') {
             rewind()
         }
 
-        else if ((playerInfo.currentPlayerTime === Math.floor(playerInfo.songLength)) && songsQueued.length > 0) {
+        else if ((playerInfo.currentPlayerTime === playerInfo.songLength) && songsQueued.length > 0) {
             setSongSelected(songsQueued[0])
             addQueToHistory(songsQueued[0])
         }
 
-        else if ((playerInfo.currentPlayerTime === Math.floor(playerInfo.songLength)) && playerInfo.repeat === 'all') {
+        else if ((playerInfo.currentPlayerTime === playerInfo.songLength) && playerInfo.repeat === 'all') {
             skipToNext()
         }
 
-        else if (playerInfo.playSong && (playerInfo.currentPlayerTime < Math.floor(playerInfo.songLength))) {
+        else if (playerInfo.playSong && playerInfo.currentPlayerTime < playerInfo.songLength) {
 
             playerInfo.timelineTimer = setInterval(() => {
-                setPlayerInfo(prevState => ({...prevState, currentPlayerTime: playerInfo.currentPlayerTime + 1}))
+                setPlayerInfo(prevState => ({...prevState, currentPlayerTime: Math.floor(playerInfo.currentPlayerTime) + 1}))
             }, 1000)
         }
 
-        else if (playerInfo.currentPlayerTime === Math.floor(playerInfo.songLength)) {
+        else if (playerInfo.currentPlayerTime === playerInfo.songLength) {
 
             clearInterval(playerInfo.timelineTimer)
             setPlayerInfo(prevState => ({...prevState, timelineTimer: 0, currentPlayerTime: 0, playSong: false}))
@@ -123,13 +123,13 @@ const UseYoutube = ({selectedSong, songHistory, setSongSelected, songsQueued, ad
 
     const playerState = (event) => {
         if (event.data === 1) {
-            setPlayerInfo(prevState => ({...prevState, playSong: true, songLength: event.target.getDuration(), currentPlayerTime: event.target.getCurrentTime()}))
+            setPlayerInfo(prevState => ({...prevState, playSong: true, songLength: Math.floor(event.target.getDuration()), currentPlayerTime: event.target.getCurrentTime()}))
         }
     }
 
     const onPlayerReady = (event) => {
 
-        setPlayerInfo(prevState => ({...prevState, songLength: event.target.getDuration()}))
+        setPlayerInfo(prevState => ({...prevState, songLength: Math.floor(event.target.getDuration())}))
 
     }
 
@@ -197,6 +197,7 @@ const UseYoutube = ({selectedSong, songHistory, setSongSelected, songsQueued, ad
     }
 
     const rewind = () => {
+        console.log('replaying')
         setPlayerInfo(prevState => ({...prevState, currentPlayerTime: 0}));
 
         player.loadVideoById({
@@ -283,19 +284,32 @@ const UseYoutube = ({selectedSong, songHistory, setSongSelected, songsQueued, ad
 
     return (
 
-        <div className='col-7'>
-            <div className='row align-items-center'>
-                <div className='col-4'>
-                    <BackSkip skipToPrev={skipToPrev} rewind={rewind}/>
-                    <Play playSong={play} playPauseToggle={playerInfo.playSong}/>
-                    <ForwardSkip skipToNext={skipToNext}/>
-                    <Repeat toggleRepeat={toggleRepeat} repeat={playerInfo.repeat}/>
-                    <Volume mute={mute} muted={playerInfo.muted} volume={playerInfo.volume} changeVol={changeVol}/>
-                    <div id='youtube-player' className='iframe'/>
-                </div>
+        <div className='order-2 order-lg-1 col-12 text-center col-lg-6 text-lg-end'>
+                    <div className='row align-items-center justify-content-end'>
+                        <div className='order-2 order-lg-1 col-12 col-lg-5 col-xxl-4'>
+                            <BackSkip skipToPrev={skipToPrev} rewind={rewind}/>
+                            <Play playSong={play} playPauseToggle={playerInfo.playSong}/>
+                            <ForwardSkip skipToNext={skipToNext}/>
+                            <Repeat toggleRepeat={toggleRepeat} repeat={playerInfo.repeat}/>
+                            <Volume mute={mute} muted={playerInfo.muted} volume={playerInfo.volume} changeVol={changeVol}/>
+                            <div id='youtube-player' className='iframe'/>
+                        </div>
 
-                <Timeline currentPlayerTime={playerInfo.currentPlayerTime} songLength={playerInfo.songLength} seek={seek}/>
-            </div>
+                        <div className='order-1 order-lg-2 col-12 col-lg-7 col-xxl-6'>
+                            <Timeline currentPlayerTime={playerInfo.currentPlayerTime} songLength={playerInfo.songLength} seek={seek}/>
+                        </div>
+
+                    </div>
+
+                    {/*<BackSkip skipToPrev={skipToPrev} rewind={rewind}/>*/}
+                    {/*<Play playSong={play} playPauseToggle={playerInfo.playSong}/>*/}
+                    {/*<ForwardSkip skipToNext={skipToNext}/>*/}
+                    {/*<Repeat toggleRepeat={toggleRepeat} repeat={playerInfo.repeat}/>*/}
+                    {/*<Volume mute={mute} muted={playerInfo.muted} volume={playerInfo.volume} changeVol={changeVol}/>*/}
+                    {/*<div id='youtube-player' className='iframe'/>*/}
+
+
+                    {/*<Timeline currentPlayerTime={playerInfo.currentPlayerTime} songLength={playerInfo.songLength} seek={seek}/>*/}
         </div>
 
     );

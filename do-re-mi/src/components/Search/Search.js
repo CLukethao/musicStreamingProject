@@ -1,11 +1,12 @@
 import React, { useRef, useState } from 'react'
 import './styles.css'
-import SearchResults from "./SearchResults/SearchResults";
-import PlaylistModal from "../Playlists/PlaylistModal/PlaylistModal";
 import {useDispatch, useSelector} from "react-redux";
 import {playlistSelected} from "../../redux/actions/playlistActions";
 import {getSearch} from "../../redux/actions/searchActions";
 import {updateHistory, addToQueue, songSelected} from "../../redux/actions/historyActions";
+import SearchResults from "./SearchResults/SearchResults";
+import PlaylistModal from "../Playlists/PlaylistModal/PlaylistModal";
+
 
 
 const Search = () => {
