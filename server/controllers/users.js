@@ -1,5 +1,4 @@
 import User from "../models/user.js";
-import asyncHandler from 'express-async-handler'
 import bcrypt from 'bcryptjs'
 import mongoose from "mongoose";
 import {generateToken} from "../utils/generateToken.js";
@@ -35,7 +34,7 @@ export const registerUser = async (req, res) => {
     }
 }
 
-export const authUser = asyncHandler(async (req, res) => {
+export const authUser = async (req, res) => {
 
     const {email, password} = req.body;
 
@@ -57,13 +56,11 @@ export const authUser = asyncHandler(async (req, res) => {
         }
     }
 
-
-
     catch (error) {
         console.log(error)
     }
 
-})
+}
 
 export const updateUserInfo = async (req, res) => {
 

@@ -23,7 +23,7 @@ const Playlists = () => {
         let updatedPlaylist = {...playlists[playlistToEdit], songs: songs}
         let updatedPlaylistsArray = [...playlists.slice(0, playlistToEdit), updatedPlaylist, ...playlists.slice(playlistToEdit + 1)]
 
-        dispatch(updatePlaylistSongs(user._id, updatedPlaylistsArray))
+        dispatch(updatePlaylistSongs(user._id, updatedPlaylistsArray, user.token))
 
         if (selectedPlaylist !== null && playlists[playlistToEdit] !== null) {
             if (selectedPlaylist.playlistName === playlists[playlistToEdit].playlistName) {
@@ -54,7 +54,7 @@ const Playlists = () => {
     const deleteSelectedPlaylist = (id, event) => {
         event.stopPropagation(event)
 
-        dispatch(deletePlaylist(user._id, id))
+        dispatch(deletePlaylist(user._id, id, user.token))
     }
 
     const playSong = (song, playlist) => {

@@ -38,7 +38,6 @@
 }
 
 .player-show {
-    transition: .4s;
     bottom: 0;
 }
 
@@ -67,6 +66,7 @@
     background-color: rgb(28,28,28);
     border: black solid 1px;
     padding-left: 5px;
+    padding-right: 5px;
 }
 
 .vol-range {

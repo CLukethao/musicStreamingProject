@@ -2,14 +2,14 @@ import * as constantType from "../constants/constantTypes";
 import * as api from "../../api";
 
 
-export const getHistory = (currentDate, id) => async (dispatch) => {
+export const getHistory = (currentDate, id, token) => async (dispatch) => {
 
     try {
 
-        const { data } = await api.fetchHistory(id);
+        const { data } = await api.fetchHistory(id, token);
 
         if (data.length === 0 || data[data.length - 1].date !== currentDate) {
-            dispatch(createHistory(currentDate, id))
+            dispatch(createHistory(currentDate, id, token))
         }
 
         else {
@@ -24,7 +24,7 @@ export const getHistory = (currentDate, id) => async (dispatch) => {
 
 }
 
-export const updateHistory = (id, history, songToAdd) => async (dispatch) => {
+export const updateHistory = (id, history, songToAdd, token) => async (dispatch) => {
 
     let newHistory = history
 
@@ -36,7 +36,7 @@ export const updateHistory = (id, history, songToAdd) => async (dispatch) => {
             newHistory.songs.splice(indexOfSongInHistory, 1)
             newHistory.songs.push(songToAdd)
 
-            const { data } = await api.updateHistory(id, newHistory);
+            const { data } = await api.updateHistory(id, newHistory, token);
 
             dispatch({type: constantType.UPDATE_HISTORY, payload: data})
         }
@@ -44,7 +44,7 @@ export const updateHistory = (id, history, songToAdd) => async (dispatch) => {
         else {
             newHistory.songs.push(songToAdd)
 
-            const { data } = await api.updateHistory(id, newHistory);
+            const { data } = await api.updateHistory(id, newHistory, token);
 
             dispatch({type: constantType.UPDATE_HISTORY, payload: data})
         }
@@ -55,10 +55,10 @@ export const updateHistory = (id, history, songToAdd) => async (dispatch) => {
     }
 }
 
-export const createHistory = (date, id) => async (dispatch) => {
+export const createHistory = (date, id, token) => async (dispatch) => {
 
     try {
-        const { data } = await api.createHistory({date: date, id: id});
+        const { data } = await api.createHistory({date: date, id: id}, token);
         console.log(data)
         dispatch ({type: constantType.CREATE_HISTORY, payload: data})
     }

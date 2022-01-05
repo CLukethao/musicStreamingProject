@@ -90,7 +90,7 @@ const PlaylistModal = ({ song }, ref) => {
                 let updatedPlaylists = playlists;
                 updatedPlaylists[i].songs.push(song);
 
-                dispatch(updatePlaylistSongs(user._id, updatedPlaylists));
+                dispatch(updatePlaylistSongs(user._id, updatedPlaylists, user.token));
         
             }
 
@@ -104,7 +104,7 @@ const PlaylistModal = ({ song }, ref) => {
 
                 updatedPlaylists[i].songs.splice(indexOfSong, 1);
 
-                dispatch(updatePlaylistSongs(user._id, updatedPlaylists));
+                dispatch(updatePlaylistSongs(user._id, updatedPlaylists, user.token));
 
             }
         }
@@ -113,7 +113,7 @@ const PlaylistModal = ({ song }, ref) => {
     }
 
     const newPlaylist = (playlist) => {
-        dispatch(createPlaylist(playlist, user._id))
+        dispatch(createPlaylist(playlist, user._id, user.token))
 
     }
 

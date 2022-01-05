@@ -28,7 +28,7 @@ const History = () => {
     const playSong = (song) => {
         dispatch(songSelected(song))
         dispatch(playlistSelected(null))
-        dispatch(updateHistory(user._id, history[history.length - 1], song))
+        dispatch(updateHistory(user._id, history[history.length - 1], song, user.token))
     }
 
     const playlistModal = useRef(null)

@@ -41,7 +41,7 @@ const Search = () => {
     const playSong = (song) => {
         dispatch(songSelected(song))
         dispatch(playlistSelected(null))
-        dispatch(updateHistory(user._id, history, song))
+        dispatch(updateHistory(user._id, history, song, user.token))
     }
 
     const addSongToQueue = (song, event) => {

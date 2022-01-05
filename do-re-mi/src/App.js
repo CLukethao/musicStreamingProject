@@ -33,8 +33,8 @@ const App = () => {
         }
 
         if (user._id) {
-            dispatch(getPlaylists(userInfo._id))
-            dispatch(getHistory(currentDate, userInfo._id))
+            dispatch(getPlaylists(userInfo._id, userInfo.token))
+            dispatch(getHistory(currentDate, userInfo._id, userInfo.token))
         }
 
     }, [user._id])

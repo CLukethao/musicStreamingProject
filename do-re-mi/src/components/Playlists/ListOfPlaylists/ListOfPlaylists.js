@@ -27,8 +27,8 @@ const ListOfPlaylists = ({playlists, playPlaylist, editPlaylist, deletePlaylist}
                 let playlistLength = playlist.songs.length
 
                 return listOfPlaylists.push(
-                    <div className='col-12 col-lg-3 text-white mt-4 d-flex justify-content-center' key={playlist._id}>
-                        <div className='row playlists' onClick={(event) => playPlaylist(playlist)} >
+                    <div className='col-12 col-sm-6 col-xl-3 text-white mt-4 d-flex justify-content-center' key={playlist._id}>
+                        <div className='row playlists' onClick={() => playPlaylist(playlist)} >
 
                             <div className='col-12 playlist-img-container'>
 

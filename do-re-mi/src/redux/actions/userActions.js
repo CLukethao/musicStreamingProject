@@ -33,8 +33,16 @@ export const updateUserInfo = (userInfo) => async (dispatch) => {
 
         const { data } = await api.updateUserInfo(userInfo)
 
+        const updatedInfo = {
+            _id: data._id,
+            name: data.name,
+            email: data.email,
+            token: data.token
+        }
+
         if (data.updated !== "error") {
-            localStorage.setItem('userInfo', JSON.stringify(data))
+            localStorage.setItem('userInfo', JSON.stringify(updatedInfo))
+
             dispatch({type: constantType.UPDATE_USER_SETTINGS, payload: data})
         }
 

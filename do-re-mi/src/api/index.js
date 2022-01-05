@@ -1,37 +1,30 @@
 import axios from 'axios';
 
-// const playlistUrl = 'http://localhost:5000/playlists';
-// const historyUrl = 'http://localhost:5000/history'
-// const userUrl = 'http://localhost:5000/user'
-
 axios.defaults.baseURL = 'http://localhost:5000/'
-// axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('')
 
 const playlistUrl = 'playlists';
 const historyUrl = 'history'
 const userUrl = 'user'
 
+export const fetchPlaylists = (id, token) => axios.get(`${playlistUrl}/${id}`, {headers: {'authorization': `Bearer ` + token}});
 
+export const createPlaylist = (newPlaylist, token) => axios.post(playlistUrl, newPlaylist, {headers: {'authorization': `Bearer ` + token}});
 
-export const fetchPlaylists = (id) => axios.get(`${playlistUrl}/${id}`);
+export const updatePlaylist = (updatedPlaylist, token) => axios.patch(`${playlistUrl}/${updatedPlaylist.id}`, updatedPlaylist.playlist, {headers: {'authorization': `Bearer ` + token}})
 
-export const createPlaylist = (newPlaylist) => axios.post(playlistUrl, newPlaylist);
+export const deletePlaylist = (data, token) => axios.delete(`${playlistUrl}/${data.id}`, {data: data, headers: {'authorization': `Bearer ` + token}})
 
-export const updatePlaylist = (updatedPlaylist) => axios.patch(`${playlistUrl}/${updatedPlaylist.id}`, updatedPlaylist.playlist)
+export const fetchHistory = (id, token) => axios.get(`${historyUrl}/${id}`, {headers: {'authorization': `Bearer ` + token}});
 
-export const deletePlaylist = (data) => axios.delete(`${playlistUrl}/${data.id}`, {data: data})
+export const createHistory = (newHistory, token) => axios.post(historyUrl, newHistory,{headers: {'authorization': `Bearer ` + token}} )
 
-export const fetchHistory = (id) => axios.get(`${historyUrl}/${id}`);
-
-export const createHistory = (newHistory) => axios.post(historyUrl, newHistory)
-
-export const updateHistory = (id, updatedHistory) => axios.patch(`${historyUrl}/${id}`, updatedHistory)
+export const updateHistory = (id, updatedHistory, token) => axios.patch(`${historyUrl}/${id}`, updatedHistory, {headers: {'authorization': `Bearer ` + token}})
 
 export const createUser = (userInfo) => axios.post(userUrl, userInfo)
 
 export const login = (userInfo) => axios.post('http://localhost:5000/user/login', userInfo)
 
-export const updateUserInfo = (userInfo) => axios.patch(userUrl, userInfo)
+export const updateUserInfo = (userInfo) => axios.patch(userUrl, userInfo, {headers: {'authorization': `Bearer ` + userInfo.token}})
 
 const searchUrl = 'https://www.googleapis.com/youtube/v3/search?key='
 const API_KEY = 'AIzaSyDlnn9kjXhP8g6mrWbHZev0fivwxJQlOSA'

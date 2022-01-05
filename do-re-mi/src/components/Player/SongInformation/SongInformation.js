@@ -7,7 +7,7 @@ const SongInformation = ({selectedSong, openPlaylistModal}) => {
 
         return (
             <div className='order-1 order-lg-2 mb-2 mb-lg-0 col-12 col-lg-5 player-info-container'>
-                <div className='row align-items-center'>
+                <div className='row align-items-center justify-content-center'>
                     <div className='col-3' style={{maxWidth: '155px', minWidth: '155px'}}>
                         <button className='btn playlist-btn' onClick={() => openPlaylistModal()}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

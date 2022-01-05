@@ -33,13 +33,15 @@ const Player = () => {
     }
 
     const addSongToHistory = (song) => {
-        dispatch(updateHistory(user._id, history, song))
+        dispatch(updateHistory(user._id, history, song, user.token))
     }
+
+
 
     if ((selectedSong.hasOwnProperty('snippet') && selectedSong.length !== 0) || playlistSelected !== null) {
         return (
             <div className='player vw-100 player-show'>
-                <div className='row justify-content-center align-items-center'>
+                <div className='row justify-content-center align-items-center vw-100'>
                     <UseYoutube selectedSong={selectedSong} songHistory={history.songs} setSongSelected={setSongSelected} songsQueued={songsQueued} addQueToHistory={addQueueToHistory} playlistSelected={playlistSelected} addSongToHistory={addSongToHistory}/>
 
                     <SongInformation selectedSong={selectedSong} openPlaylistModal={openPlaylistModal}/>

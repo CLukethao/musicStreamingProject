@@ -138,7 +138,7 @@ const UserSettings = () => {
 
     const onSubmit = () => {
 
-        let updatedUserInfo = {name: '', email: '', password: '', _id: user._id}
+        let updatedUserInfo = {name: '', email: '', password: '', _id: user._id, token: user.token}
 
         if (inputError.name === false) {
             updatedUserInfo.name = updatedInfo.name

@@ -2,10 +2,10 @@
 import * as api from '../../api';
 import * as constantType from "../constants/constantTypes";
 
-export const getPlaylists = (id) => async (dispatch) => {
+export const getPlaylists = (id, token) => async (dispatch) => {
 
     try {
-        const { data } = await api.fetchPlaylists(id);
+        const { data } = await api.fetchPlaylists(id, token);
 
         dispatch({type: constantType.FETCH_ALL_PLAYLISTS, payload: data})
     }
@@ -15,10 +15,10 @@ export const getPlaylists = (id) => async (dispatch) => {
     }
 }
 
-export const createPlaylist = (playlistName, id) => async (dispatch) => {
+export const createPlaylist = (playlistName, id, token) => async (dispatch) => {
 
     try {
-        const { data } = await api.createPlaylist({playlistName: playlistName, id: id});
+        const { data } = await api.createPlaylist({playlistName: playlistName, id: id}, token);
 
         dispatch({type: constantType.CREATE_PLAYLIST, payload: data})
     }
@@ -28,11 +28,11 @@ export const createPlaylist = (playlistName, id) => async (dispatch) => {
     }
 }
 
-export const updatePlaylistSongs = (id, playlist) => async (dispatch) => {
+export const updatePlaylistSongs = (id, playlist, token) => async (dispatch) => {
 
     try {
 
-        const { data } = await api.updatePlaylist({id: id, playlist: playlist});
+        const { data } = await api.updatePlaylist({id: id, playlist: playlist}, token);
 
         dispatch({type: constantType.UPDATE_PLAYLIST_SONGS, payload: data})
     }
@@ -52,10 +52,10 @@ export const playlistSelected = (playlist) => async (dispatch) => {
     }
 }
 
-export const deletePlaylist = (id, playlistId) => async (dispatch) => {
+export const deletePlaylist = (id, playlistId, token) => async (dispatch) => {
 
     try {
-        const { data } = await api.deletePlaylist({id: id, playlistId: playlistId});
+        const { data } = await api.deletePlaylist({id: id, playlistId: playlistId}, token);
         dispatch({type: constantType.DELETE_PLAYLIST, payload: data})
     }
 
