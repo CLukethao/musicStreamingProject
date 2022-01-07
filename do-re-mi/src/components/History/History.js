@@ -48,16 +48,16 @@ const History = () => {
 
     return (
         <div className='container history-container'>
-            <div className='row result-header mt-4 mb-2'>
-                <div className='col-12 mb-2 title'>
+            <div className='row result-header mt-4 mb-2 align-items-center'>
+                <div className='col-12 mb-2 page-title title'>
                     History
                 </div>
 
-                <div className='col-md-4 text-start'>
+                <div className='col-5 col-md-4 text-start'>
                     <DateSelector history={history} changeDate={changeDate} historyIndex={historyIndex}/>
                 </div>
 
-                <div className='col-4 col-md-2 text-md-center'>
+                <div className='col-3 col-md-2 text-md-center'>
                     Title
                 </div>
 

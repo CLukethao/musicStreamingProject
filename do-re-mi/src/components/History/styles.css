@@ -1,24 +1,23 @@
 
-
 /*most classes recycled from /search/styles.css*/
+
 
 .primary-date {
     color: white;
-    font-size: 25px;
+    font-size: 1.8vw;
 }
-
 
 .primary-date:hover {
     color: white;
-    font-size: 25px;
 }
 
 .next-date {
+    font-size: 1.2vw;
     color: gray;
 }
 
 .next-date:hover {
-    color: gray;
+    color: white;
 }
 
 .date-btn {
@@ -34,11 +33,46 @@
     margin-bottom: 100px;
 }
 
+@media screen and (max-width: 900px) {
 
-.title {
-    color: white;
-    animation: header-animate 2s linear infinite
+    .title {
+        font-size: 5vw;
+        font-weight: bold;
+        color: white;
+        animation: header-animate 2s linear infinite
+    }
+
+    .primary-date {
+        color: white;
+        font-size: 3.5vw;
+    }
+
+    .next-date {
+        font-size: 2.5vw;
+        color: gray;
+    }
 }
+
+@media screen and (min-width: 900px) {
+
+    .title {
+        font-size: 2vw;
+        font-weight: bold;
+        color: white;
+        animation: header-animate 2s linear infinite
+    }
+
+    .primary-date {
+        color: white;
+        font-size: 1.8vw;
+    }
+
+    .next-date {
+        font-size: 1.2vw;
+        color: gray;
+    }
+}
+
 
 @keyframes header-animate {
 
