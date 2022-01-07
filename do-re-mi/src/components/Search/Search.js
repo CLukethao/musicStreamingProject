@@ -57,7 +57,7 @@ const Search = () => {
 
     return (
         <div className='container'>
-            <div className='row mb-5 mt-2'>
+            <div className='row mb-5 mt-4'>
                 <div className='col-6 offset-1 col-md-6 offset-md-3 mt-3 input-p'>
                     <input className='form-control' type='text' placeholder='Search' value={inputData.searchQuery} onChange={(e) => setInputData({...inputData, searchQuery: e.target.value})} onKeyDown={event => handleEnter(event)}/>
                 </div>

@@ -11,7 +11,6 @@ const SignUpModal = ({closeModal}) => {
     const error = useSelector((state) => state.user.error);
     const user = useSelector(state => state.user)
 
-
     const removeError = () => {
         dispatch(clearError())
     }
@@ -61,7 +60,7 @@ const SignUpModal = ({closeModal}) => {
     const nameCheck = () => {
         if (userInfo.name.length === 0) {
             setSignUpError((prevState => ({...prevState, name: true})))
-            console.log('name error')
+
         }
 
         else {
@@ -72,7 +71,7 @@ const SignUpModal = ({closeModal}) => {
     const emailCheck = () => {
         if (!emailRegex.test(userInfo.email)) {
             setSignUpError((prevState => ({...prevState, email: true})))
-            console.log('email error')
+
         }
 
         else {
@@ -83,7 +82,7 @@ const SignUpModal = ({closeModal}) => {
     const passwordCheck = () => {
         if (userInfo.password.length < 6) {
             setSignUpError((prevState => ({...prevState, password: true})))
-            console.log('email error')
+
         }
 
         else {
@@ -94,7 +93,7 @@ const SignUpModal = ({closeModal}) => {
     const monthCheck = () => {
         if ((userInfo.dob.month.length === 0) || userInfo.dob.month === 'Month'  || (userInfo.dob.day <= 0) || userInfo.dob.year.length !== 4) {
             setSignUpError((prevState => ({...prevState, dob: true})))
-            console.log('dob error')
+
         }
 
         else {
@@ -185,10 +184,11 @@ const SignUpModal = ({closeModal}) => {
                         </div>
                     </div>
 
+
                     <div className='row justify-content-center'>
                         <div className='col-3 mt-3'>
                             {error ? <ErrorMessage>{error}</ErrorMessage> : null}
-                            {user._id ? <Success>Account Created!</Success> : null}
+                            {user.success ? <Success>Account Created!</Success> : null}
                         </div>
                     </div>
 

@@ -15,8 +15,6 @@ import UserSettings from "./components/UserSettings/UserSettings";
 import UserAuth from "./components/UserAuth/UserAuth";
 
 
-
-
 const App = () => {
 
     const dispatch = useDispatch()

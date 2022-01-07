@@ -20,6 +20,9 @@ app.use('/user', user)
 app.use('/playlists', playlist)
 app.use('/history', history)
 
+app.get('/', (req, res) => {
+    res.send('Hello Do-Re-Mi!')
+})
 
 
 const PORT = process.env.PORT || 5000;

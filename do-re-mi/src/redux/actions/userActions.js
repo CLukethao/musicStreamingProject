@@ -18,7 +18,7 @@ export const createUser = (userInfo) => async (dispatch) => {
     try {
 
         const { data } = await api.createUser(userInfo)
-
+        console.log(data)
         dispatch({type: constantType.CREATE_USER, payload: data})
 
     }

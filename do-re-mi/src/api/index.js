@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:5000/'
+axios.defaults.baseURL = 'https://do-re-mi-music.herokuapp.com/'
 
 const playlistUrl = 'playlists';
 const historyUrl = 'history'
 const userUrl = 'user'
+
 
 export const fetchPlaylists = (id, token) => axios.get(`${playlistUrl}/${id}`, {headers: {'authorization': `Bearer ` + token}});
 
@@ -22,7 +23,7 @@ export const updateHistory = (id, updatedHistory, token) => axios.patch(`${histo
 
 export const createUser = (userInfo) => axios.post(userUrl, userInfo)
 
-export const login = (userInfo) => axios.post('http://localhost:5000/user/login', userInfo)
+export const login = (userInfo) => axios.post('user/login', userInfo)
 
 export const updateUserInfo = (userInfo) => axios.patch(userUrl, userInfo, {headers: {'authorization': `Bearer ` + userInfo.token}})
 

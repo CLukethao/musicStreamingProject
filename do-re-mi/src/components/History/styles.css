@@ -64,11 +64,11 @@
 
     .primary-date {
         color: white;
-        font-size: 1.8vw;
+        font-size: 1.3vw;
     }
 
     .next-date {
-        font-size: 1.2vw;
+        font-size: 1vw;
         color: gray;
     }
 }

@@ -28,13 +28,13 @@ const LogInModal = ({ closeModal }) => {
     }
 
     const onLogin = () => {
-        console.log(loginInfo)
+
         dispatch(login(loginInfo))
     }
 
     const handleEnter = (event) => {
         if (event.key === 'Enter') {
-            console.log(loginInfo)
+
             dispatch(login(loginInfo))
         }
     }
