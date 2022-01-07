@@ -3,7 +3,7 @@ The web application is complete and fully functional, you can find it hosted her
 
 ## Tools used
 ### Front End
-React, Redux, Bootstrap
+React, Redux, Bootstrap, Axios, Youtube API
 
 ### Back End
 Express, Node.js, Mongo DB, Bcrypt, JWT
