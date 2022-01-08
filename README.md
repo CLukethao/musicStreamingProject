@@ -1,5 +1,5 @@
 # Do Re Mi - music streaming project
-The web application is complete and fully functional, you can find it hosted here at https://doremimusic.netlify.app/
+You can the web application hosted here https://doremimusic.netlify.app/
 
 ## Tools used
 ### Front End
